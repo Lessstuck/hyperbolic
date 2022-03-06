@@ -3,7 +3,6 @@ Get metronome working
 
 Simplify interface = start & tempo only
 - eliminate sequencer
-- delete jQuery
 - delete bootstrap
 
 Insert noneuclidean module in play conditional
