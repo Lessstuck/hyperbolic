@@ -1,2 +1,2 @@
 # hyperbolic
-Interactive music in the browser
+Noneuclidean algorithmic music with a 3D browser interface.
