@@ -1,9 +1,9 @@
 function browserFormat () {
-  if (navigator.userAgent.safari) {
+  // if (navigator.userAgent.safari) {
     return ".mp3";
-  } else {
-    return ".ogg";
-  };
+  // } else {
+  //   return ".ogg";
+  // };
 };
 
 $(document).ready(function () {
