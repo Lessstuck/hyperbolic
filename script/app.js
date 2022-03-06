@@ -1,10 +1,10 @@
 function browserFormat () {
-  if (navigator.userAgent.safari) {
+  if ($.browser.safari) {
     return ".mp3";
   } else {
     return ".ogg";
-  };
-};
+  }
+}
 
 $(document).ready(function () {
   window.addEventListener('touchstart', function() {
