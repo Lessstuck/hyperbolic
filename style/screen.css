@@ -1,0 +1,15 @@
+.wrapper {
+  margin: 100px auto 20px;
+  width: 480px;
+}
+.span3 {
+  white-space: nowrap;
+}
+select {width: 80px;}
+#rate {
+  width: 50px;
+}
+#sequencer {
+  margin: 20px 0;
+  overflow: hidden;
+}
