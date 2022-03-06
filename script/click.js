@@ -117,10 +117,7 @@ Metronome.prototype.playSound = function (buffer) {
   }
   source.start(0);
 }
-// Metronome.prototype.sound = function (height) {
-//   this.sound = {};
-//   this[height] = this[height] || new Audio("audio/" + height + browserFormat());
-// };
+
 Metronome.prototype.barInterval = function () {
   if (this.justStarted) {
     this.justStarted = false;
