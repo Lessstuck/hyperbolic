@@ -104,14 +104,10 @@ function Metronome (rateWrapper, meterWrapper) {
   return this; 
 };
 Metronome.prototype.playNote = function (index) {
-  if (index == 0) {
-    this.playSound('low');
-  } else {
     this.playSound('low');
     if (track.play()) {
       this.playSound('high');
     };
-  }
 };
 Metronome.prototype.playSound = function (buffer) {
   var source = context.createBufferSource();
