@@ -43,6 +43,8 @@ function createNewSound(height, parent) {
   }
   request.send();
 };
+let track = new Track([.25, .25, .25, .25]);
+
 Metronome.prototype = {
   start: function () {
     iosSleepPreventInterval = setInterval(function () {
@@ -99,13 +101,16 @@ function Metronome (rateWrapper, meterWrapper) {
   createNewSound('high', this);
   createNewSound('med', this);
   createNewSound('low', this);
-  return this;
+  return this; 
 };
 Metronome.prototype.playNote = function (index) {
   if (index == 0) {
-    this.playSound('high');
+    this.playSound('low');
   } else {
     this.playSound('low');
+    if (track.play()) {
+      this.playSound('high');
+    };
   }
 };
 Metronome.prototype.playSound = function (buffer) {
@@ -123,7 +128,7 @@ Metronome.prototype.barInterval = function () {
     this.justStarted = false;
     return 0;
   } else {
-    return this.meter('beat')*1/this.meter('value')*this.temp();
+    return this.meter('beat')*1/this.meter('value')*this.temp();  // ms per bar
   }
 };
 Metronome.prototype.meter = function (option) {

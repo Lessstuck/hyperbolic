@@ -18,6 +18,7 @@ $(document).ready(function () {
   var rate, metronome;
   var rateTrigger = $("#rate");
   var meterTrigger = $("#meter");
+  console.log(rateTrigger, meterTrigger);
   metronome = new Metronome(rateTrigger, meterTrigger);
 
   $("#start").click(function (){
