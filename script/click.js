@@ -43,7 +43,8 @@ function createNewSound(height, parent) {
   }
   request.send();
 };
-let track = new Track([.25, .25, .25, .25]);
+
+let trackSounds = ['low', 'med', 'high'];
 
 Metronome.prototype = {
   start: function () {
@@ -91,7 +92,7 @@ Metronome.prototype = {
     }
   }
 }
-function Metronome (rateWrapper, meterWrapper) {
+function Metronome (rateWrapper, meterWrapper, trackNumber) {
   this.rate         = rateWrapper;
   this.meterOptions = meterWrapper;
   this.stopped      = true;
@@ -101,12 +102,20 @@ function Metronome (rateWrapper, meterWrapper) {
   createNewSound('high', this);
   createNewSound('med', this);
   createNewSound('low', this);
+  this.trackNumber  = trackNumber;
+  this.track = new Track([.25, .25, .25, .25]);
   return this; 
 };
 Metronome.prototype.playNote = function (index) {
-    this.playSound('low');
-    if (track.play()) {
-      this.playSound('high');
+    // this.playSound('low');
+    // let trackSound;
+    // if (this.trackNumber == 0) {
+    //   trackSound = "med"
+    // } else {
+    //   trackSound = "high"
+    // }
+    if (this.track.play()) {
+      this.playSound(trackSounds[this.trackNumber]);
     };
 };
 Metronome.prototype.playSound = function (buffer) {
