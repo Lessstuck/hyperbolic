@@ -18,7 +18,15 @@ class Player {
       this.track = new Track;
   }
 }
-let player = new Player;
+
+let trackSounds = ['low', 'med', 'high'];
+let players = [];
+for (let i = 0; i < 3; i++) {
+  players[i] = new Player;
+  players[i].sound = trackSounds[i];
+}
+
+
 
 const Sequencer = {
   timeout: function(callback, length) {
@@ -60,7 +68,7 @@ function createNewSound(height, parent) {
   }
   request.send();
 };
-let trackSounds = ['low', 'med', 'high'];
+
 
 function Metronome (rateWrapper, meterWrapper, trackNumber) {
   this.rate         = rateWrapper;
@@ -124,7 +132,7 @@ Metronome.prototype = {
 };
 Metronome.prototype.playNote = function (index) {
     if (this.track.play()) {
-      this.playSound(trackSounds[this.trackNumber]);
+      this.playSound(players[this.trackNumber].sound);
     };
 };
 Metronome.prototype.playSound = function (buffer) {

@@ -22,23 +22,23 @@ $(document).ready(function () {
   var rate, metronome;
   var rateTrigger = $("#rate");
   var meterTrigger = $("#meter");
-  console.log(rateTrigger, meterTrigger);
-  var metronome = new Metronome(rateTrigger, meterTrigger, 0);
-  var metronome2 = new Metronome(rateTrigger, meterTrigger, 1);
-  var metronome3 = new Metronome(rateTrigger, meterTrigger, 2);
+  let metronomes = [];
+  metronomes[0] = new Metronome(rateTrigger, meterTrigger, 0);
+  metronomes[1] = new Metronome(rateTrigger, meterTrigger, 1);
+  metronomes[2] = new Metronome(rateTrigger, meterTrigger, 2);
 
   $("#start").click(function (){
     if ($("#rate").val()) {
-      metronome.start();
-      metronome2.start();
-      metronome3.start();
+      for (let metronome of metronomes){
+        metronome.start()
+      }
       return false;
     }
   });
   $("#stop").click(function (){
-    metronome.stop();
-    metronome2.stop();
-    metronome3.stop();
+    for (let metronome of metronomes){
+      metronome.stop()
+    }
     return false;
   });
 ;})
