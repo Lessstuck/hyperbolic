@@ -1,9 +1,26 @@
+import {Track} from "./noneuclidean/noneuclidean.mjs";
+import {browserFormat} from "./app.js";
+
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 var context = new AudioContext();
 
 var iosSleepPreventInterval = null;
 
-Sequencer = {
+class Player {
+  constructor (beatProb = [0.33, 0.33, 0.33],
+    sound = 'low',
+    dynaProb = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    scale = [0, 2, 5, 8, 10, 12] )  {
+      this.beatProb = beatProb;
+      this.sound = sound;
+      this.dynaProb = dynaProb;
+      this.scale = scale;
+      this.track = new Track;
+  }
+}
+let player = new Player;
+
+const Sequencer = {
   timeout: function(callback, length) {
     if (length <= 0) {
       length = 1;
@@ -43,9 +60,22 @@ function createNewSound(height, parent) {
   }
   request.send();
 };
-
 let trackSounds = ['low', 'med', 'high'];
 
+function Metronome (rateWrapper, meterWrapper, trackNumber) {
+  this.rate         = rateWrapper;
+  this.meterOptions = meterWrapper;
+  this.stopped      = true;
+  this.justStarted  = true;
+  this.listenEvents();
+  this.sound = {};
+  createNewSound('high', this);
+  createNewSound('med', this);
+  createNewSound('low', this);
+  this.trackNumber  = trackNumber;
+  this.track = new Track([.25, .25, .25, .25]);
+  return this; 
+};
 Metronome.prototype = {
   start: function () {
     iosSleepPreventInterval = setInterval(function () {
@@ -91,29 +121,8 @@ Metronome.prototype = {
       })(i);
     }
   }
-}
-function Metronome (rateWrapper, meterWrapper, trackNumber) {
-  this.rate         = rateWrapper;
-  this.meterOptions = meterWrapper;
-  this.stopped      = true;
-  this.justStarted  = true;
-  this.listenEvents();
-  this.sound = {};
-  createNewSound('high', this);
-  createNewSound('med', this);
-  createNewSound('low', this);
-  this.trackNumber  = trackNumber;
-  this.track = new Track([.25, .25, .25, .25]);
-  return this; 
 };
 Metronome.prototype.playNote = function (index) {
-    // this.playSound('low');
-    // let trackSound;
-    // if (this.trackNumber == 0) {
-    //   trackSound = "med"
-    // } else {
-    //   trackSound = "high"
-    // }
     if (this.track.play()) {
       this.playSound(trackSounds[this.trackNumber]);
     };
@@ -160,3 +169,5 @@ Metronome.prototype.listenEvents = function () {
     metronome.bpm = parseInt(this.value);
   });
 };
+
+export {Metronome};

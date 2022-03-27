@@ -1,3 +1,5 @@
+import {Metronome} from "./click.js";
+
 function browserFormat () {
   // if (navigator.userAgent.safari) {
     return ".mp3";
@@ -5,6 +7,8 @@ function browserFormat () {
   //   return ".ogg";
   // };
 };
+
+
 
 $(document).ready(function () {
   window.addEventListener('touchstart', function() {
@@ -19,9 +23,9 @@ $(document).ready(function () {
   var rateTrigger = $("#rate");
   var meterTrigger = $("#meter");
   console.log(rateTrigger, meterTrigger);
-  metronome = new Metronome(rateTrigger, meterTrigger, 0);
-  metronome2 = new Metronome(rateTrigger, meterTrigger, 1);
-  metronome3 = new Metronome(rateTrigger, meterTrigger, 2);
+  var metronome = new Metronome(rateTrigger, meterTrigger, 0);
+  var metronome2 = new Metronome(rateTrigger, meterTrigger, 1);
+  var metronome3 = new Metronome(rateTrigger, meterTrigger, 2);
 
   $("#start").click(function (){
     if ($("#rate").val()) {
@@ -38,3 +42,5 @@ $(document).ready(function () {
     return false;
   });
 ;})
+
+export {browserFormat};
