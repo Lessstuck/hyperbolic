@@ -19,14 +19,11 @@ class Player {
   }
 }
 
-let trackSounds = ['low', 'med', 'high'];
 let players = [];
-for (let i = 0; i < 3; i++) {
-  players[i] = new Player;
-  players[i].sound = trackSounds[i];
-}
 
-
+players[0]  = new Player ([1], 'low', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
+players[1]  = new Player ([0, 1], 'med', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
+players[2]  = new Player ([0, 0, 0, 0, 0, 1], 'high', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
 
 const Sequencer = {
   timeout: function(callback, length) {
@@ -77,11 +74,11 @@ function Metronome (rateWrapper, meterWrapper, trackNumber) {
   this.justStarted  = true;
   this.listenEvents();
   this.sound = {};
-  createNewSound('high', this);
-  createNewSound('med', this);
-  createNewSound('low', this);
+  createNewSound(players[0].sound, this);
+  createNewSound(players[1].sound, this);
+  createNewSound(players[2].sound, this);
   this.trackNumber  = trackNumber;
-  this.track = new Track([.25, .25, .25, .25]);
+  this.track = players[trackNumber].track;
   return this; 
 };
 Metronome.prototype = {

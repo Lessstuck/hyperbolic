@@ -24,8 +24,8 @@ $(document).ready(function () {
   var meterTrigger = $("#meter");
   let metronomes = [];
   metronomes[0] = new Metronome(rateTrigger, meterTrigger, 0);
-  metronomes[1] = new Metronome(rateTrigger, meterTrigger, 1);
-  metronomes[2] = new Metronome(rateTrigger, meterTrigger, 2);
+  // metronomes[1] = new Metronome(rateTrigger, meterTrigger, 1);
+  // metronomes[2] = new Metronome(rateTrigger, meterTrigger, 2);
 
   $("#start").click(function (){
     if ($("#rate").val()) {
