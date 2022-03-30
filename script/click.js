@@ -8,11 +8,11 @@ var iosSleepPreventInterval = null;
 
 class Player {
   constructor (beatProb = [0.33, 0.33, 0.33],
-    sound = 'low',
+    soundFilename     = 'low',
     dynaProb = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     scale = [0, 2, 5, 8, 10, 12] )  {
       this.beatProb = beatProb;
-      this.sound = sound;
+      this.soundFilename = soundFilename;
       this.dynaProb = dynaProb;
       this.scale = scale;
       this.track = new Track;
@@ -48,8 +48,8 @@ const Sequencer = {
   }
 };
 
-function createNewSound(height, parent) {
-  var url = 'audio/' + height + browserFormat();
+function createNewSound(fileName, parent) {
+  var url = 'audio/' + fileName + browserFormat();
   var request = new XMLHttpRequest();
   request.open('GET', url, true);
   request.responseType = 'arraybuffer';
@@ -60,7 +60,7 @@ function createNewSound(height, parent) {
 
   request.onload = function() {
     context.decodeAudioData(request.response, function(buffer) {
-      parent.sound[height] = buffer;
+      parent.sound[fileName] = buffer;
     }, onError);
   }
   request.send();
@@ -74,9 +74,9 @@ function Metronome (rateWrapper, meterWrapper, trackNumber) {
   this.justStarted  = true;
   this.listenEvents();
   this.sound = {};
-  createNewSound(players[0].sound, this);
-  createNewSound(players[1].sound, this);
-  createNewSound(players[2].sound, this);
+  createNewSound(players[0].soundFilename, this);
+  createNewSound(players[1].soundFilename, this);
+  createNewSound(players[2].soundFilename, this);
   this.trackNumber  = trackNumber;
   this.track = players[trackNumber].track;
   return this; 
@@ -129,7 +129,7 @@ Metronome.prototype = {
 };
 Metronome.prototype.playNote = function (index) {
     if (this.track.play()) {
-      this.playSound(players[this.trackNumber].sound);
+      this.playSound(players[this.trackNumber].soundFilename);
     };
 };
 Metronome.prototype.playSound = function (buffer) {
