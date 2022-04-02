@@ -15,15 +15,16 @@ class Player {
       this.soundFilename = soundFilename;
       this.dynaProb = dynaProb;
       this.scale = scale;
-      this.track = new Track;
+      this.track = new Track(beatProb);
+      console.log(beatProb)
   }
 }
 
 let players = [];
 
 players[0]  = new Player ([1], 'low', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
-players[1]  = new Player ([0, 1], 'med', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
-players[2]  = new Player ([0, 0, 0, 0, 0, 1], 'high', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
+// players[1]  = new Player ([0, 1], 'med', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
+// players[2]  = new Player ([0, 0, 0, 0, 0, 1], 'high', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
 
 const Sequencer = {
   timeout: function(callback, length) {
@@ -74,9 +75,9 @@ function Metronome (rateWrapper, meterWrapper, trackNumber) {
   this.justStarted  = true;
   this.listenEvents();
   this.sound = {};
-  createNewSound(players[0].soundFilename, this);
-  createNewSound(players[1].soundFilename, this);
-  createNewSound(players[2].soundFilename, this);
+  createNewSound(players[0].soundFilename, this);   // inefficient to create all buffers for each instance but works for now   O(mn)
+  // createNewSound(players[1].soundFilename, this);
+  // createNewSound(players[2].soundFilename, this);
   this.trackNumber  = trackNumber;
   this.track = players[trackNumber].track;
   return this; 
@@ -127,10 +128,17 @@ Metronome.prototype = {
     }
   }
 };
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+
 Metronome.prototype.playNote = function (index) {
-    if (this.track.play()) {
+    console.log('play a note')
+    let playState = this.track.play();
+    console.log(playState);
+    // if (playState) {
       this.playSound(players[this.trackNumber].soundFilename);
-    };
+    // };
 };
 Metronome.prototype.playSound = function (buffer) {
   var source = context.createBufferSource();
