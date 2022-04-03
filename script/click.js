@@ -10,7 +10,7 @@ class Player {
   constructor (beatProb = [0.33, 0.33, 0.33],
     soundFilename     = 'low',
     dynaProb = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    scale = [0, 2, 5, 8, 10, 12] 
+    scale = [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24] 
   )
   {
       this.beatProb = beatProb;
@@ -23,9 +23,10 @@ class Player {
 
 let players = [];
 
-players[0]  = new Player ([0, 1, 0, 0], 'low', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
-players[1]  = new Player ([0,  1, 1], 'med', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
-players[2]  = new Player ([1, 1, 1, 1], 'high', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
+players[0]  = new Player ([1, 1, 0, 0], 'low', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
+players[1]  = new Player ([0,  1, 1], 'low', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
+players[2]  = new Player ([0, 0, 1, 1], 'low', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
+players[3]  = new Player ([0, 1], 'high', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [12]);
 
 const Sequencer = {
   timeout: function(callback, length) {
@@ -35,7 +36,7 @@ const Sequencer = {
     var source = context.createBufferSource();
     source.buffer = context.createBuffer(1, 32000 * (length / 1000), 32000);
     source.connect(context.destination);
-    source.onended = callback;
+    source.onended = callback; 
     if (!source.stop) {
       source.stop = source.noteOff;
     }
@@ -134,15 +135,15 @@ Metronome.prototype.playNote = function (index) {
       this.playSound(players[this.trackNumber].soundFilename);
     };
 };
+
+// pick notes at random from scale, then play
 Metronome.prototype.playSound = function (buffer) {
   var source = context.createBufferSource();
   source.buffer = this.sound[buffer];
   source.connect(context.destination);
-  // if (!source.start) {
-  //   source.start = source.start;
-  // }
+  let scale = players[this.trackNumber].scale
+  source.playbackRate.value = (2 ** ((scale[Math.floor(Math.random() * scale.length)] - 12) / 12));
   source.start(0);
-  source.playbackRate.value = 2 ** Math.random();
 }
 
 Metronome.prototype.barInterval = function () {
