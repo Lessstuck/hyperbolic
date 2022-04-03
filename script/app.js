@@ -19,7 +19,6 @@ $(document).ready(function () {
     source.noteOn(0);
 
   }, false);
-  var rate, metronome;
   var rateTrigger = $("#rate");
   var meterTrigger = $("#meter");
   let metronomes = [];

@@ -40,7 +40,7 @@ const Sequencer = {
       source.stop = source.noteOff;
     }
     if (!source.start) {
-      source.start = source.noteOn;
+      source.start = source.start;
     }
     source.start(0)
     return source;
@@ -76,9 +76,7 @@ function Metronome (rateWrapper, meterWrapper, trackNumber) {
   this.justStarted  = true;
   this.listenEvents();
   this.sound = {};
-  createNewSound(players[0].soundFilename, this);   // inefficient to create all buffers for each instance but works for now   O(mn)
-  createNewSound(players[1].soundFilename, this);
-  createNewSound(players[2].soundFilename, this);
+  createNewSound(players[trackNumber].soundFilename, this); 
   this.trackNumber  = trackNumber;
   this.track = players[trackNumber].track;
   return this; 
@@ -141,7 +139,7 @@ Metronome.prototype.playSound = function (buffer) {
   source.buffer = this.sound[buffer];
   source.connect(context.destination);
   if (!source.start) {
-    source.start = source.noteOn;
+    source.start = source.start;
   }
   source.start(0);
 }
