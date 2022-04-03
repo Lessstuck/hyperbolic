@@ -138,10 +138,11 @@ Metronome.prototype.playSound = function (buffer) {
   var source = context.createBufferSource();
   source.buffer = this.sound[buffer];
   source.connect(context.destination);
-  if (!source.start) {
-    source.start = source.start;
-  }
+  // if (!source.start) {
+  //   source.start = source.start;
+  // }
   source.start(0);
+  source.playbackRate.value = 2 ** Math.random();
 }
 
 Metronome.prototype.barInterval = function () {

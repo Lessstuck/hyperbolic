@@ -16,7 +16,7 @@ $(document).ready(function () {
     var source = context.createBufferSource();
     source.buffer = buffer;
     source.connect(context.destination);
-    source.noteOn(0);
+    source.start(0);
 
   }, false);
   var rateTrigger = $("#rate");
