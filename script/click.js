@@ -23,9 +23,9 @@ class Player {
 
 let players = [];
 
-players[0]  = new Player ([.5, .5], 'low', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
-players[1]  = new Player ([0,  1], 'med', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
-players[2]  = new Player ([0, 0, 0, 0, 0, 1], 'high', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
+players[0]  = new Player ([0, 1, 0, 0], 'low', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
+players[1]  = new Player ([0,  1, 1], 'med', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
+players[2]  = new Player ([1, 1, 1, 1], 'high', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] );
 
 const Sequencer = {
   timeout: function(callback, length) {

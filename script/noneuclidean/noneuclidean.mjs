@@ -1,8 +1,3 @@
-// let count = Math.random(5);
-let beatProbNorm = [];
-let beatProbNormAccum;
-
-
 class Track {
   constructor(beatProb = [0.33, 0.33, 0.33]) {
     this.beatProb = beatProb;
@@ -10,10 +5,22 @@ class Track {
     this.maxBeats = 0;      // length of this phrase
     // normalize beatProb
     const initialValue = 0;
-    const beatProbSum = beatProb.reduce(
+    const beatProbSum = this.beatProb.reduce(
       (previousValue, currentValue) => previousValue + currentValue, initialValue
     );
-    beatProbNorm = beatProb.map(x => x/beatProbSum);
+    this.beatProbNorm = this.beatProb.map(x => x/beatProbSum);
+    // starting beat count
+      let coinToss = Math.random();
+      let beatProbNormAccum = this.beatProbNorm[0];
+      let maxCount = this.beatProbNorm.length;
+      for (let m = 0; m < maxCount; m++) {
+        if (coinToss <= beatProbNormAccum) {
+          this.maxBeats = m + 1; // new phrase length (lengths 1, 2, 3, … )
+          this.beatCount = 0;
+          break;
+        };
+        beatProbNormAccum = beatProbNormAccum + this.beatProbNorm[m + 1];
+      }  
   }
   play = () => {
     let playIt;
@@ -24,15 +31,15 @@ class Track {
     };
     if (this.beatCount == this.maxBeats) {  // if at the end of a phrase, pick a new one
       let coinToss = Math.random();
-      beatProbNormAccum = beatProbNorm[0];
-      var maxCount = this.beatProb.length;
+      let beatProbNormAccum = this.beatProbNorm[0];
+      let maxCount = this.beatProbNorm.length;
       for (let m = 0; m < maxCount; m++) {
         if (coinToss <= beatProbNormAccum) {
           this.maxBeats = m + 1; // new phrase length (lengths 1, 2, 3, … )
           this.beatCount = 0;
           break;
         };
-        beatProbNormAccum = beatProbNormAccum + beatProbNorm[m + 1];
+        beatProbNormAccum = beatProbNormAccum + this.beatProbNorm[m + 1];
       };  
     } else {
     this.beatCount++;
