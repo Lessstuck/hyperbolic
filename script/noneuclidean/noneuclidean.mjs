@@ -23,28 +23,32 @@ class Track {
       }  
   }
   play = () => {
-    let playIt;
-    if (this.beatCount == 0) {  // if at beginning of phrase, play it
-      playIt = 1;
-    } else  {
-      playIt = 0;
-    };
-    if (this.beatCount == this.maxBeats) {  // if at the end of a phrase, pick a new one
-      let coinToss = Math.random();
-      let beatProbNormAccum = this.beatProbNorm[0];
-      let maxCount = this.beatProbNorm.length;
-      for (let m = 0; m < maxCount; m++) {
-        if (coinToss <= beatProbNormAccum) {
-          this.maxBeats = m + 1; // new phrase length (lengths 1, 2, 3, … )
-          this.beatCount = 0;
-          break;
+  // calculate new phrase length asynchronously  
+    (async () =>  {
+      await (() =>  {
+        if (this.beatCount == this.maxBeats) {  // if at the end of a phrase, pick a new one
+          let coinToss = Math.random();
+          let beatProbNormAccum = this.beatProbNorm[0];
+          let maxCount = this.beatProbNorm.length;
+          for (let m = 0; m < maxCount; m++) {
+            if (coinToss <= beatProbNormAccum) {
+              this.maxBeats = m + 1; // new phrase length (lengths 1, 2, 3, … )
+              this.beatCount = 0;
+              break;
+            };
+            beatProbNormAccum = beatProbNormAccum + this.beatProbNorm[m + 1];
+          };  
+        } else {
+          this.beatCount++;
         };
-        beatProbNormAccum = beatProbNormAccum + this.beatProbNorm[m + 1];
-      };  
-    } else {
-    this.beatCount++;
+      })();
+    })();
+// if at beginning of phrase, play!
+    if (this.beatCount == 0) {  
+      return 1;
+    } else  {
+      return 0;
     };
-  return playIt;
   };
 }
 export { Track };
