@@ -24,9 +24,8 @@ class Track {
   }
   play = () => {
   // calculate new phrase length asynchronously  
-    (async () =>  {
-      await (() =>  {
-        if (this.beatCount == this.maxBeats) {  // if at the end of a phrase, pick a new one
+    setTimeout (() =>  {
+        if (this.beatCount == this.maxBeats) { // if at the end of a phrase, pick a new one
           let coinToss = Math.random();
           let beatProbNormAccum = this.beatProbNorm[0];
           let maxCount = this.beatProbNorm.length;
@@ -37,12 +36,11 @@ class Track {
               break;
             };
             beatProbNormAccum = beatProbNormAccum + this.beatProbNorm[m + 1];
-          };  
+          };
         } else {
           this.beatCount++;
         };
-      })();
-    })();
+      }, 0);
 // if at beginning of phrase, play!
     if (this.beatCount == 0) {  
       return 1;
