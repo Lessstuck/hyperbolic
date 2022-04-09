@@ -138,12 +138,16 @@ Metronome.prototype.playNote = function (index) {
 
 // pick notes at random from scale, then play
 Metronome.prototype.playSound = function (buffer) {
-  var source = context.createBufferSource();
-  source.buffer = this.sound[buffer];
-  source.connect(context.destination);
+  this.gainNode = context.createGain();
+  this.source = context.createBufferSource();
+  this.source.buffer = this.sound[buffer];
+  this.source.connect(this.gainNode)
+  this.gainNode.connect(context.destination);
+  let linearGain = Math.random() * .5 + .5;
+  this.gainNode.gain.value = linearGain * linearGain;   // easy hack to make volume a bit more logarithmic
   let scale = players[this.trackNumber].scale
-  source.playbackRate.value = (2 ** ((scale[Math.floor(Math.random() * scale.length)] - 12) / 12));
-  source.start(0);
+  this.source.playbackRate.value = (2 ** ((scale[Math.floor(Math.random() * scale.length)] - 12) / 12));
+  this.source.start(0);
 }
 
 Metronome.prototype.barInterval = function () {
