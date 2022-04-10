@@ -9,13 +9,13 @@ var iosSleepPreventInterval = null;
 class Player {
   constructor (beatProb = [0.33, 0.33, 0.33],
     soundFilename     = 'low',
-    dynaProb = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    level = [1],
     scale = [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24] 
   )
   {
       this.beatProb = beatProb;
       this.soundFilename = soundFilename;
-      this.dynaProb = dynaProb;
+      this.level = level;
       this.scale = scale;
       this.track = new Track(beatProb);
   }
@@ -23,10 +23,10 @@ class Player {
 
 let players = [];
 
-players[0]  = new Player ([1, 1, 0, 0], 'low', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
-players[1]  = new Player ([0,  1, 1], 'low', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
-players[2]  = new Player ([0, 0, 1, 1], 'low', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
-players[3]  = new Player ([0, 1], 'high', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [12]);
+players[0]  = new Player ([1, 1, 0, 0], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
+players[1]  = new Player ([], 'SOPHIE_snap_01', [0.5], [ 12]);
+players[2]  = new Player ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_gravelbell', [1], [12]);
+players[3]  = new Player ([1], 'high', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [12]);
 
 const Sequencer = {
   timeout: function(callback, length) {
@@ -141,7 +141,7 @@ Metronome.prototype.playSound = function (buffer) {
   this.source.buffer = this.sound[buffer];
   this.source.connect(this.gainNode)
   this.gainNode.connect(context.destination);
-  let linearGain = Math.random() * .5 + .5;
+  let linearGain = (Math.random() * .5 + .5) * players[this.trackNumber].level;
   this.gainNode.gain.value = linearGain * linearGain;   // easy hack to make volume a bit more logarithmic
   let scale = players[this.trackNumber].scale
   this.source.detune.value = (scale[Math.floor(Math.random() * scale.length)] - 12) * 100;
