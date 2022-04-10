@@ -56,11 +56,9 @@ function createNewSound(fileName, parent) {
   var request = new XMLHttpRequest();
   request.open('GET', url, true);
   request.responseType = 'arraybuffer';
-
   function onError (event) {
     console.log(event);
   }
-
   request.onload = function() {
     context.decodeAudioData(request.response, function(buffer) {
       parent.sound[fileName] = buffer;
@@ -146,7 +144,7 @@ Metronome.prototype.playSound = function (buffer) {
   let linearGain = Math.random() * .5 + .5;
   this.gainNode.gain.value = linearGain * linearGain;   // easy hack to make volume a bit more logarithmic
   let scale = players[this.trackNumber].scale
-  this.source.playbackRate.value = (2 ** ((scale[Math.floor(Math.random() * scale.length)] - 12) / 12));
+  this.source.detune.value = (scale[Math.floor(Math.random() * scale.length)] - 12) * 100;
   this.source.start(0);
 }
 
