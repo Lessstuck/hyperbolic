@@ -22,11 +22,11 @@ class Player {
 }
 
 let players = [];
-
 players[0]  = new Player ([1, 1, 0, 0], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
-players[1]  = new Player ([], 'SOPHIE_snap_01', [0.5], [ 12]);
-players[2]  = new Player ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_gravelbell', [1], [12]);
-players[3]  = new Player ([1], 'high', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [12]);
+players[1]  = new Player ([1, 1, 0, 0], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
+players[2]  = new Player ([], 'SOPHIE_snap_01', [0.5], [ 12]);
+players[3]  = new Player ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_gravelbell', [.67], [12]);
+// players[3]  = new Player ([1], 'high', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [12]);
 
 const Sequencer = {
   timeout: function(callback, length) {

@@ -11,12 +11,12 @@
 <script type="module" src='script/app.js'></script>
 <link rel="stylesheet" type="text/css" href="style/normalize.css">
 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
-<!-- <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.min.css">
- --><link rel="stylesheet" type="text/css" href="style/screen.css">
+<!-- <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.min.css"> -->
+<link rel="stylesheet" type="text/css" href="style/screen.css">
 </head>
 <body>
   <div class="wrapper">
-    <h1>“Noneuclidean” Rhythm</h1>
+    <!-- <h3>“Noneuclidean” Rhythm</h3> -->
     <div class="controls">
       <div id='meter' class='row'>
         <div hidden class='span3'>
@@ -47,11 +47,14 @@
         </div>
         <div class='span3'>
           <div class="speed input-append">
-            <input id="rate" type="number" value="106" min='40' max='240'/>
             <a href="#" id='start' class='btn'>start</a>
             <a href="#" id='stop' class='btn'>stop</a>
           </div>
         </div>
+
+      </div>
+      <div>
+        <input id="rate" type="range" value="106" min='40' max='240'/>
       </div>
     </div>
   </div>
