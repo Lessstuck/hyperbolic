@@ -26,7 +26,11 @@ players[0]  = new Player ([1, 1, 0, 0], 'REACH_JUPE_tonal_one_shot_reverb__pluck
 players[1]  = new Player ([1, 1, 0, 0], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
 players[2]  = new Player ([], 'SOPHIE_snap_01', [0.5], [ 12]);
 players[3]  = new Player ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_gravelbell', [.67], [12]);
-// players[3]  = new Player ([1], 'high', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [12]);
+players[10]  = new Player ([1, 1, 0, 0], 'low', [.67], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
+players[11]  = new Player ([1, 1, 0, 0], 'low', [.67], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
+players[12]  = new Player ([], 'med', [0.5], [ 12]);
+players[13]  = new Player ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'high', [.67], [12]);
+
 
 const Sequencer = {
   timeout: function(callback, length) {
@@ -75,7 +79,11 @@ function Metronome (rateWrapper, meterWrapper, trackNumber) {
   this.justStarted  = true;
   this.listenEvents();
   this.sound = {};
+  this.morphOffset = 0;
+  
+  // create 2 sounds per metronome for morphing between
   createNewSound(players[trackNumber].soundFilename, this); 
+  createNewSound(players[trackNumber + 10].soundFilename, this); 
   this.trackNumber  = trackNumber;
   this.track = players[trackNumber].track;
   return this; 
@@ -130,7 +138,14 @@ Metronome.prototype = {
 Metronome.prototype.playNote = function (index) {
     let playState = this.track.play();
     if (playState) {
-      this.playSound(players[this.trackNumber].soundFilename);
+    // let morphPercent = 50;
+    let coinToss = Math.floor(Math.random() * 100);
+    if (coinToss > 25) {
+      this.morphOffset = 0;
+    } else  {
+      this.morphOffset = 10;
+    };
+      this.playSound(players[this.trackNumber + this.morphOffset].soundFilename);
     };
 };
 
@@ -141,9 +156,10 @@ Metronome.prototype.playSound = function (buffer) {
   this.source.buffer = this.sound[buffer];
   this.source.connect(this.gainNode)
   this.gainNode.connect(context.destination);
-  let linearGain = (Math.random() * .5 + .5) * players[this.trackNumber].level;
+  
+  let linearGain = (Math.random() * .5 + .5) * players[this.trackNumber + this.morphOffset].level;
   this.gainNode.gain.value = linearGain * linearGain;   // easy hack to make volume a bit more logarithmic
-  let scale = players[this.trackNumber].scale
+  let scale = players[this.trackNumber + this.morphOffset].scale
   this.source.detune.value = (scale[Math.floor(Math.random() * scale.length)] - 12) * 100;
   this.source.start(0);
 }
