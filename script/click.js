@@ -72,9 +72,10 @@ function createNewSound(fileName, parent) {
 };
 
 
-function Metronome (rateWrapper, meterWrapper, trackNumber) {
+function Metronome (rateWrapper, meterWrapper, morphWrapper, trackNumber) {
   this.rate         = rateWrapper;
   this.meterOptions = meterWrapper;
+  this.morph = morphWrapper;
   this.stopped      = true;
   this.justStarted  = true;
   this.listenEvents();
@@ -138,9 +139,9 @@ Metronome.prototype = {
 Metronome.prototype.playNote = function (index) {
     let playState = this.track.play();
     if (playState) {
-    // let morphPercent = 50;
+    let morphPercent = parseInt(this.morph.val());
     let coinToss = Math.floor(Math.random() * 100);
-    if (coinToss > 25) {
+    if (coinToss > morphPercent) {
       this.morphOffset = 0;
     } else  {
       this.morphOffset = 10;

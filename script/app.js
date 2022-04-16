@@ -21,11 +21,12 @@ $(document).ready(function () {
   }, false);
   var rateTrigger = $("#rate");
   var meterTrigger = $("#meter");
+  var morphTrigger = $("#morph");
   let metronomes = [];
-  metronomes[0] = new Metronome(rateTrigger, meterTrigger, 0);
-  metronomes[1] = new Metronome(rateTrigger, meterTrigger, 1);
-  metronomes[2] = new Metronome(rateTrigger, meterTrigger, 2);
-  metronomes[3] = new Metronome(rateTrigger, meterTrigger, 3);
+  metronomes[0] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 0);
+  metronomes[1] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 1);
+  metronomes[2] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 2);
+  metronomes[3] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 3);
 
   $("#start").click(function (){
     if ($("#rate").val()) {
