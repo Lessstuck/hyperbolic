@@ -25,14 +25,18 @@
     }
   </style>
   <div id="myEmbeddedScene">
-    <a-scene background="transparent: true;" embedded style="z-index: 1;" physics="debug: false; gravity: -1.8;"
+    <a-scene
+      device-orientation-permission-ui="enabled: true"
+      background="transparent: true;"
+      embedded style="z-index: 1;" 
+      physics="debug: false; gravity: -1.8;"
       height: 300px;
       width: 600px;>
         <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow body="shape: box;"></a-box>
         <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow></a-sphere>
-        <!-- <a-camera>
+        <a-camera>
           <a-cursor></a-cursor>
-        </a-camera> -->
+        </a-camera>
         <!-- <canvas class="a-canvas a-grab-cursor" data-aframe-canvas="true" style="" width="600px" height="300px"></canvas> -->
     </a-scene>
   </div>
