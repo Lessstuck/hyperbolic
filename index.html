@@ -16,13 +16,30 @@
 <script type="module" src='script/app.js'></script>
 </head>
 <body>
-  <a-scene physics="debug: false; gravity: -1.8;">
-    <a-camera near=0.001></a-camera>
-    <a-box position="-1 5 -5" rotation="0 45 0" color="#4CC3D9" shadow body="shape: box;"></a-box>
-  </a-scene>
-  <div class="wrapper">
-    <!-- <h3>“Noneuclidean” Rhythm</h3> -->
+
+  <style>
+    #myEmbeddedScene {
+      width:100%;
+      height:600px;
+      z-index: 0;
+    }
+  </style>
+  <div id="myEmbeddedScene">
+    <a-scene background="transparent: true;" embedded style="z-index: 1;" physics="debug: false; gravity: -1.8;"
+      height: 300px;
+      width: 600px;>
+        <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow body="shape: box;"></a-box>
+        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow></a-sphere>
+        <!-- <a-camera>
+          <a-cursor></a-cursor>
+        </a-camera> -->
+        <!-- <canvas class="a-canvas a-grab-cursor" data-aframe-canvas="true" style="" width="600px" height="300px"></canvas> -->
+    </a-scene>
+  </div>
+
+  <div class="wrapper" style="z-index: 2;">
     <div class="controls">
+      <!-- vestigial 16-step sequencer interface -->
       <div id='meter' class='row'>
         <div hidden class='span3'>
           <select id='note_beat' class='input-small'>
@@ -71,5 +88,6 @@
       </div>
     </div>
   </div>
+
 </body>
 </html>
