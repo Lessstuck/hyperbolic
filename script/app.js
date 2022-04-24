@@ -8,9 +8,8 @@ function browserFormat () {
   // };
 };
 
-
-
 $(document).ready(function () {
+  const context = new AudioContext;
   window.addEventListener('touchstart', function() {
     var buffer = context.createBuffer(1, 1, 22050);
     var source = context.createBufferSource();
