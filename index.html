@@ -4,8 +4,12 @@
 <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 <meta content="utf-8" http-equiv="encoding">
 <title>Click</title>
-<script  type="text/javascript" src="script/aframe-v1.3.0.js"></script>
-<script type="text/javascript" src="script/aframe-physics-system.js"></script>
+<!-- <script  type="text/javascript" src="script/aframe-v1.3.0.js"></script> -->
+<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+<script src="../script/aframe-physics-system.js"></script>
+
+<!-- <script type="text/javascript" src="../dist/aframe-physics-system.js"></script> -->
+
 <script type="text/javascript" src='script/jquery-3.6.0.js'></script>
 <script type="text/javascript" src='bootstrap/js/bootstrap.min.js'></script>
 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
@@ -25,55 +29,55 @@
     }
   </style>
   <div id="myEmbeddedScene">
-    <a-scene
-      device-orientation-permission-ui="enabled: true; deviceMotionMessage: true;"
-      background="transparent: true;"
-      embedded style="z-index: 1;" 
-      physics="debug: false; gravity: -1.8;"
-      height: 300px;
-      width: 600px;>
-        <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow body="shape: box;"></a-box>
-        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow></a-sphere>
+    <a-scene physics="debug: false; friction: 0.1; restitution: 0.9;"
+    device-orientation-permission-ui="enabled: true; deviceMotionMessage: true;"
+    background="transparent: true;"
+    embedded style="z-index: 1;" "
+    height: 300px;
+    width: 600px;>
+      <a-mixin id="test" ttl dynamic-body></a-mixin>
+      <a-sphere position="0 3.75 -5" radius="1.25" color="#EF2D5E" shadow dynamic-body></a-sphere>
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4" shadow static-body></a-plane>
+      <a-sky color="#ECECEC"></a-sky>
     </a-scene>
-  </div>
+</div>
 
-  <div class="wrapper" style="z-index: 2;">
-    <div class="controls">
-      <!-- vestigial 16-step sequencer interface -->
-      <div id='meter' class='row'>
-        <div hidden class='span3'>
-          <select id='note_beat' class='input-small'>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>11</option>
-            <option>12</option>
-            <option>13</option>
-            <option>14</option>
-            <option>15</option>
-            <option selected='selected'>16</option>
-          </select>
-          <select id='note_value'>
-            <option>1</option>
-            <option>2</option>
-            <option>4</option>
-            <option>8</option>
-            <option selected='selected'>16</option>
-          </select>
-        </div>
-        <div class='span3'>
-          <div >
-            <a href="#" id='start' class='btn'>start</a>
-            <a href="#" id='stop' class='btn'>stop</a>
-          </div>
-        </div>
-      </div>
+<div id='meter' class='row'>
+  <div hidden class='span3'>
+    <select id='note_beat' class='input-small'>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+      <option>7</option>
+      <option>8</option>
+      <option>9</option>
+      <option>11</option>
+      <option>12</option>
+      <option>13</option>
+      <option>14</option>
+      <option>15</option>
+      <option selected='selected'>16</option>
+    </select>
+    <select id='note_value'>
+      <option>1</option>
+      <option>2</option>
+      <option>4</option>
+      <option>8</option>
+      <option selected='selected'>16</option>
+    </select>
+  </div>
+  <div class='span3'>
+    <div >
+      <a href="#" id='start' class='btn'>start</a>
+      <a href="#" id='stop' class='btn'>stop</a>
+    </div>
+  </div>
+</div>
+
+
       <div>
         <a>Tempo</a>
       </div>
@@ -87,7 +91,7 @@
         <input id="morph" type="range" value="0" min='0' max='100'/>
       </div>
     </div>
-  </div>
+</div>
 
 </body>
 </html>
