@@ -3,35 +3,26 @@
 <head>
 <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 <meta content="utf-8" http-equiv="encoding">
-<!-- <title>Click</title>
+<title>Click</title>
 
+<!-- <script src="script/aframe-v1.3.0.js"></script> -->
+<!-- physics engine can't use the most recent aframe because "t.Geometry is not a constructor"-->
+<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+<!-- <script> src="script/aframe-master.js"</script> -->
 
-<meta charset="utf-8" />
-<title>cannon.js + three.js - mouse pick</title> -->
-<link rel="stylesheet" href="./style/style.css" type="text/css" />
-<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-<script type="module">
-  import { addTitle, addSourceButton } from './script/dom-utils.js'
-
-  addTitle()
-  addSourceButton()
-</script>
-
-
+<script src="script/aframe-physics-system.js"></script>
 <script type="text/javascript" src='script/jquery-3.6.0.js'></script>
 <script type="text/javascript" src='bootstrap/js/bootstrap.min.js'></script>
 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
-<!-- <link rel="stylesheet" type="text/css" href="style/normalize.css">
-<link rel="stylesheet" type="text/css" href="style/screen.css"> -->
+<link rel="stylesheet" type="text/css" href="style/normalize.css">
+<link rel="stylesheet" type="text/css" href="style/screen.css">
 <script type="module" src='script/noneuclidean/noneuclidean.mjs'></script>
 <script type="module" src='script/click.js'></script>
 <script type="module" src='script/app.js'></script>
 </head>
 <body>
 
-<script type="module" src="./script/mousepick.js"></script>
-
-  <!-- <style>
+  <style>
     #myEmbeddedScene {
       width:100%;
       height:200px;
@@ -49,7 +40,7 @@
       <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4" shadow static-body></a-plane>
       <a-sky color="#ECECEC"></a-sky>
     </a-scene>
-</div> -->
+</div>
 
 <div id='meter' class='row'>
   <div hidden class='span3'>
