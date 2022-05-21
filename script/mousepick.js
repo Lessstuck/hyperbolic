@@ -6,7 +6,7 @@
  import * as THREE from 'https://unpkg.com/three@0.122.0/build/three.module.js'
  import Stats from 'https://unpkg.com/three@0.122.0/examples/jsm/libs/stats.module.js'
  
-
+let dragPosition;
 
 // three.js variables
 let camera, scene, renderer, stats
@@ -50,7 +50,7 @@ renderer.outputEncoding = THREE.sRGBEncoding
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
-document.body.appendChild(renderer.domElement)
+document.getElementById('webgl').appendChild(renderer.domElement);
 
 // Stats.js
 stats = new Stats()
@@ -284,8 +284,9 @@ world.fixedStep()
 
 // Sync the three.js meshes with the bodies
 for (let i = 0; i !== meshes.length; i++) {
-    meshes[i].position.copy(bodies[i].position)
-    meshes[i].quaternion.copy(bodies[i].quaternion)
+    meshes[i].position.copy(bodies[i].position);
+    dragPosition = meshes[0].position.x;
+    meshes[i].quaternion.copy(bodies[i].quaternion);
 }
 
 // Render three.js
@@ -293,3 +294,5 @@ renderer.render(scene, camera)
 
 stats.update()
 }
+
+export {dragPosition};

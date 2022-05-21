@@ -1,80 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-<meta content="utf-8" http-equiv="encoding">
-<!-- <title>Click</title>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <title>Hyperbolic</title>
+
+  <link rel="stylesheet" href="./style/style.css" type="text/css" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
 
-<meta charset="utf-8" />
-<title>cannon.js + three.js - mouse pick</title> -->
-<link rel="stylesheet" href="./style/style.css" type="text/css" />
-<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <script type="text/javascript" src='script/jquery-3.6.0.js'></script>
+  <script type="text/javascript" src='bootstrap/js/bootstrap.min.js'></script>
+  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+  <script type="module" src='script/noneuclidean/noneuclidean.mjs'></script>
+  <script type="module" src='script/click.js'></script>
+  <script type="module" src='script/app.js'></script>
 
-
-<script type="text/javascript" src='script/jquery-3.6.0.js'></script>
-<script type="text/javascript" src='bootstrap/js/bootstrap.min.js'></script>
-<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
-<!-- <link rel="stylesheet" type="text/css" href="style/normalize.css">
-<link rel="stylesheet" type="text/css" href="style/screen.css"> -->
-<script type="module" src='script/noneuclidean/noneuclidean.mjs'></script>
-<script type="module" src='script/click.js'></script>
-<script type="module" src='script/app.js'></script>
 </head>
 <body>
-
-<script type="module" src="./script/mousepick.js"></script>
-
-<div id='meter' class='row'>
-  <div hidden class='span3'>
-    <select id='note_beat' class='input-small'>
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-      <option>6</option>
-      <option>7</option>
-      <option>8</option>
-      <option>9</option>
-      <option>11</option>
-      <option>12</option>
-      <option>13</option>
-      <option>14</option>
-      <option>15</option>
-      <option selected='selected'>16</option>
-    </select>
-    <select id='note_value'>
-      <option>1</option>
-      <option>2</option>
-      <option>4</option>
-      <option>8</option>
-      <option selected='selected'>16</option>
-    </select>
-  </div>
-  <div class='span3'>
-    <div >
-      <a href="#" id='start' class='btn'>start</a>
-      <a href="#" id='stop' class='btn'>stop</a>
+  <script type="module" src="script/mousepick.js"></script>
+  <div id='meter' class='row'>
+    <div hidden class='span3'>
+      <select id='note_beat' class='input-small'>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>11</option>
+        <option>12</option>
+        <option>13</option>
+        <option>14</option>
+        <option>15</option>
+        <option selected='selected'>16</option>
+      </select>
+      <select id='note_value'>
+        <option>1</option>
+        <option>2</option>
+        <option>4</option>
+        <option>8</option>
+        <option selected='selected'>16</option>
+      </select>
+    </div>
+    <div class='span3'>
+      <div >
+        <a href="#" id='start' class='btn'>start</a>
+        <a href="#" id='stop' class='btn'>stop</a>
+      </div>
     </div>
   </div>
-</div>
 
+  
 
-      <div>
-        <a>Tempo</a>
-      </div>
-      <div>
-        <input id="rate" type="range" value="106" min='40' max='240'/>
-      </div>
-      <div>
-        <a>Morph</a>
-      </div>
-      <div>
-        <input id="morph" type="range" value="0" min='0' max='100'/>
-      </div>
-    </div>
-</div>
-
+  <div>
+    <a>Tempo</a>
+  </div>
+  <div>
+    <input id="rate" type="range" value="106" min='40' max='240'/>
+  </div>
+  <div>
+    <a>Morph</a>
+  </div>
+  <div>
+    <input id="morph" type="range" value="0" min='0' max='100'/>
+  </div>
+  <div id="webgl"></div>
 </body>
 </html>

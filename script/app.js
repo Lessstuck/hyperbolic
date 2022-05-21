@@ -1,4 +1,5 @@
 import {Metronome} from "./click.js";
+import {dragPosition} from "./mousepick.js";
 
 function browserFormat () {
   // if (navigator.userAgent.safari) {
@@ -7,6 +8,9 @@ function browserFormat () {
   //   return ".ogg";
   // };
 };
+
+// console.log(`mesh position in app: ${meshes[0].position.x}`)
+console.log(`mesh position in app: ${dragPosition}`)
 
 $(document).ready(function () {
   const context = new AudioContext;
