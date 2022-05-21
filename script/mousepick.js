@@ -2,10 +2,11 @@
  * Example of a pickable object.
  */
 
- import * as CANNON from './cannon-es.js'
- import * as THREE from 'https://unpkg.com/three@0.122.0/build/three.module.js'
- import Stats from 'https://unpkg.com/three@0.122.0/examples/jsm/libs/stats.module.js'
- 
+import * as CANNON from './cannon-es.js'
+import * as THREE from 'https://unpkg.com/three@0.122.0/build/three.module.js'
+import Stats from 'https://unpkg.com/three@0.122.0/examples/jsm/libs/stats.module.js'
+
+import {updateDragPosition} from "./app.js";
 let dragPosition;
 
 // three.js variables
@@ -286,6 +287,7 @@ world.fixedStep()
 for (let i = 0; i !== meshes.length; i++) {
     meshes[i].position.copy(bodies[i].position);
     dragPosition = meshes[0].position.x;
+    updateDragPosition();
     meshes[i].quaternion.copy(bodies[i].quaternion);
 }
 

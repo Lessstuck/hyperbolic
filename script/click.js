@@ -139,7 +139,8 @@ Metronome.prototype = {
 Metronome.prototype.playNote = function (index) {
     let playState = this.track.play();
     if (playState) {
-    let morphPercent = parseInt(this.morph.val());
+    // let morphPercent = parseInt(this.morph.val());
+    let morphPercent = this.morph();
     let coinToss = Math.floor(Math.random() * 100);
     if (coinToss > morphPercent) {
       this.morphOffset = 0;

@@ -1,6 +1,18 @@
 import {Metronome} from "./click.js";
 import {dragPosition} from "./mousepick.js";
 
+function morphTrigger() {
+  return updateDragPosition();
+};
+
+function updateDragPosition() {
+  let morph = (dragPosition + 5) * 20;  // scale webgl coords to 0-100 for morphing
+  // morphTrigger = morph;
+  // console.log(`mesh position in app: ${morph}`)
+  return morph;
+}
+
+
 function browserFormat () {
   // if (navigator.userAgent.safari) {
     return ".mp3";
@@ -10,7 +22,7 @@ function browserFormat () {
 };
 
 // console.log(`mesh position in app: ${meshes[0].position.x}`)
-console.log(`mesh position in app: ${dragPosition}`)
+
 
 $(document).ready(function () {
   const context = new AudioContext;
@@ -24,7 +36,7 @@ $(document).ready(function () {
   }, false);
   var rateTrigger = $("#rate");
   var meterTrigger = $("#meter");
-  var morphTrigger = $("#morph");
+  // var morphTrigger = $("#morph");
   let metronomes = [];
   metronomes[0] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 0);
   metronomes[1] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 1);
@@ -47,4 +59,4 @@ $(document).ready(function () {
   });
 ;})
 
-export {browserFormat};
+export {browserFormat, updateDragPosition};
