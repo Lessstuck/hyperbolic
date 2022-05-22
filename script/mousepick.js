@@ -34,7 +34,7 @@ animate()
 
 function initThree() {
 // Camera
-camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.5, 1000)
+camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.5, 1000)
 camera.position.set(0, 2, 10)
 
 // Scene
@@ -84,12 +84,22 @@ scene.add(directionalLight)
 raycaster = new THREE.Raycaster()
 
 // Floor
-const floorGeometry = new THREE.PlaneBufferGeometry(100, 100, 1, 1)
+const floorGeometry = new THREE.PlaneBufferGeometry(5, 5, 1, 1)
 floorGeometry.rotateX(-Math.PI / 2)
 const floorMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 })
 const floor = new THREE.Mesh(floorGeometry, floorMaterial)
 floor.receiveShadow = true
 scene.add(floor)
+// Ceiling
+const ceilingGeometry = new THREE.PlaneBufferGeometry(5, 5, 1, 1)
+ceilingGeometry.rotateX(-Math.PI / 2)
+const ceilngMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 })
+ceilngMaterial.side = THREE.DoubleSide
+const ceiling = new THREE.Mesh(ceilingGeometry, ceilngMaterial)
+ceiling.receiveShadow = true
+scene.add(ceiling)
+ceiling.position.y = 5
+
 
 // Click marker to be shown on interaction
 const markerGeometry = new THREE.SphereBufferGeometry(0.2, 8, 8)
@@ -124,7 +134,7 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 function initCannon() {
 // Setup world
 world = new CANNON.World()
-world.gravity.set(0, -10, 0)
+world.gravity.set(0, -9.2, 0)
 
 // Floor
 const floorShape = new CANNON.Plane()
@@ -132,12 +142,20 @@ const floorBody = new CANNON.Body({ mass: 0 })
 floorBody.addShape(floorShape)
 floorBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)
 world.addBody(floorBody)
+// Ceiling
+const ceilingShape = new CANNON.Plane()
+const ceilingBody = new CANNON.Body({ mass: 0 })
+ceilingBody.position.y = 5
+ceilingBody.addShape(ceilingShape)
+ceilingBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)
+world.addBody(ceilingBody)
 
 // Cube body
 const cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5))
 cubeBody = new CANNON.Body({ mass: 5 })
 cubeBody.addShape(cubeShape)
-cubeBody.position.set(0, 5, 0)
+cubeBody.position.set(0, 2.5, 0)
+// cubeBody.mass = 5
 bodies.push(cubeBody)
 world.addBody(cubeBody)
 
