@@ -89,6 +89,7 @@ floorGeometry.rotateX(-Math.PI / 2)
 const floorMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 })
 const floor = new THREE.Mesh(floorGeometry, floorMaterial)
 floor.receiveShadow = true
+floor.position.y = -2
 scene.add(floor)
 // Ceiling
 const ceilingGeometry = new THREE.PlaneBufferGeometry(5, 5, 1, 1)
@@ -97,8 +98,9 @@ const ceilngMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 })
 ceilngMaterial.side = THREE.DoubleSide
 const ceiling = new THREE.Mesh(ceilingGeometry, ceilngMaterial)
 ceiling.receiveShadow = true
-scene.add(ceiling)
 ceiling.position.y = 5
+scene.add(ceiling)
+
 
 
 // Click marker to be shown on interaction
@@ -135,29 +137,38 @@ function initCannon() {
 // Setup world
 world = new CANNON.World()
 world.gravity.set(0, -9.2, 0)
+const worldBoxMaterial = new CANNON.Material('worldBox')
 
 // Floor
 const floorShape = new CANNON.Plane()
-const floorBody = new CANNON.Body({ mass: 0 })
+const floorBody = new CANNON.Body({ mass: 0 , material: worldBoxMaterial})
+floorBody.position.set(0, -2, 0)
 floorBody.addShape(floorShape)
 floorBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)
 world.addBody(floorBody)
 // Ceiling
 const ceilingShape = new CANNON.Plane()
-const ceilingBody = new CANNON.Body({ mass: 0 })
+const ceilingBody = new CANNON.Body({ mass: 0 , material: worldBoxMaterial})
 ceilingBody.position.y = 5
-ceilingBody.addShape(ceilingShape)
+// ceilingBody.addShape(ceilingShape)
 ceilingBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)
 world.addBody(ceilingBody)
 
+// Balls
+const ballMaterial = new CANNON.Material()
 // Cube body
 const cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5))
-cubeBody = new CANNON.Body({ mass: 5 })
+cubeBody = new CANNON.Body({ mass: 5, material: ballMaterial})
 cubeBody.addShape(cubeShape)
 cubeBody.position.set(0, 2.5, 0)
 // cubeBody.mass = 5
 bodies.push(cubeBody)
 world.addBody(cubeBody)
+
+// Create contact material behaviour
+const worldBox_ball = new CANNON.ContactMaterial(worldBoxMaterial, ballMaterial, { friction: 0.0, restitution: 1.5 })
+
+world.addContactMaterial(worldBox_ball)
 
 // Joint body, to later constraint the cube
 const jointShape = new CANNON.Sphere(0.1)
