@@ -228,7 +228,7 @@ bodies.push(ballBody)
 world.addBody(ballBody)
 
 // Create contact material behaviour
-const worldBox_ball = new CANNON.ContactMaterial(worldBoxMaterial, ballMaterial, { friction: 0.0, restitution: 1.2 })
+const worldBox_ball = new CANNON.ContactMaterial(worldBoxMaterial, ballMaterial, { friction: 0.0, restitution: 1 })
 world.addContactMaterial(worldBox_ball)
 
 // Joint body, to later constraint the cube
@@ -249,10 +249,18 @@ world.addBody(jointBody)
 window.addEventListener('pointerdown', (event) => {
 // Cast a ray from where the mouse is pointing and
 // see if we hit something
-const hitPoint = (getHitPoint(event.clientX, event.clientY, cubeMesh, camera) || getHitPoint(event.clientX, event.clientY, ballMesh, camera))
-
-// Return if the cube wasn't hit
-if (!hitPoint) {
+const cubeHitPoint = getHitPoint(event.clientX, event.clientY, cubeMesh, camera)
+const ballHitPoint =  getHitPoint(event.clientX, event.clientY, ballMesh, camera)
+// Return if one wasn't hit
+let hitPoint
+let hitBody
+if (cubeHitPoint) {
+    hitPoint = cubeHitPoint;
+    hitBody = cubeBody
+} else if (ballHitPoint) {
+    hitPoint = ballHitPoint;
+    hitBody = ballBody}
+else {
     return
 }
 
@@ -263,9 +271,9 @@ moveClickMarker(hitPoint)
 // Move the movement plane on the z-plane of the hit
 moveMovementPlane(hitPoint, camera)
 
-// Create the constraint between the cube body and the joint body
-addJointConstraint(hitPoint, cubeBody)
-addJointConstraint(hitPoint, ballBody)
+// Create the constraint between the body that was hit and the joint body
+addJointConstraint(hitPoint, hitBody)
+// addJointConstraint(hitPoint, ballBody)
 
 // Set the flag to trigger pointermove on next frame so the
 // movementPlane has had time to move
@@ -339,6 +347,10 @@ const hits = raycaster.intersectObject(mesh)
 // Return the closest hit or undefined
 return hits.length > 0 ? hits[0].point : undefined
 }
+
+/////////////////////////////////////////////////////////////////////////////
+//  interaction constraint
+/////////////////////////////////////////////////////////////////////////////
 
 // Add a constraint between the cube and the jointBody
 // in the initeraction position
