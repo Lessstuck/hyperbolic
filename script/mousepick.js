@@ -16,6 +16,7 @@ let clickMarker
 let raycaster
 let cubeMesh
 let ballMesh
+let octaMesh
 
 // cannon.js variables
 let world
@@ -23,6 +24,7 @@ let jointBody
 let jointConstraint
 let cubeBody
 let ballBody
+let octaBody
 
 let isDragging = false
 
@@ -125,13 +127,18 @@ cubeMesh = new THREE.Mesh(cubeGeometry, ballMaterial)
 cubeMesh.castShadow = true
 meshes.push(cubeMesh)
 scene.add(cubeMesh)
-
 // Ball
 const ballGeometry = new THREE.SphereBufferGeometry(.5, 30, 30)
 ballMesh = new THREE.Mesh(ballGeometry, ballMaterial)
 ballMesh.castShadow = true
 meshes.push(ballMesh)
 scene.add(ballMesh)
+// Octahedron
+const octaGeometry = new THREE.OctahedronBufferGeometry(.5)
+octaMesh = new THREE.Mesh(octaGeometry, ballMaterial)
+octaMesh.castShadow = true
+meshes.push(octaMesh)
+scene.add(octaMesh)
 
 // Movement plane when dragging
 const planeGeometry = new THREE.PlaneBufferGeometry(100, 100)
@@ -212,20 +219,27 @@ world.addBody(planeZmax)
 const ballMaterial = new CANNON.Material()
 
 // Cube body
-const cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5))
+const cubeShape = new CANNON.Box(new CANNON.Vec3(1, 1, 1))
 cubeBody = new CANNON.Body({ mass: 5, material: ballMaterial})
 cubeBody.addShape(cubeShape)
 cubeBody.position.set(0, 0, 0)
 cubeBody.angularDamping = .3
 bodies.push(cubeBody)
 world.addBody(cubeBody)
-
-const ballShape = new CANNON.Sphere(1, 12, 12)
+// Sphere body
+const ballShape = new CANNON.Sphere(.5, 12, 12)
 ballBody = new CANNON.Body({ mass: 5, material: ballMaterial})
 ballBody.addShape(ballShape)
 ballBody.position.set(0, 2.5, 0)
 bodies.push(ballBody)
 world.addBody(ballBody)
+// Octahedron body
+const octaShape = new CANNON.Sphere(.5) // no octahedron in CANNON
+octaBody = new CANNON.Body({ mass: 5, material: ballMaterial})
+octaBody.addShape(octaShape)
+octaBody.position.set(0, -2.5, 0)
+bodies.push(octaBody)
+world.addBody(octaBody)
 
 // Create contact material behaviour
 const worldBox_ball = new CANNON.ContactMaterial(worldBoxMaterial, ballMaterial, { friction: 0.0, restitution: 1 })
@@ -251,6 +265,7 @@ window.addEventListener('pointerdown', (event) => {
 // see if we hit something
 const cubeHitPoint = getHitPoint(event.clientX, event.clientY, cubeMesh, camera)
 const ballHitPoint =  getHitPoint(event.clientX, event.clientY, ballMesh, camera)
+const octaHitPoint =  getHitPoint(event.clientX, event.clientY, octaMesh, camera)
 // Return if one wasn't hit
 let hitPoint
 let hitBody
@@ -259,8 +274,11 @@ if (cubeHitPoint) {
     hitBody = cubeBody
 } else if (ballHitPoint) {
     hitPoint = ballHitPoint;
-    hitBody = ballBody}
-else {
+    hitBody = ballBody
+} else if (octaHitPoint) {
+    hitPoint = octaHitPoint;
+    hitBody = octaBody
+} else {
     return
 }
 
