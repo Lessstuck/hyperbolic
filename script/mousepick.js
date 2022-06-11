@@ -15,12 +15,14 @@ let movementPlane
 let clickMarker
 let raycaster
 let cubeMesh
+let ballMesh
 
 // cannon.js variables
 let world
 let jointBody
 let jointConstraint
 let cubeBody
+let ballBody
 
 let isDragging = false
 
@@ -83,30 +85,29 @@ scene.add(directionalLight)
 // Raycaster for mouse interaction
 raycaster = new THREE.Raycaster()
 
+
+/////////////////////////////////////////////////////////////////////////////
+//  geometries
+/////////////////////////////////////////////////////////////////////////////
+
 // Floor
-const floorGeometry = new THREE.PlaneBufferGeometry(5, 5, 1, 1)
+const floorGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1)
 floorGeometry.rotateX(-Math.PI / 2)
 const floorMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 })
 floorMaterial.side = THREE.DoubleSide
 const floor = new THREE.Mesh(floorGeometry, floorMaterial)
 floor.receiveShadow = true
-floor.position.y = -2.5
+floor.position.y = -5
 scene.add(floor)
 // Ceiling
-const ceilingGeometry = new THREE.PlaneBufferGeometry(5, 5, 1, 1)
+const ceilingGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1)
 ceilingGeometry.rotateX(-Math.PI / 2)
 const ceilngMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 })
 ceilngMaterial.side = THREE.DoubleSide
 const ceiling = new THREE.Mesh(ceilingGeometry, ceilngMaterial)
 ceiling.receiveShadow = true
-ceiling.position.y = 2.5
+ceiling.position.y = 5
 scene.add(ceiling)
-
-
-
-
-
-
 
 
 // Click marker to be shown on interaction
@@ -116,13 +117,21 @@ clickMarker = new THREE.Mesh(markerGeometry, markerMaterial)
 clickMarker.visible = false // Hide it..
 scene.add(clickMarker)
 
+
+const ballMaterial = new THREE.MeshPhongMaterial({ color: 0x999999 })
 // Cube
-const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1, 10, 10)
-const cubeMaterial = new THREE.MeshPhongMaterial({ color: 0x999999 })
-cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial)
+const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
+cubeMesh = new THREE.Mesh(cubeGeometry, ballMaterial)
 cubeMesh.castShadow = true
 meshes.push(cubeMesh)
 scene.add(cubeMesh)
+
+// Ball
+const ballGeometry = new THREE.SphereBufferGeometry(.5, 30, 30)
+ballMesh = new THREE.Mesh(ballGeometry, ballMaterial)
+ballMesh.castShadow = true
+meshes.push(ballMesh)
+scene.add(ballMesh)
 
 // Movement plane when dragging
 const planeGeometry = new THREE.PlaneBufferGeometry(100, 100)
@@ -139,6 +148,12 @@ camera.updateProjectionMatrix()
 renderer.setSize(window.innerWidth, window.innerHeight)
 }
 
+
+/////////////////////////////////////////////////////////////////////////////
+//  physics
+/////////////////////////////////////////////////////////////////////////////
+
+
 function initCannon() {
 // Setup world
 world = new CANNON.World()
@@ -149,23 +164,16 @@ const worldBoxMaterial = new CANNON.Material('worldBox')
 const floorShape = new CANNON.Plane()
 const floorBody = new CANNON.Body({ mass: 0 , material: worldBoxMaterial})
 floorBody.addShape(floorShape)
-floorBody.position.set(0, -2.5, 0)
+floorBody.position.set(0, -5, 0)
 floorBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)    // rotation affects collision!!!
 world.addBody(floorBody)
-// Ceiling
-// const ceilingShape = new CANNON.Plane()
-// const ceilingBody = new CANNON.Body({ mass: 0 , material: worldBoxMaterial})
-// ceilingBody.addShape(ceilingShape)
-// ceilingBody.position.set(0, 5, 0)
-// ceilingBody.quaternion.setFromEuler((-Math.PI / 2) * 3)   // rotate 270°
-// world.addBody(ceilingBody)
 
 // Ceiling
 const ceilingShape = new CANNON.Plane()
 const ceilingBody = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
 ceilingBody.addShape(ceilingShape)
 ceilingBody.quaternion.setFromEuler(Math.PI / 2, 0, 0)
-ceilingBody.position.set(0, 2.5, 0)
+ceilingBody.position.set(0, 5, 0)
 world.addBody(ceilingBody)
 
 // Plane -x
@@ -200,21 +208,27 @@ planeZmax.quaternion.setFromEuler(0, Math.PI, 0)
 planeZmax.position.set(0, 0, 5)
 world.addBody(planeZmax)
 
-
-
-
 // Balls
 const ballMaterial = new CANNON.Material()
+
 // Cube body
 const cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5))
 cubeBody = new CANNON.Body({ mass: 5, material: ballMaterial})
 cubeBody.addShape(cubeShape)
-cubeBody.position.set(0, 2.5, 0)
+cubeBody.position.set(0, 0, 0)
+cubeBody.angularDamping = .3
 bodies.push(cubeBody)
 world.addBody(cubeBody)
 
+const ballShape = new CANNON.Sphere(1, 12, 12)
+ballBody = new CANNON.Body({ mass: 5, material: ballMaterial})
+ballBody.addShape(ballShape)
+ballBody.position.set(0, 2.5, 0)
+bodies.push(ballBody)
+world.addBody(ballBody)
+
 // Create contact material behaviour
-const worldBox_ball = new CANNON.ContactMaterial(worldBoxMaterial, ballMaterial, { friction: 0.0, restitution: 1.0 })
+const worldBox_ball = new CANNON.ContactMaterial(worldBoxMaterial, ballMaterial, { friction: 0.0, restitution: 1.2 })
 world.addContactMaterial(worldBox_ball)
 
 // Joint body, to later constraint the cube
@@ -226,10 +240,16 @@ jointBody.collisionFilterMask = 0
 world.addBody(jointBody)
 }
 
+/////////////////////////////////////////////////////////////////////////////
+//  listener 
+/////////////////////////////////////////////////////////////////////////////
+
+
+
 window.addEventListener('pointerdown', (event) => {
 // Cast a ray from where the mouse is pointing and
 // see if we hit something
-const hitPoint = getHitPoint(event.clientX, event.clientY, cubeMesh, camera)
+const hitPoint = (getHitPoint(event.clientX, event.clientY, cubeMesh, camera) || getHitPoint(event.clientX, event.clientY, ballMesh, camera))
 
 // Return if the cube wasn't hit
 if (!hitPoint) {
@@ -245,6 +265,7 @@ moveMovementPlane(hitPoint, camera)
 
 // Create the constraint between the cube body and the joint body
 addJointConstraint(hitPoint, cubeBody)
+addJointConstraint(hitPoint, ballBody)
 
 // Set the flag to trigger pointermove on next frame so the
 // movementPlane has had time to move
@@ -352,6 +373,9 @@ function removeJointConstraint() {
 world.removeConstraint(jointConstraint)
 jointConstraint = undefined
 }
+/////////////////////////////////////////////////////////////////////////////
+//  step animation and render
+/////////////////////////////////////////////////////////////////////////////
 
 function animate() {
 requestAnimationFrame(animate)
