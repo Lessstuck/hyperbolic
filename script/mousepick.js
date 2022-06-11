@@ -35,7 +35,7 @@ animate()
 function initThree() {
 // Camera
 camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.5, 1000)
-camera.position.set(0, 2, 10)
+camera.position.set(0, 0, 10)
 
 // Scene
 scene = new THREE.Scene()
@@ -87,9 +87,10 @@ raycaster = new THREE.Raycaster()
 const floorGeometry = new THREE.PlaneBufferGeometry(5, 5, 1, 1)
 floorGeometry.rotateX(-Math.PI / 2)
 const floorMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 })
+floorMaterial.side = THREE.DoubleSide
 const floor = new THREE.Mesh(floorGeometry, floorMaterial)
 floor.receiveShadow = true
-floor.position.y = -2
+floor.position.y = -2.5
 scene.add(floor)
 // Ceiling
 const ceilingGeometry = new THREE.PlaneBufferGeometry(5, 5, 1, 1)
@@ -98,8 +99,13 @@ const ceilngMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 })
 ceilngMaterial.side = THREE.DoubleSide
 const ceiling = new THREE.Mesh(ceilingGeometry, ceilngMaterial)
 ceiling.receiveShadow = true
-ceiling.position.y = 5
+ceiling.position.y = 2.5
 scene.add(ceiling)
+
+
+
+
+
 
 
 
@@ -136,23 +142,66 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 function initCannon() {
 // Setup world
 world = new CANNON.World()
-world.gravity.set(0, -9.2, 0)
+world.gravity.set(0, 0, 0)
 const worldBoxMaterial = new CANNON.Material('worldBox')
 
 // Floor
 const floorShape = new CANNON.Plane()
 const floorBody = new CANNON.Body({ mass: 0 , material: worldBoxMaterial})
-floorBody.position.set(0, -2, 0)
 floorBody.addShape(floorShape)
-floorBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)
+floorBody.position.set(0, -2.5, 0)
+floorBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)    // rotation affects collision!!!
 world.addBody(floorBody)
 // Ceiling
-const ceilingShape = new CANNON.Plane()
-const ceilingBody = new CANNON.Body({ mass: 0 , material: worldBoxMaterial})
-ceilingBody.position.y = 5
+// const ceilingShape = new CANNON.Plane()
+// const ceilingBody = new CANNON.Body({ mass: 0 , material: worldBoxMaterial})
 // ceilingBody.addShape(ceilingShape)
-ceilingBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)
+// ceilingBody.position.set(0, 5, 0)
+// ceilingBody.quaternion.setFromEuler((-Math.PI / 2) * 3)   // rotate 270°
+// world.addBody(ceilingBody)
+
+// Ceiling
+const ceilingShape = new CANNON.Plane()
+const ceilingBody = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
+ceilingBody.addShape(ceilingShape)
+ceilingBody.quaternion.setFromEuler(Math.PI / 2, 0, 0)
+ceilingBody.position.set(0, 2.5, 0)
 world.addBody(ceilingBody)
+
+// Plane -x
+const planeShapeXmin = new CANNON.Plane()
+const planeXmin = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
+planeXmin.addShape(planeShapeXmin)
+planeXmin.quaternion.setFromEuler(0, Math.PI / 2, 0)
+planeXmin.position.set(-5, 0, 0)
+world.addBody(planeXmin)
+
+// Plane +x
+const planeShapeXmax = new CANNON.Plane()
+const planeXmax = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
+planeXmax.addShape(planeShapeXmax)
+planeXmax.quaternion.setFromEuler(0, -Math.PI / 2, 0)
+planeXmax.position.set(5, 0, 0)
+world.addBody(planeXmax)
+
+// Plane -z
+const planeShapeZmin = new CANNON.Plane()
+const planeZmin = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
+planeZmin.addShape(planeShapeZmin)
+planeZmin.quaternion.setFromEuler(0, 0, 0)
+planeZmin.position.set(0, 0, -5)
+world.addBody(planeZmin)
+
+// Plane +z
+const planeShapeZmax = new CANNON.Plane()
+const planeZmax = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
+planeZmax.addShape(planeShapeZmax)
+planeZmax.quaternion.setFromEuler(0, Math.PI, 0)
+planeZmax.position.set(0, 0, 5)
+world.addBody(planeZmax)
+
+
+
 
 // Balls
 const ballMaterial = new CANNON.Material()
@@ -161,13 +210,11 @@ const cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5))
 cubeBody = new CANNON.Body({ mass: 5, material: ballMaterial})
 cubeBody.addShape(cubeShape)
 cubeBody.position.set(0, 2.5, 0)
-// cubeBody.mass = 5
 bodies.push(cubeBody)
 world.addBody(cubeBody)
 
 // Create contact material behaviour
-const worldBox_ball = new CANNON.ContactMaterial(worldBoxMaterial, ballMaterial, { friction: 0.0, restitution: 1.5 })
-
+const worldBox_ball = new CANNON.ContactMaterial(worldBoxMaterial, ballMaterial, { friction: 0.0, restitution: 1.0 })
 world.addContactMaterial(worldBox_ball)
 
 // Joint body, to later constraint the cube
