@@ -34,6 +34,7 @@ $(document).ready(function () {
   var rateTrigger = $("#rate");
   var meterTrigger = $("#meter");
   let metronomes = [];
+
   metronomes[0] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 0);
   metronomes[1] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 1);
   metronomes[2] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 2);
@@ -53,6 +54,8 @@ $(document).ready(function () {
     }
     return false;
   });
-;})
+ 
+
+})
 
 export {browserFormat, updateDragPosition};

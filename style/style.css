@@ -21,7 +21,7 @@ canvas {
   position: absolute;
   display: block;
   z-index: 99;
-  left: 35%;
+  left: 37%;
   top: 90%;
   }
 
@@ -33,6 +33,21 @@ canvas {
   top: 90%;
   }
   
+.front_overlay  {
+  position: absolute;
+  display: block;
+  z-index: 99;
+  left: 60%;
+  top: 90%;
+  }
+
+.top_overlay  {
+  position: absolute;
+  display: block;
+  z-index: 99;
+  left: 63%;
+  top: 90%;
+  }
 
 /* more space for the Stats.js button name */
 .dg .cr.function .property-name {

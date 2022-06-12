@@ -7,6 +7,8 @@ import * as THREE from 'https://unpkg.com/three@0.122.0/build/three.module.js'
 import Stats from 'https://unpkg.com/three@0.122.0/examples/jsm/libs/stats.module.js'
 
 import {updateDragPosition} from "./app.js";
+// cameraView = "top"
+// console.log("mousepick cameraView: " + cameraView)
 let dragPosition;
 
 // three.js variables
@@ -36,10 +38,18 @@ initThree()
 initCannon()
 animate()
 
+
 function initThree() {
 // Camera
-camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.5, 1000)
-camera.position.set(0, 0, 10)
+camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.5, 1000)
+camera.position.set(0, 0, 10);
+  $("#front").click(function (){
+    camera.position.set(0, 0, 10);
+  })
+  $("#top").click(function (){
+    camera.position.set(0, 10, 0);
+  })
+camera.lookAt(0, 0, 0)
 
 // Scene
 scene = new THREE.Scene()
@@ -109,7 +119,7 @@ ceilngMaterial.side = THREE.DoubleSide
 const ceiling = new THREE.Mesh(ceilingGeometry, ceilngMaterial)
 ceiling.receiveShadow = true
 ceiling.position.y = 5
-scene.add(ceiling)
+// scene.add(ceiling)
 
 
 // Click marker to be shown on interaction
