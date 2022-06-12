@@ -13,7 +13,7 @@ canvas {
   position: absolute;
   display: block;
   z-index: 99;
-  left: 50%;
+  left: 45%;
   top: 90%;
   }
 
@@ -21,17 +21,17 @@ canvas {
   position: absolute;
   display: block;
   z-index: 99;
-  left: 30%;
+  left: 35%;
   top: 90%;
   }
 
-  .stop_overlay  {
-    position: absolute;
-    display: block;
-    z-index: 99;
-    left: 40%;
-    top: 90%;
-    }
+.stop_overlay  {
+  position: absolute;
+  display: block;
+  z-index: 99;
+  left: 40%;
+  top: 90%;
+  }
   
 
 /* more space for the Stats.js button name */

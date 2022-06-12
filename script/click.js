@@ -139,7 +139,6 @@ Metronome.prototype = {
 Metronome.prototype.playNote = function (index) {
     let playState = this.track.play();
     if (playState) {
-    // let morphPercent = parseInt(this.morph.val());
     let morphPercent = this.morph();
     let coinToss = Math.floor(Math.random() * 100);
     if (coinToss > morphPercent) {
@@ -174,8 +173,12 @@ Metronome.prototype.barInterval = function () {
     return this.meter('beat')*1/this.meter('value')*this.temp();  // ms per bar
   }
 };
+
+//////////////////////////////////// meter select
+
 Metronome.prototype.meter = function (option) {
-  this[option] = this[option] || parseInt(this.meterOptions.find('#note_' + option + ' option:selected').text());
+  // this[option] = this[option] || parseInt(this.meterOptions.find('#note_' + option + ' option:selected').text());
+  this[option] = 16;
   return this[option];
 };
 Metronome.prototype.temp = function () {
@@ -183,15 +186,21 @@ Metronome.prototype.temp = function () {
   this.tempValue = 60/this.bpm*1000*4;
   return this.tempValue;
 };
+
+
+
 Metronome.prototype.stopBar = function () {
   for (var i = 0; i < this.barNotes.length; i++) 
     Sequencer.clearTimeout(this.barNotes[i]);
 };
 Metronome.prototype.listenEvents = function () {
   var metronome = this;
+
+//////////////////////////////////// value select
   metronome.meterOptions.find('select').change(function () {
     var optionName = $(this).attr('id').split("note_")[1];
-    var optionValue = parseInt($(this).find('option:selected').text());
+    var optionValue = 16;
+    // var optionValue = parseInt($(this).find('option:selected').text());
     metronome[optionName] = optionValue;
   });
   metronome.rate.bind('keyup change input', function () {
