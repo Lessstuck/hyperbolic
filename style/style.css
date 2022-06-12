@@ -9,6 +9,31 @@ canvas {
   outline: none;
 }
 
+.tempo_overlay {
+  position: absolute;
+  display: block;
+  z-index: 99;
+  left: 50%;
+  top: 90%;
+  }
+
+.start_overlay  {
+  position: absolute;
+  display: block;
+  z-index: 99;
+  left: 30%;
+  top: 90%;
+  }
+
+  .stop_overlay  {
+    position: absolute;
+    display: block;
+    z-index: 99;
+    left: 40%;
+    top: 90%;
+    }
+  
+
 /* more space for the Stats.js button name */
 .dg .cr.function .property-name {
   width: 100% !important;

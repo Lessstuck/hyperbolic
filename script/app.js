@@ -21,9 +21,6 @@ function browserFormat () {
   // };
 };
 
-// console.log(`mesh position in app: ${meshes[0].position.x}`)
-
-
 $(document).ready(function () {
   const context = new AudioContext;
   window.addEventListener('touchstart', function() {
@@ -36,7 +33,6 @@ $(document).ready(function () {
   }, false);
   var rateTrigger = $("#rate");
   var meterTrigger = $("#meter");
-  // var morphTrigger = $("#morph");
   let metronomes = [];
   metronomes[0] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 0);
   metronomes[1] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 1);
