@@ -42,14 +42,17 @@ animate()
 function initThree() {
 // Camera
 camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.5, 1000)
-camera.position.set(0, 0, 10);
-  $("#front").click(function (){
-    camera.position.set(0, 0, 10);
-  })
-  $("#top").click(function (){
-    camera.position.set(0, 10, 0);
-  })
+camera.position.set(0, 10, 0);
 camera.lookAt(0, 0, 0)
+
+$("#front").click(function (){
+    camera.position.set(0, 0, 10);
+    camera.lookAt(0, 0, 0)
+})
+$("#top").click(function (){
+    camera.position.set(0, 10, 0);
+    camera.lookAt(0, 0, 0)
+})
 
 // Scene
 scene = new THREE.Scene()

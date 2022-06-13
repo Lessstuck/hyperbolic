@@ -44,8 +44,8 @@ $(document).ready(function () {
     if ($("#rate").val()) {
       for (let metronome of metronomes){
         metronome.start()
-      }
-      return false;
+    }
+    return false;
     }
   });
   $("#stop").click(function (){
