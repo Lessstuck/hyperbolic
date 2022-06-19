@@ -9,45 +9,22 @@ canvas {
   outline: none;
 }
 
-.tempo_overlay {
+.flex-container {
   position: absolute;
-  display: block;
-  z-index: 99;
-  left: 45%;
   top: 90%;
-  }
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+  /* text-align: center; */
+}
 
-.start_overlay  {
-  position: absolute;
-  display: block;
+.overlay  {
+  margin: 10px;
+  padding: 20px;
+  display: inline;
   z-index: 99;
-  left: 37%;
-  top: 90%;
-  }
-
-.stop_overlay  {
-  position: absolute;
-  display: block;
-  z-index: 99;
-  left: 40%;
-  top: 90%;
-  }
-  
-.front_overlay  {
-  position: absolute;
-  display: block;
-  z-index: 99;
-  left: 60%;
-  top: 90%;
-  }
-
-.top_overlay  {
-  position: absolute;
-  display: block;
-  z-index: 99;
-  left: 63%;
-  top: 90%;
-  }
+}
 
 /* more space for the Stats.js button name */
 .dg .cr.function .property-name {
