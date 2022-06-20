@@ -75,7 +75,10 @@ function createNewSound(fileName, parent) {
 function Metronome (rateWrapper, meterWrapper, morphWrapper, trackNumber) {
   this.rate         = rateWrapper;
   this.meterOptions = meterWrapper;
-  this.morph = morphWrapper;
+  this.morph = [];
+  this.morph[0] = morphWrapper(trackNumber, 0);
+  this.morph[1] = morphWrapper(trackNumber, 1);
+  this.morph[2] = morphWrapper(trackNumber, 2);
   this.pan = 0;
   this.stopped      = true;
   this.justStarted  = true;
@@ -140,7 +143,7 @@ Metronome.prototype = {
 Metronome.prototype.playNote = function (index) {
     let playState = this.track.play();
     if (playState) {
-    let morphPercent = this.morph();
+    let morphPercent = this.morph[0];
     let coinToss = Math.floor(Math.random() * 100);
     if (coinToss > morphPercent) {
       this.morphOffset = 0;
@@ -163,7 +166,7 @@ Metronome.prototype.playSound = function (buffer) {
   
   let linearGain = (Math.random() * .5 + .5) * players[this.trackNumber + this.morphOffset].level;
   this.gainNode.gain.value = linearGain * linearGain;   // easy hack to make volume a bit more logarithmic
-  this.panner.pan.value = (this.morph() / 50) - 1; // convert 0-100 to -1 to +1 for webaudio panner
+  this.panner.pan.value = (this.morph[0] / 50) - 1; // convert 0-100 to -1 to +1 for webaudio panner
   let scale = players[this.trackNumber + this.morphOffset].scale;
   this.source.detune.value = (scale[Math.floor(Math.random() * scale.length)] - 12) * 100;
   this.source.start(0);

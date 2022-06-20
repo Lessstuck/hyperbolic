@@ -8,7 +8,7 @@ import Stats from 'https://unpkg.com/three@0.122.0/examples/jsm/libs/stats.modul
 
 import {morphTrigger} from "./app.js";
 
-let dragPosition;
+let dragPositions = {};
 
 // three.js variables
 let camera, scene, renderer, stats
@@ -138,18 +138,21 @@ const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
 cubeMesh = new THREE.Mesh(cubeGeometry, ballMaterial)
 cubeMesh.castShadow = true
 meshes.push(cubeMesh)
+dragPositions[0] = [0,0,0]
 scene.add(cubeMesh)
 // Ball
 const ballGeometry = new THREE.SphereBufferGeometry(.5, 30, 30)
 ballMesh = new THREE.Mesh(ballGeometry, ballMaterial)
 ballMesh.castShadow = true
 meshes.push(ballMesh)
+dragPositions[1] = [0,0,0]
 scene.add(ballMesh)
 // Octahedron
 const octaGeometry = new THREE.OctahedronBufferGeometry(.5)
 octaMesh = new THREE.Mesh(octaGeometry, ballMaterial)
 octaMesh.castShadow = true
 meshes.push(octaMesh)
+dragPositions[2] = [0,0,0]
 scene.add(octaMesh)
 
 // Movement plane when dragging
@@ -428,8 +431,12 @@ world.fixedStep()
 // Sync the three.js meshes with the bodies
 for (let i = 0; i !== meshes.length; i++) {
     meshes[i].position.copy(bodies[i].position);
-    dragPosition = meshes[0].position.x;
-    morphTrigger();
+    dragPositions[i][0] = meshes[i].position.x; 
+    morphTrigger(i, 0);
+    dragPositions[i][1] = meshes[i].position.y;
+    morphTrigger(i, 1);
+    dragPositions[i][2] = meshes[i].position.z;
+    morphTrigger(i, 2);
     meshes[i].quaternion.copy(bodies[i].quaternion);
 }
 
@@ -439,4 +446,4 @@ renderer.render(scene, camera)
 stats.update()
 }
 
-export {dragPosition};
+export {dragPositions};

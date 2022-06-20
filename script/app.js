@@ -1,10 +1,27 @@
 import {Metronome} from "./click.js";
-import {dragPosition} from "./mousepick.js";
+import {dragPositions} from "./mousepick.js";
 
-function morphTrigger() {
-  let morph = (dragPosition + 5) * 10;  // scale webgl coords to 0-100 for morphing
-  return morph;
-};
+// let morphTriggers = {};
+// var morphs = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+
+// console.log("what " + dragPositions[0][0])
+
+function morphTrigger(i, j) {
+  // for (let i = 0; i < dragPositions.length; i++)  {
+  //   for (let j = 0; j < 3; j++) {
+      // function morphTriggers[i][j]() {
+        // morphs[i][j] =  (dragPositions[i][j] + 5) * 10;  // scale webgl coords to 0-100 for morphing
+        // return  morphs[i][j];
+        return (dragPositions[i][j] + 5) * 10;
+      // } 
+    }
+//   }
+// }
+
+// function morphTrigger() {
+//   let morph = (dragPositions[0][0] + 5) * 10;  // scale webgl coords to 0-100 for morphing
+//   return morph;
+// };
 
 
 function browserFormat () {
@@ -32,7 +49,6 @@ $(document).ready(function () {
   metronomes[0] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 0);
   metronomes[1] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 1);
   metronomes[2] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 2);
-  metronomes[3] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 3);
 
   $("#start").click(function (){
     if ($("#rate").val()) {
