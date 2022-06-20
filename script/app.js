@@ -2,15 +2,9 @@ import {Metronome} from "./click.js";
 import {dragPosition} from "./mousepick.js";
 
 function morphTrigger() {
-  return updateDragPosition();
-};
-
-function updateDragPosition() {
-  let morph = (dragPosition + 5) * 20;  // scale webgl coords to 0-100 for morphing
-  // morphTrigger = morph;
-  // console.log(`mesh position in app: ${morph}`)
+  let morph = (dragPosition + 5) * 10;  // scale webgl coords to 0-100 for morphing
   return morph;
-}
+};
 
 
 function browserFormat () {
@@ -58,4 +52,4 @@ $(document).ready(function () {
 
 })
 
-export {browserFormat, updateDragPosition};
+export {browserFormat, morphTrigger};

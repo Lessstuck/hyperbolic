@@ -76,6 +76,7 @@ function Metronome (rateWrapper, meterWrapper, morphWrapper, trackNumber) {
   this.rate         = rateWrapper;
   this.meterOptions = meterWrapper;
   this.morph = morphWrapper;
+  this.pan = 0;
   this.stopped      = true;
   this.justStarted  = true;
   this.listenEvents();
@@ -153,14 +154,17 @@ Metronome.prototype.playNote = function (index) {
 // pick notes at random from scale, then play
 Metronome.prototype.playSound = function (buffer) {
   this.gainNode = context.createGain();
+  this.panner = context.createStereoPanner();
   this.source = context.createBufferSource();
   this.source.buffer = this.sound[buffer];
-  this.source.connect(this.gainNode)
-  this.gainNode.connect(context.destination);
+  this.source.connect(this.gainNode);
+  this.gainNode.connect(this.panner);
+  this.panner.connect(context.destination);
   
   let linearGain = (Math.random() * .5 + .5) * players[this.trackNumber + this.morphOffset].level;
   this.gainNode.gain.value = linearGain * linearGain;   // easy hack to make volume a bit more logarithmic
-  let scale = players[this.trackNumber + this.morphOffset].scale
+  this.panner.value = this.morph / 50 - 1; // convert 0-100 to -1 to +1 for webaudio panner
+  let scale = players[this.trackNumber + this.morphOffset].scale;
   this.source.detune.value = (scale[Math.floor(Math.random() * scale.length)] - 12) * 100;
   this.source.start(0);
 }
