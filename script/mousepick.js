@@ -430,7 +430,6 @@ for (let i = 0; i !== meshes.length; i++) {
     meshes[i].position.copy(bodies[i].position);
     dragPosition = meshes[0].position.x;
     morphTrigger();
-    // console.log(morph);
     meshes[i].quaternion.copy(bodies[i].quaternion);
 }
 

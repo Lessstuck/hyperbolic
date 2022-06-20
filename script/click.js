@@ -163,7 +163,7 @@ Metronome.prototype.playSound = function (buffer) {
   
   let linearGain = (Math.random() * .5 + .5) * players[this.trackNumber + this.morphOffset].level;
   this.gainNode.gain.value = linearGain * linearGain;   // easy hack to make volume a bit more logarithmic
-  this.panner.value = this.morph / 50 - 1; // convert 0-100 to -1 to +1 for webaudio panner
+  this.panner.pan.value = (this.morph() / 50) - 1; // convert 0-100 to -1 to +1 for webaudio panner
   let scale = players[this.trackNumber + this.morphOffset].scale;
   this.source.detune.value = (scale[Math.floor(Math.random() * scale.length)] - 12) * 100;
   this.source.start(0);
