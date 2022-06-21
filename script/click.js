@@ -75,10 +75,12 @@ function createNewSound(fileName, parent) {
 function Metronome (rateWrapper, meterWrapper, morphWrapper, trackNumber) {
   this.rate         = rateWrapper;
   this.meterOptions = meterWrapper;
+  this.morphWrapper = morphWrapper;
+  this.trackNumber = trackNumber;
   this.morph = [];
-  this.morph[0] = morphWrapper(trackNumber, 0);
-  this.morph[1] = morphWrapper(trackNumber, 1);
-  this.morph[2] = morphWrapper(trackNumber, 2);
+  this.morph[0] = this.morphWrapper(this.trackNumber, 0);
+  this.morph[1] = this.morphWrapper(this.trackNumber, 1);
+  this.morph[2] = this.morphWrapper(this.trackNumber, 2);
   this.pan = 0;
   this.stopped      = true;
   this.justStarted  = true;
@@ -140,17 +142,25 @@ Metronome.prototype = {
   }
 };
 
+//////////////////////////////////////////////////////////////
+// play notes
+//////////////////////////////////////////////////////////////
+
+
 Metronome.prototype.playNote = function (index) {
     let playState = this.track.play();
     if (playState) {
-    let morphPercent = this.morph[0];
+      this.morph[0] = this.morphWrapper(this.trackNumber, 0);
+      this.morph[1] = this.morphWrapper(this.trackNumber, 1);
+      this.morph[2] = this.morphWrapper(this.trackNumber, 2);
+    // let morphPercent = this.morph[0];
     let coinToss = Math.floor(Math.random() * 100);
-    if (coinToss > morphPercent) {
+    if (coinToss > this.morph[0]) {
       this.morphOffset = 0;
     } else  {
       this.morphOffset = 10;
     };
-      this.playSound(players[this.trackNumber + this.morphOffset].soundFilename);
+    this.playSound(players[this.trackNumber + this.morphOffset].soundFilename);
     };
 };
 

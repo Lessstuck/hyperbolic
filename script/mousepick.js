@@ -432,11 +432,8 @@ world.fixedStep()
 for (let i = 0; i !== meshes.length; i++) {
     meshes[i].position.copy(bodies[i].position);
     dragPositions[i][0] = meshes[i].position.x; 
-    morphTrigger(i, 0);
     dragPositions[i][1] = meshes[i].position.y;
-    morphTrigger(i, 1);
     dragPositions[i][2] = meshes[i].position.z;
-    morphTrigger(i, 2);
     meshes[i].quaternion.copy(bodies[i].quaternion);
 }
 

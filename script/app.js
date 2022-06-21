@@ -1,28 +1,9 @@
 import {Metronome} from "./click.js";
 import {dragPositions} from "./mousepick.js";
 
-// let morphTriggers = {};
-// var morphs = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
-
-// console.log("what " + dragPositions[0][0])
-
 function morphTrigger(i, j) {
-  // for (let i = 0; i < dragPositions.length; i++)  {
-  //   for (let j = 0; j < 3; j++) {
-      // function morphTriggers[i][j]() {
-        // morphs[i][j] =  (dragPositions[i][j] + 5) * 10;  // scale webgl coords to 0-100 for morphing
-        // return  morphs[i][j];
         return (dragPositions[i][j] + 5) * 10;
-      // } 
     }
-//   }
-// }
-
-// function morphTrigger() {
-//   let morph = (dragPositions[0][0] + 5) * 10;  // scale webgl coords to 0-100 for morphing
-//   return morph;
-// };
-
 
 function browserFormat () {
   // if (navigator.userAgent.safari) {
