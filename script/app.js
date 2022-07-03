@@ -1,9 +1,10 @@
 import {Metronome} from "./click.js";
 import {dragPositions} from "./mousepick.js";
-
+/// maps dragPositions (-5 to +5) to morph values (0 to 100)
+/// i = body index, j = axis index
 function morphTrigger(i, j) {
-        return (dragPositions[i][j] + 5) * 10;
-    }
+  return (dragPositions[i][j] + 5) * 10;
+}
 
 function browserFormat () {
   // if (navigator.userAgent.safari) {

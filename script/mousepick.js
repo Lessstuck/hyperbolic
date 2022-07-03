@@ -133,13 +133,15 @@ scene.add(clickMarker)
 
 
 const ballMaterial = new THREE.MeshPhongMaterial({ color: 0x999999 })
-// Cube
-const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
-cubeMesh = new THREE.Mesh(cubeGeometry, ballMaterial)
-cubeMesh.castShadow = true
-meshes.push(cubeMesh)
-dragPositions[0] = [0,0,0]
-scene.add(cubeMesh)
+
+
+// Octahedron
+const octaGeometry = new THREE.OctahedronBufferGeometry(.5)
+octaMesh = new THREE.Mesh(octaGeometry, ballMaterial)
+octaMesh.castShadow = true
+meshes.push(octaMesh)
+dragPositions[2] = [0,2.5,0]
+scene.add(octaMesh)
 // Ball
 const ballGeometry = new THREE.SphereBufferGeometry(.5, 30, 30)
 ballMesh = new THREE.Mesh(ballGeometry, ballMaterial)
@@ -147,13 +149,13 @@ ballMesh.castShadow = true
 meshes.push(ballMesh)
 dragPositions[1] = [0,0,0]
 scene.add(ballMesh)
-// Octahedron
-const octaGeometry = new THREE.OctahedronBufferGeometry(.5)
-octaMesh = new THREE.Mesh(octaGeometry, ballMaterial)
-octaMesh.castShadow = true
-meshes.push(octaMesh)
-dragPositions[2] = [0,0,0]
-scene.add(octaMesh)
+// Cube
+const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
+cubeMesh = new THREE.Mesh(cubeGeometry, ballMaterial)
+cubeMesh.castShadow = true
+meshes.push(cubeMesh)
+dragPositions[0] = [0,-2.5,0]
+scene.add(cubeMesh)
 
 // Movement plane when dragging
 const planeGeometry = new THREE.PlaneBufferGeometry(100, 100)
@@ -233,28 +235,31 @@ world.addBody(planeZmax)
 // Balls
 const ballMaterial = new CANNON.Material()
 
-// Cube body
-const cubeShape = new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-cubeBody = new CANNON.Body({ mass: 5, material: ballMaterial})
-cubeBody.addShape(cubeShape)
-cubeBody.position.set(0, 0, 0)
-cubeBody.angularDamping = .3
-bodies.push(cubeBody)
-world.addBody(cubeBody)
-// Sphere body
-const ballShape = new CANNON.Sphere(.5, 12, 12)
-ballBody = new CANNON.Body({ mass: 5, material: ballMaterial})
-ballBody.addShape(ballShape)
-ballBody.position.set(0, 2.5, 0)
-bodies.push(ballBody)
-world.addBody(ballBody)
 // Octahedron body
 const octaShape = new CANNON.Sphere(.5) // no octahedron in CANNON
 octaBody = new CANNON.Body({ mass: 5, material: ballMaterial})
 octaBody.addShape(octaShape)
-octaBody.position.set(0, -2.5, 0)
+octaBody.position.set(0, 2.5, 0)
 bodies.push(octaBody)
 world.addBody(octaBody)
+
+// Sphere body
+const ballShape = new CANNON.Sphere(.5, 12, 12)
+ballBody = new CANNON.Body({ mass: 5, material: ballMaterial})
+ballBody.addShape(ballShape)
+ballBody.position.set(0, 0, 0)
+bodies.push(ballBody)
+world.addBody(ballBody)
+
+// Cube body
+const cubeShape = new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+cubeBody = new CANNON.Body({ mass: 5, material: ballMaterial})
+cubeBody.addShape(cubeShape)
+cubeBody.position.set(0, -2.5, 0)
+cubeBody.angularDamping = .3
+bodies.push(cubeBody)
+world.addBody(cubeBody)
+
 
 // Create contact material behaviour
 const worldBox_ball = new CANNON.ContactMaterial(worldBoxMaterial, ballMaterial, { friction: 0.0, restitution: 1 })
@@ -284,15 +289,15 @@ const octaHitPoint =  getHitPoint(event.clientX, event.clientY, octaMesh, camera
 // Return if one wasn't hit
 let hitPoint
 let hitBody
-if (cubeHitPoint) {
-    hitPoint = cubeHitPoint;
-    hitBody = cubeBody
+if (octaHitPoint) {
+    hitPoint = octaHitPoint;
+    hitBody = octaBody
 } else if (ballHitPoint) {
     hitPoint = ballHitPoint;
     hitBody = ballBody
-} else if (octaHitPoint) {
-    hitPoint = octaHitPoint;
-    hitBody = octaBody
+} else if (cubeHitPoint) {
+    hitPoint = cubeHitPoint;
+    hitBody = cubeBody 
 } else {
     return
 }
@@ -314,6 +319,7 @@ requestAnimationFrame(() => {
     isDragging = true
 })
 })
+
 
 window.addEventListener('pointermove', (event) => {
 if (!isDragging) {

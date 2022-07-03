@@ -1,29 +1,44 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-  <meta content="utf-8" http-equiv="encoding">
-  <title>Hyperbolic</title>
-  <link rel="stylesheet" href="./style/style.css" type="text/css" />
-  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-  <script type="text/javascript" src='script/jquery-3.6.0.js'></script>
-  <script type="text/javascript" src='bootstrap/js/bootstrap.min.js'></script>
-  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
-  <script type="module" src='script/noneuclidean/noneuclidean.mjs'></script>
-  <script type="module" src='script/click.js'></script>
-  <script type="module" src='script/app.js'></script>
-  <script type="module" src="script/mousepick.js"></script>
-</head>
-<body>
-  <div>
-    <div class="flex-container">
-      <a href="#" id='start' class='overlay'>start</a>
-      <a href="#" id='stop' class='overlay'>stop</a>
-      <input id="rate" class='overlay' type="range" value="106" min='60' max='140' style="width: 80px"/>
-      <a href="#" id='front' class='overlay'>front</a>
-      <a href="#" id='top' class='overlay'>top</a>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
+    <title>Hyperbolic</title>
+    <link rel="stylesheet" href="./style/style.css" type="text/css" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <script type="text/javascript" src="script/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="bootstrap/css/bootstrap.min.css"
+    />
+    <script type="module" src="script/noneuclidean/noneuclidean.mjs"></script>
+    <script type="module" src="script/click.js"></script>
+    <script type="module" src="script/app.js"></script>
+    <script type="module" src="script/mousepick.js"></script>
+  </head>
+  <body>
+    <div>
+      <div class="flex-container">
+        <a href="#" id="start" class="overlay">start</a>
+        <a href="#" id="stop" class="overlay">stop</a>
+        <input
+          id="rate"
+          class="overlay"
+          type="range"
+          value="106"
+          min="60"
+          max="140"
+          style="width: 80px"
+        />
+        <a href="#" id="front" class="overlay">front</a>
+        <a href="#" id="top" class="overlay">top</a>
+      </div>
     </div>
-  </div>
-  <div id="webgl"></div>
-</body>
+    <div id="webgl"></div>
+  </body>
 </html>

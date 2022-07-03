@@ -77,10 +77,10 @@ function Metronome (rateWrapper, meterWrapper, morphWrapper, trackNumber) {
   this.meterOptions = meterWrapper;
   this.morphWrapper = morphWrapper;
   this.trackNumber = trackNumber;
-  this.morph = [];
-  this.morph[0] = this.morphWrapper(this.trackNumber, 0);
-  this.morph[1] = this.morphWrapper(this.trackNumber, 1);
-  this.morph[2] = this.morphWrapper(this.trackNumber, 2);
+  this.morph = [[50, 50, 50], [50, 50, 50], [50, 50, 50]];
+  this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0);     ////// updated x position, mapped 0 - 100
+  this.morph[this.trackNumber][1] = this.morphWrapper(this.trackNumber, 1);
+  this.morph[this.trackNumber][2] = this.morphWrapper(this.trackNumber, 2);
   this.pan = 0;
   this.stopped      = true;
   this.justStarted  = true;
@@ -135,7 +135,7 @@ Metronome.prototype = {
     for (var i = 0; i < metronome.meter('beat'); i++) {
       (function (i) {
         metronome.barNotes[i] = Sequencer.timeout(function () {
-          metronome.playNote(i);
+          metronome.playNote(i);    // playnote is 16th note pulse. see definition directly below
         },i*metronome.temp()/metronome.meter('value'))
       })(i);
     }
@@ -147,21 +147,20 @@ Metronome.prototype = {
 //////////////////////////////////////////////////////////////
 
 
-Metronome.prototype.playNote = function (index) {
-    let playState = this.track.play();
-    if (playState) {
-      this.morph[0] = this.morphWrapper(this.trackNumber, 0);
-      this.morph[1] = this.morphWrapper(this.trackNumber, 1);
-      this.morph[2] = this.morphWrapper(this.trackNumber, 2);
-    // let morphPercent = this.morph[0];
-    let coinToss = Math.floor(Math.random() * 100);
-    if (coinToss > this.morph[0]) {
-      this.morphOffset = 0;
-    } else  {
-      this.morphOffset = 10;
-    };
-    this.playSound(players[this.trackNumber + this.morphOffset].soundFilename);
-    };
+Metronome.prototype.playNote = function (i) {
+  let playState = this.track.play();       // get track playState from noneuclidean.js
+  if (playState) {
+    this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0);
+    this.morph[this.trackNumber][1] = this.morphWrapper(this.trackNumber, 1); 
+    this.morph[this.trackNumber][2] = this.morphWrapper(this.trackNumber, 2);
+  let coinToss = Math.floor(Math.random() * 100);
+  if (coinToss > this.morph[this.trackNumber][1]) {
+    this.morphOffset = 0;
+  } else  {
+    this.morphOffset = 10;
+  };
+  this.playSound(players[this.trackNumber + this.morphOffset].soundFilename);
+  };
 };
 
 // pick notes at random from scale, then play
@@ -176,7 +175,7 @@ Metronome.prototype.playSound = function (buffer) {
   
   let linearGain = (Math.random() * .5 + .5) * players[this.trackNumber + this.morphOffset].level;
   this.gainNode.gain.value = linearGain * linearGain;   // easy hack to make volume a bit more logarithmic
-  this.panner.pan.value = (this.morph[0] / 50) - 1; // convert 0-100 to -1 to +1 for webaudio panner
+  this.panner.pan.value = (this.morph[this.trackNumber][0] * .02) - 1; // convert 0-100 to -1 to +1 for webaudio panner
   let scale = players[this.trackNumber + this.morphOffset].scale;
   this.source.detune.value = (scale[Math.floor(Math.random() * scale.length)] - 12) * 100;
   this.source.start(0);
@@ -191,7 +190,7 @@ Metronome.prototype.barInterval = function () {
   }
 };
 
-//////////////////////////////////// meter select
+//////////////////////////////////// meter select ///// UI disabled
 
 Metronome.prototype.meter = function (option) {
   // this[option] = this[option] || parseInt(this.meterOptions.find('#note_' + option + ' option:selected').text());
