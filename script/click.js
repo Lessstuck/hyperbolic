@@ -72,7 +72,7 @@ function createNewSound(fileName, parent) {
 };
 
 
-function Metronome (rateWrapper, meterWrapper, morphWrapper, trackNumber) {
+function Instrument (rateWrapper, meterWrapper, morphWrapper, trackNumber) {
   this.rate         = rateWrapper;
   this.meterOptions = meterWrapper;
   this.morphWrapper = morphWrapper;
@@ -88,14 +88,14 @@ function Metronome (rateWrapper, meterWrapper, morphWrapper, trackNumber) {
   this.sound = {};
   this.morphOffset = 0;
   
-  // create 2 sounds per metronome for morphing between
+  // create 2 sounds per instrument for morphing between
   createNewSound(players[trackNumber].soundFilename, this); 
   createNewSound(players[trackNumber + 10].soundFilename, this); 
   this.trackNumber  = trackNumber;
   this.track = players[trackNumber].track;
   return this; 
 };
-Metronome.prototype = {
+Instrument.prototype = {
   start: function () {
     iosSleepPreventInterval = setInterval(function () {
       window.location.href = "/new/page";
@@ -116,9 +116,9 @@ Metronome.prototype = {
     this.stopBar();
   },
   mainLoop: function () {
-    var metronome = this;
+    var instrument = this;
     this.timeout = Sequencer.timeout(function () {
-      metronome.runMainLoop();
+      instrument.runMainLoop();
     }, this.barInterval());  
     return this;
   },
@@ -130,13 +130,13 @@ Metronome.prototype = {
     return this.mainLoop();
   },
   innerLoop: function () {
-    var metronome = this;
-    metronome.barNotes = [];
-    for (var i = 0; i < metronome.meter('beat'); i++) {
+    var instrument = this;
+    instrument.barNotes = [];
+    for (var i = 0; i < instrument.meter('beat'); i++) {
       (function (i) {
-        metronome.barNotes[i] = Sequencer.timeout(function () {
-          metronome.playNote(i);    // playnote is 16th note pulse. see definition directly below
-        },i*metronome.temp()/metronome.meter('value'))
+        instrument.barNotes[i] = Sequencer.timeout(function () {
+          instrument.playNote(i);    // playnote is 16th note pulse. see definition directly below
+        },i*instrument.temp()/instrument.meter('value'))
       })(i);
     }
   }
@@ -147,7 +147,7 @@ Metronome.prototype = {
 //////////////////////////////////////////////////////////////
 
 
-Metronome.prototype.playNote = function (i) {
+Instrument.prototype.playNote = function (i) {
   let playState = this.track.play();       // get track playState from noneuclidean.js
   if (playState) {
     this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0);
@@ -164,7 +164,7 @@ Metronome.prototype.playNote = function (i) {
 };
 
 // pick notes at random from scale, then play
-Metronome.prototype.playSound = function (buffer) {
+Instrument.prototype.playSound = function (buffer) {
   this.gainNode = context.createGain();
   this.panner = context.createStereoPanner();
   this.source = context.createBufferSource();
@@ -181,7 +181,7 @@ Metronome.prototype.playSound = function (buffer) {
   this.source.start(0);
 }
 
-Metronome.prototype.barInterval = function () {
+Instrument.prototype.barInterval = function () {
   if (this.justStarted) {
     this.justStarted = false;
     return 0;
@@ -192,12 +192,12 @@ Metronome.prototype.barInterval = function () {
 
 //////////////////////////////////// meter select ///// UI disabled
 
-Metronome.prototype.meter = function (option) {
+Instrument.prototype.meter = function (option) {
   // this[option] = this[option] || parseInt(this.meterOptions.find('#note_' + option + ' option:selected').text());
   this[option] = 16;
   return this[option];
 };
-Metronome.prototype.temp = function () {
+Instrument.prototype.temp = function () {
   this.bpm = this.bpm || parseInt(this.rate.val());
   this.tempValue = 60/this.bpm*1000*4;
   return this.tempValue;
@@ -205,23 +205,23 @@ Metronome.prototype.temp = function () {
 
 
 
-Metronome.prototype.stopBar = function () {
+Instrument.prototype.stopBar = function () {
   for (var i = 0; i < this.barNotes.length; i++) 
     Sequencer.clearTimeout(this.barNotes[i]);
 };
-Metronome.prototype.listenEvents = function () {
-  var metronome = this;
+Instrument.prototype.listenEvents = function () {
+  var instrument = this;
 
 //////////////////////////////////// value select
-  metronome.meterOptions.find('select').change(function () {
+instrument.meterOptions.find('select').change(function () {
     var optionName = $(this).attr('id').split("note_")[1];
     var optionValue = 16;
     // var optionValue = parseInt($(this).find('option:selected').text());
-    metronome[optionName] = optionValue;
+    instrument[optionName] = optionValue;
   });
-  metronome.rate.bind('keyup change input', function () {
-    metronome.bpm = parseInt(this.value);
+  instrument.rate.bind('keyup change input', function () {
+    instrument.bpm = parseInt(this.value);
   });
 };
 
-export {Metronome};
+export {Instrument};

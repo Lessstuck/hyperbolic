@@ -1,4 +1,4 @@
-import {Metronome} from "./click.js";
+import {Instrument} from "./click.js";
 import {dragPositions} from "./mousepick.js";
 /// maps dragPositions (-5 to +5) to morph values (0 to 100)
 /// i = body index, j = axis index
@@ -9,7 +9,7 @@ function morphTrigger(i, j) {
   } else if (dragPositionClipped > 100) {
     dragPositionClipped = 100;
   }
-  return dragPositionClipped;
+  return Math.round(dragPositionClipped);
 }
 
 function browserFormat () {
@@ -32,23 +32,23 @@ $(document).ready(function () {
   }, false);
   var rateTrigger = $("#rate");
   var meterTrigger = $("#meter");
-  let metronomes = [];
+  let instruments = [];
 
-  metronomes[0] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 0);
-  metronomes[1] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 1);
-  metronomes[2] = new Metronome(rateTrigger, meterTrigger, morphTrigger, 2);
+  instruments[0] = new Instrument(rateTrigger, meterTrigger, morphTrigger, 0);
+  instruments[1] = new Instrument(rateTrigger, meterTrigger, morphTrigger, 1);
+  instruments[2] = new Instrument(rateTrigger, meterTrigger, morphTrigger, 2);
 
   $("#start").click(function (){
     if ($("#rate").val()) {
-      for (let metronome of metronomes){
-        metronome.start()
+      for (let instrument of instruments){
+        instrument.start()
     }
     return false;
     }
   });
   $("#stop").click(function (){
-    for (let metronome of metronomes){
-      metronome.stop()
+    for (let instrument of instruments){
+      instrument.stop()
     }
     return false;
   });
