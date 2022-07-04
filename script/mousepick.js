@@ -6,8 +6,6 @@ import * as CANNON from './cannon-es.js'
 import * as THREE from 'https://unpkg.com/three@0.122.0/build/three.module.js'
 import Stats from 'https://unpkg.com/three@0.122.0/examples/jsm/libs/stats.module.js'
 
-import {morphTrigger} from "./app.js";
-
 let dragPositions = {};
 
 // three.js variables
@@ -41,7 +39,7 @@ animate()
 function initThree() {
 // Camera
 camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.5, 1000)
-camera.position.set(0, 10, 0);
+camera.position.set(0, 0, 10);
 camera.lookAt(0, 0, 0)
 
 $("#front").click(function (){
@@ -286,6 +284,7 @@ window.addEventListener('pointerdown', (event) => {
 const cubeHitPoint = getHitPoint(event.clientX, event.clientY, cubeMesh, camera)
 const ballHitPoint =  getHitPoint(event.clientX, event.clientY, ballMesh, camera)
 const octaHitPoint =  getHitPoint(event.clientX, event.clientY, octaMesh, camera)
+// All 3 HitPoints are evaluated, but the if-else below will prioritize, for example, octa if both octa and ball are hit
 // Return if one wasn't hit
 let hitPoint
 let hitBody
@@ -435,7 +434,7 @@ requestAnimationFrame(animate)
 world.fixedStep()
 
 // Sync the three.js meshes with the bodies
-for (let i = 0; i !== meshes.length; i++) {
+for (let i = 0; i < meshes.length; i++) {
     meshes[i].position.copy(bodies[i].position);
     dragPositions[i][0] = meshes[i].position.x; 
     dragPositions[i][1] = meshes[i].position.y;

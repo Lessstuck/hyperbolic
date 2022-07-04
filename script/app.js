@@ -1,5 +1,7 @@
 import {Instrument} from "./click.js";
 import {dragPositions} from "./mousepick.js";
+
+
 /// maps dragPositions (-5 to +5) to morph values (0 to 100)
 /// i = body index, j = axis index
 function morphTrigger(i, j) {
@@ -9,7 +11,12 @@ function morphTrigger(i, j) {
   } else if (dragPositionClipped > 100) {
     dragPositionClipped = 100;
   }
-  return Math.round(dragPositionClipped);
+  dragPositionClipped = Math.round(dragPositionClipped);
+  if (i == 0)  {
+    console.log(`dragPosition: ${i} ${j} ${dragPositionClipped}`);
+  }
+
+  return dragPositionClipped;
 }
 
 function browserFormat () {
@@ -56,4 +63,4 @@ $(document).ready(function () {
 
 })
 
-export {browserFormat, morphTrigger};
+export {browserFormat};
