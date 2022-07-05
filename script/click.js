@@ -6,7 +6,7 @@ var context = new AudioContext();
 
 var iosSleepPreventInterval = null;
 
-class Player {
+class Preset {
   constructor (beatProb = [0.33, 0.33, 0.33],
     soundFilename     = 'low',
     level = [1],
@@ -21,24 +21,24 @@ class Player {
   }
 }
 
-// let players = [];
-// players[0]  = new Player ([0, 0, 0, 1, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [0, 4, 7, 9, 12]);
-// players[1]  = new Player ([1, 1, 0, 0], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
-// players[2]  = new Player ([], 'SOPHIE_snap_01', [0.5], [ 12]);
-// players[3]  = new Player ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_gravelbell', [.67], [12]);
-// players[10]  = new Player ([1, 0, 0, 0], 'low', [.67], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
-// players[11]  = new Player ([1, 1, 0, 0], 'low', [.67], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
-// players[12]  = new Player ([], 'med', [0.5], [ 12]);
-// players[13]  = new Player ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'high', [.67], [12]);
-let players = [];
-players[0]  = new Player ([0, 0, 0, 1, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [0, 4, 7, 9, 12]);
-players[1]  = new Player ([1, 1, 0, 0], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [0], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
-players[2]  = new Player ([], 'SOPHIE_snap_01', [0], [ 12]);
-players[3]  = new Player ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_gravelbell', [0], [12]);
-players[10]  = new Player ([1, 0, 0, 0], 'low', [.67], [12, 14, 16, 19, 21, 24]);
-players[11]  = new Player ([1, 1, 0, 0], 'low', [.0], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
-players[12]  = new Player ([], 'med', [0], [ 12]);
-players[13]  = new Player ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'high', [0], [12]);
+// let presets = [];
+// presets[0]  = new Preset ([0, 0, 0, 1, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [0, 4, 7, 9, 12]);
+// presets[1]  = new Preset ([1, 1, 0, 0], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
+// presets[2]  = new Preset ([], 'SOPHIE_snap_01', [0.5], [ 12]);
+// presets[3]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_gravelbell', [.67], [12]);
+// presets[10]  = new Preset ([1, 0, 0, 0], 'low', [.67], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
+// presets[11]  = new Preset ([1, 1, 0, 0], 'low', [.67], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
+// presets[12]  = new Preset ([], 'med', [0.5], [ 12]);
+// presets[13]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'high', [.67], [12]);
+let presets = [];
+presets[0]  = new Preset ([0, 0, 0, 1, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [0, 4, 7, 9, 12]);
+presets[1]  = new Preset ([1, 1, 0, 0], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [0], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
+presets[2]  = new Preset ([], 'SOPHIE_snap_01', [0], [ 12]);
+presets[3]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_gravelbell', [0], [12]);
+presets[10]  = new Preset ([1, 0, 0, 0], 'low', [.67], [12, 14, 16, 19, 21, 24]);
+presets[11]  = new Preset ([1, 1, 0, 0], 'low', [.0], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
+presets[12]  = new Preset ([], 'med', [0], [ 12]);
+presets[13]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'high', [0], [12]);
 
 
 const Sequencer = {
@@ -98,10 +98,10 @@ function Instrument (rateWrapper, meterWrapper, morphWrapper, trackNumber) {
   this.morphOffset = [0, 0, 0];
   
   // create 2 sounds per instrument for morphing between
-  createNewSound(players[trackNumber].soundFilename, this); 
-  createNewSound(players[trackNumber + 10].soundFilename, this); 
+  createNewSound(presets[trackNumber].soundFilename, this); 
+  createNewSound(presets[trackNumber + 10].soundFilename, this); 
   this.trackNumber  = trackNumber;
-  this.track = players[trackNumber].track;
+  this.track = presets[trackNumber].track;
   return this; 
 };
 Instrument.prototype = {
@@ -169,10 +169,8 @@ Instrument.prototype.playNote = function (i) {
     } else  {
       this.morphOffset[j] = 10;
     };
-
   }
-
-  this.playSound(players[this.trackNumber + this.morphOffset[1]].soundFilename);
+  this.playSound(presets[this.trackNumber + this.morphOffset[1]].soundFilename);
   };
 };
 
@@ -186,10 +184,10 @@ Instrument.prototype.playSound = function (buffer) {
   this.gainNode.connect(this.panner);
   this.panner.connect(context.destination);
   
-  let linearGain = (Math.random() * .5 + .5) * players[this.trackNumber + this.morphOffset[1]].level;
+  let linearGain = (Math.random() * .5 + .5) * presets[this.trackNumber + this.morphOffset[1]].level;
   this.gainNode.gain.value = linearGain * linearGain;   // easy hack to make volume a bit more logarithmic
   this.panner.pan.value = (this.morph[this.trackNumber][0] * .02) - 1; // convert 0-100 to -1 to +1 for webaudio panner
-  let scale = players[this.trackNumber + this.morphOffset[1]].scale;
+  let scale = presets[this.trackNumber + this.morphOffset[1]].scale;
   this.source.detune.value = (scale[Math.floor(Math.random() * scale.length)] - 12) * 100;
   this.source.start(0);
 }
