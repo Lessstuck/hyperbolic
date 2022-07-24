@@ -21,25 +21,16 @@ class Preset {
   }
 }
 
-// let presets = [];
-// presets[0]  = new Preset ([0, 0, 0, 1, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [0, 4, 7, 9, 12]);
-// presets[1]  = new Preset ([1, 1, 0, 0], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
-// presets[2]  = new Preset ([], 'SOPHIE_snap_01', [0.5], [ 12]);
-// presets[3]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_gravelbell', [.67], [12]);
-// presets[10]  = new Preset ([1, 0, 0, 0], 'low', [.67], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
-// presets[11]  = new Preset ([1, 1, 0, 0], 'low', [.67], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
-// presets[12]  = new Preset ([], 'med', [0.5], [ 12]);
-// presets[13]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'high', [.67], [12]);
 let presets = [];
-presets[0]  = new Preset ([0, 0, 0, 1, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [0, 4, 7, 9, 12]);
+presets[0]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C', [.67], [0, 4, 7, 9, 12]);
 presets[1]  = new Preset ([1, 1, 0, 0], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [0], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
 presets[2]  = new Preset ([], 'SOPHIE_snap_01', [0], [ 12]);
 presets[3]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_gravelbell', [0], [12]);
-presets[10]  = new Preset ([1, 0, 0, 0], 'low', [.67], [12, 14, 16, 19, 21, 24]);
+presets[10]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [12, 14, 16, 19, 21, 24]);
 presets[11]  = new Preset ([1, 1, 0, 0], 'low', [.0], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
 presets[12]  = new Preset ([], 'med', [0], [ 12]);
 presets[13]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'high', [0], [12]);
-
+ 
 
 const Sequencer = {
   timeout: function(callback, length) {
@@ -100,8 +91,7 @@ function Instrument (rateWrapper, meterWrapper, morphWrapper, trackNumber) {
   // create 2 sounds per instrument for morphing between
   createNewSound(presets[trackNumber].soundFilename, this); 
   createNewSound(presets[trackNumber + 10].soundFilename, this); 
-  this.trackNumber  = trackNumber;
-  this.track = presets[trackNumber].track;
+  // this.track = presets[this.trackNumber].track;
   return this; 
 };
 Instrument.prototype = {
@@ -157,11 +147,6 @@ Instrument.prototype = {
 
 
 Instrument.prototype.playNote = function (i) {
-  let playState = this.track.play();       // get track playState from noneuclidean.js
-  if (playState) {
-    this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0);
-    this.morph[this.trackNumber][1] = this.morphWrapper(this.trackNumber, 1); 
-    this.morph[this.trackNumber][2] = this.morphWrapper(this.trackNumber, 2);
   let coinToss = Math.floor(Math.random() * 100);
   for (let j = 0; j < this.morph.length; j++) {
     if (coinToss > this.morph[this.trackNumber][j]) {
@@ -170,6 +155,14 @@ Instrument.prototype.playNote = function (i) {
       this.morphOffset[j] = 10;
     };
   }
+  let chosenTrack = presets[this.trackNumber + this.morphOffset[0]].track;
+  
+  let playState = chosenTrack.play();       // get track playState from noneuclidean.js
+  if (playState) {
+    this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0);
+    this.morph[this.trackNumber][1] = this.morphWrapper(this.trackNumber, 1); 
+    this.morph[this.trackNumber][2] = this.morphWrapper(this.trackNumber, 2);
+
   this.playSound(presets[this.trackNumber + this.morphOffset[1]].soundFilename);
   };
 };

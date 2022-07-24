@@ -9,7 +9,7 @@ $("#low").click(function (){
   testMode = "low";
 });
 $("#high").click(function (){
-  testMode = "high";
+  testMode = "high"
 });
 
 
