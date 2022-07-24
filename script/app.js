@@ -1,22 +1,37 @@
 import {Instrument} from "./click.js";
 import {dragPositions} from "./mousepick.js";
 
+let testMode = "run";
+$("#run").click(function (){
+  testMode = "run";
+});
+$("#low").click(function (){
+  testMode = "low";
+});
+$("#high").click(function (){
+  testMode = "high";
+});
+
 
 /// maps dragPositions (-5 to +5) to morph values (0 to 100)
 /// i = body index, j = axis index
+let dragPositionClipped;
 function morphTrigger(i, j) {
-  let dragPositionClipped = (dragPositions[i][j] + 5) * 10;
-  if (dragPositionClipped < 0)  {
-    dragPositionClipped = 0;
-  } else if (dragPositionClipped > 100) {
-    dragPositionClipped = 100;
-  }
-  dragPositionClipped = Math.round(dragPositionClipped);
-  if (i == 0)  {
-    console.log(`dragPosition: ${i} ${j} ${dragPositionClipped}`);
+  if (testMode == "run")  {
+    dragPositionClipped = (dragPositions[i][j] + 5) * 10;
+    if (dragPositionClipped < 0)  {
+      dragPositionClipped = 0;
+    } else if (dragPositionClipped > 100) {
+      dragPositionClipped = 100;
+    }
+    dragPositionClipped = Math.round(dragPositionClipped);
+    return dragPositionClipped;
+  } else if (testMode == "low") {
+    return 0;
+  } else if (testMode == "high")  {
+    return 100;
   }
 
-  return dragPositionClipped;
 }
 
 function browserFormat () {
