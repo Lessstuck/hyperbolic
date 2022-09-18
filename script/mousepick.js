@@ -50,6 +50,9 @@ $("#top").click(function (){
     camera.position.set(0, 10, 0);
     camera.lookAt(0, 0, 0)
 })
+$("#fullscreen").click(function (){
+    openFullscreen();
+})
 
 // Scene
 scene = new THREE.Scene()
@@ -57,7 +60,8 @@ scene.fog = new THREE.Fog(0x000000, 500, 1000)
 
 // Renderer
 renderer = new THREE.WebGLRenderer({ antialias: true })
-renderer.setSize(window.innerWidth, window.innerHeight)
+renderer.setSize(window.innerWidth, window.innerHeight)     // swapped out for fullscreen
+// renderer.setSize(sceneWidth, sceneHeight);   //  suggested code
 renderer.setClearColor(scene.fog.color)
 
 renderer.outputEncoding = THREE.sRGBEncoding
@@ -162,19 +166,50 @@ movementPlane = new THREE.Mesh(planeGeometry, floorMaterial)
 movementPlane.visible = false // Hide it..
 scene.add(movementPlane)
 
+//////////  Fullscreen experiment   /////////////////////
+// from https://stackoverflow.com/questions/50568474/how-to-enter-fullscreen-in-three-js
+// reply by pera
+
+var myGlobalFullscreenModeVariable = 0;
+function openFullscreen() {
+    var elem = document.getElementById("webgl");
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) { /* Firefox */
+      elem.mozRequestFullscreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+      elem.msRequestFullscreen();
+    }
+    elem.style.width = '100%';
+    elem.style.height = '100%';
+    myGlobalFullscreenModeVariable = 1;
+    console.log("myGlobalFullscreenModeVariable" + " " + myGlobalFullscreenModeVariable)
+  }
+
+console.log("myGlobalFullscreenModeVariable" + " " + myGlobalFullscreenModeVariable)
 window.addEventListener('resize', onWindowResize)
-}
+}   
 
 function onWindowResize() {
-    var elem = document.getElementById("webgl");
-    var sceneWidth = window.innerWidth;
-    var sceneHeight = elem.offsetHeight;
-    // camera.aspect = window.innerWidth / window.innerHeight
-    // camera.updateProjectionMatrix()
-    // renderer.setSize(window.innerWidth, window.innerHeight)
-    camera.aspect = sceneWidth / sceneHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(sceneWidth, sceneHeight);
+    if ( myGlobalFullscreenModeVariable) {
+        var elem = document.getElementById("webgl");
+        var sceneWidth = window.innerWidth;
+        var sceneHeight = elem.offsetHeight;
+        camera.aspect = sceneWidth / sceneHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( sceneWidth, sceneHeight );
+    } else {
+        var elem = document.getElementById("webgl");
+        var sceneWidth = window.innerWidth;
+        var sceneHeight = elem.offsetHeight;
+        // var sceneHeight = window.innerHeight;
+        camera.aspect = sceneWidth / sceneHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(sceneWidth, sceneHeight);
+    }
+
 }
 
 
