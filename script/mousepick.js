@@ -6,6 +6,8 @@ import * as CANNON from './cannon-es.js'
 import * as THREE from 'https://unpkg.com/three@0.122.0/build/three.module.js'
 import Stats from 'https://unpkg.com/three@0.122.0/examples/jsm/libs/stats.module.js'
 
+"use strict";
+
 let dragPositions = {};
 
 // three.js variables
@@ -170,7 +172,7 @@ scene.add(movementPlane)
 // from https://stackoverflow.com/questions/50568474/how-to-enter-fullscreen-in-three-js
 // reply by pera
 
-var myGlobalFullscreenModeVariable = 0;
+var fullScreenMode = 0;
 function openFullscreen() {
     var elem = document.getElementById("webgl");
     if (elem.requestFullscreen) {
@@ -182,18 +184,18 @@ function openFullscreen() {
     } else if (elem.msRequestFullscreen) { /* IE/Edge */
       elem.msRequestFullscreen();
     }
-    elem.style.width = '100%';
-    elem.style.height = '100%';
-    myGlobalFullscreenModeVariable = 1;
-    console.log("myGlobalFullscreenModeVariable" + " " + myGlobalFullscreenModeVariable)
+    // elem.style.width = '100%';
+    // elem.style.height = '100%';
+    fullScreenMode = 1;
+    console.log("fullScreenMode" + " " + fullScreenMode)
   }
 
-console.log("myGlobalFullscreenModeVariable" + " " + myGlobalFullscreenModeVariable)
-window.addEventListener('resize', onWindowResize)
+window.addEventListener('resize', onWindowResize(fullScreenMode))
 }   
 
-function onWindowResize() {
-    if ( myGlobalFullscreenModeVariable) {
+function onWindowResize(fullScreenMode) {
+    console.log("resizeFullScreenMode" + " " + fullScreenMode)
+    if ( fullScreenMode) {
         var elem = document.getElementById("webgl");
         var sceneWidth = window.innerWidth;
         var sceneHeight = elem.offsetHeight;
@@ -209,6 +211,7 @@ function onWindowResize() {
         camera.updateProjectionMatrix();
         renderer.setSize(sceneWidth, sceneHeight);
     }
+    console.log("window.innerWidth " + window.innerWidth)
 
 }
 
