@@ -173,7 +173,7 @@ scene.add(movementPlane)
 
 
 function openFullscreen() {
-    var elem = document.getElementById("webgl");
+    var elem = document.getElementById("webgl-and-controls");
     if (elem.requestFullscreen) {
       elem.requestFullscreen();
     } else if (elem.mozRequestFullScreen) { /* Firefox */
@@ -183,6 +183,9 @@ function openFullscreen() {
     } else if (elem.msRequestFullscreen) { /* IE/Edge */
       elem.msRequestFullscreen();
     }
+    // elem.style.width = '100%';
+    // elem.style.height = '100%';
+
   }
 
   ////  get full screen state
@@ -199,7 +202,7 @@ function openFullscreen() {
         fullScreenMode = 1;
       } else {
           /* Run code when going back from fs mode */
-        fullScreenMode = 0;
+          fullScreenMode = 0;
       }
   }
 
@@ -211,22 +214,20 @@ window.addEventListener('resize', onWindowResize)
 function onWindowResize() {
     console.log("resize FullScreenMode" + " " + fullScreenMode)
     if ( fullScreenMode) {
-        var elem = document.getElementById("webgl");
+        var elem = document.getElementById("webgl-and-controls");
         var sceneWidth = window.innerWidth;
         var sceneHeight = elem.offsetHeight;
         camera.aspect = sceneWidth / sceneHeight;
         camera.updateProjectionMatrix();
         renderer.setSize( sceneWidth, sceneHeight );
-        console.log("fully screened")
     } else {
-        var elem = document.getElementById("webgl");
+        var elem = document.getElementById("webgl-and-controls");
         var sceneWidth = window.innerWidth;
         var sceneHeight = elem.offsetHeight;
         // var sceneHeight = window.innerHeight;
         camera.aspect = sceneWidth / sceneHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(sceneWidth, sceneHeight);
-        console.log("not fully screened")
     }
     console.log("window.innerWidth " + window.innerWidth)
 
