@@ -246,7 +246,8 @@ const worldBoxMaterial = new CANNON.Material('worldBox')
 const floorShape = new CANNON.Plane()
 const floorBody = new CANNON.Body({ mass: 0 , material: worldBoxMaterial})
 floorBody.addShape(floorShape)
-floorBody.position.set(0, -(window.innerHeight * .005), 0)
+// floorBody.position.set(0, -(window.innerHeight * .005), 0)
+floorBody.position.set(0, -5, 0)
 floorBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)    // rotation affects collision!!!
 world.addBody(floorBody)
 
@@ -255,7 +256,8 @@ const ceilingShape = new CANNON.Plane()
 const ceilingBody = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
 ceilingBody.addShape(ceilingShape)
 ceilingBody.quaternion.setFromEuler(Math.PI / 2, 0, 0)
-ceilingBody.position.set(0, (window.innerHeight * .005), 0)
+// ceilingBody.position.set(0, (window.innerHeight * .005), 0)
+ceilingBody.position.set(0, 5, 0)
 world.addBody(ceilingBody)
 
 // Plane -x
@@ -263,8 +265,8 @@ const planeShapeXmin = new CANNON.Plane()
 const planeXmin = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
 planeXmin.addShape(planeShapeXmin)
 planeXmin.quaternion.setFromEuler(0, Math.PI / 2, 0)
-// planeXmin.position.set(-5, 0, 0)
-planeXmin.position.set(-(window.innerWidth * .005), 0, 0)
+planeXmin.position.set(-5, 0, 0)
+// planeXmin.position.set(-(window.innerWidth * .005), 0, 0)
 world.addBody(planeXmin)
 
 // Plane +x
@@ -272,7 +274,8 @@ const planeShapeXmax = new CANNON.Plane()
 const planeXmax = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
 planeXmax.addShape(planeShapeXmax)
 planeXmax.quaternion.setFromEuler(0, -Math.PI / 2, 0)
-planeXmax.position.set((window.innerWidth * .005), 0, 0)
+// planeXmax.position.set((window.innerWidth * .005), 0, 0)
+planeXmax.position.set(5, 0, 0)
 world.addBody(planeXmax)
 
 // Plane -z
@@ -280,7 +283,8 @@ const planeShapeZmin = new CANNON.Plane()
 const planeZmin = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
 planeZmin.addShape(planeShapeZmin)
 planeZmin.quaternion.setFromEuler(0, 0, 0)
-planeZmin.position.set(0, 0, -(window.innerHeight * .005))
+// planeZmin.position.set(0, 0, -(window.innerHeight * .005))
+planeZmin.position.set(0, 0, -5)
 world.addBody(planeZmin)
 
 // Plane +z
@@ -288,7 +292,8 @@ const planeShapeZmax = new CANNON.Plane()
 const planeZmax = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
 planeZmax.addShape(planeShapeZmax)
 planeZmax.quaternion.setFromEuler(0, Math.PI, 0)
-planeZmax.position.set(0, 0, (window.innerHeight * .005))
+// planeZmax.position.set(0, 0, (window.innerHeight * .005))
+planeZmax.position.set(0, 0, 5)
 world.addBody(planeZmax)
 
 // Balls
