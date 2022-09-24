@@ -6,8 +6,7 @@ import * as CANNON from './cannon-es.js'
 import * as THREE from 'https://unpkg.com/three@0.122.0/build/three.module.js'
 import Stats from 'https://unpkg.com/three@0.122.0/examples/jsm/libs/stats.module.js'
 
-"use strict";
-
+var fullScreenMode = 0;
 let dragPositions = {};
 
 // three.js variables
@@ -27,7 +26,7 @@ let cubeBody
 let ballBody
 let octaBody
 
-let isDragging = false
+let isDragging = false;
 
 // To be synced
 const meshes = []
@@ -168,11 +167,11 @@ movementPlane = new THREE.Mesh(planeGeometry, floorMaterial)
 movementPlane.visible = false // Hide it..
 scene.add(movementPlane)
 
-//////////  Fullscreen experiment   /////////////////////
+//////////  Fullscreen or FullScreen   /////////////////////
 // from https://stackoverflow.com/questions/50568474/how-to-enter-fullscreen-in-three-js
 // reply by pera
 
-var fullScreenMode = 0;
+
 function openFullscreen() {
     var elem = document.getElementById("webgl");
     if (elem.requestFullscreen) {
@@ -184,17 +183,33 @@ function openFullscreen() {
     } else if (elem.msRequestFullscreen) { /* IE/Edge */
       elem.msRequestFullscreen();
     }
-    // elem.style.width = '100%';
-    // elem.style.height = '100%';
-    fullScreenMode = 1;
-    console.log("fullScreenMode" + " " + fullScreenMode)
   }
 
-window.addEventListener('resize', onWindowResize(fullScreenMode))
+  ////  get full screen state
+  if (document.addEventListener)
+  {
+      document.addEventListener('webkitfullscreenchange', fsChangeHandler, false);
+      document.addEventListener('mozfullscreenchange', fsChangeHandler, false);
+      document.addEventListener('fullscreenchange', fsChangeHandler, false);
+      document.addEventListener('MSFullscreenChange', fsChangeHandler, false);
+  }
+  function fsChangeHandler()
+  {
+      if (document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement !== undefined) {
+        fullScreenMode = 1;
+      } else {
+          /* Run code when going back from fs mode */
+        fullScreenMode = 0;
+      }
+  }
+
+
+
+window.addEventListener('resize', onWindowResize)
 }   
 
-function onWindowResize(fullScreenMode) {
-    console.log("resizeFullScreenMode" + " " + fullScreenMode)
+function onWindowResize() {
+    console.log("resize FullScreenMode" + " " + fullScreenMode)
     if ( fullScreenMode) {
         var elem = document.getElementById("webgl");
         var sceneWidth = window.innerWidth;
@@ -202,6 +217,7 @@ function onWindowResize(fullScreenMode) {
         camera.aspect = sceneWidth / sceneHeight;
         camera.updateProjectionMatrix();
         renderer.setSize( sceneWidth, sceneHeight );
+        console.log("fully screened")
     } else {
         var elem = document.getElementById("webgl");
         var sceneWidth = window.innerWidth;
@@ -210,6 +226,7 @@ function onWindowResize(fullScreenMode) {
         camera.aspect = sceneWidth / sceneHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(sceneWidth, sceneHeight);
+        console.log("not fully screened")
     }
     console.log("window.innerWidth " + window.innerWidth)
 
