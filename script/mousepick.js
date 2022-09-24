@@ -63,8 +63,7 @@ scene.fog = new THREE.Fog(0x000000, 500, 1000)
 
 // Renderer
 renderer = new THREE.WebGLRenderer({ antialias: true })
-// renderer.setSize(window.innerWidth, window.innerHeight)     // swapped out for fullscreen
-renderer.setSize(sceneWidth, sceneHeight);   //  suggested code
+renderer.setSize(sceneWidth, sceneHeight);
 renderer.setClearColor(scene.fog.color)
 
 renderer.outputEncoding = THREE.sRGBEncoding
@@ -214,7 +213,6 @@ window.addEventListener('resize', onWindowResize)
 }   
 
 function onWindowResize() {
-    console.log("resize FullScreenMode" + " " + fullScreenMode)
     if ( fullScreenMode) {
         var elem = document.getElementById("webgl-and-controls");
         var sceneWidth = window.innerWidth;
@@ -230,8 +228,6 @@ function onWindowResize() {
         camera.updateProjectionMatrix();
         renderer.setSize(sceneWidth, sceneHeight);
     }
-    console.log("window.innerWidth " + window.innerWidth)
-
 }
 
 
