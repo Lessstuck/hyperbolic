@@ -7,6 +7,8 @@ import * as THREE from 'https://unpkg.com/three@0.122.0/build/three.module.js'
 import Stats from 'https://unpkg.com/three@0.122.0/examples/jsm/libs/stats.module.js'
 
 var fullScreenMode = 0;
+var sceneWidth = window.innerWidth;
+var sceneHeight = window.innerHeight;
 let dragPositions = {};
 
 // three.js variables
@@ -61,8 +63,8 @@ scene.fog = new THREE.Fog(0x000000, 500, 1000)
 
 // Renderer
 renderer = new THREE.WebGLRenderer({ antialias: true })
-renderer.setSize(window.innerWidth, window.innerHeight)     // swapped out for fullscreen
-// renderer.setSize(sceneWidth, sceneHeight);   //  suggested code
+// renderer.setSize(window.innerWidth, window.innerHeight)     // swapped out for fullscreen
+renderer.setSize(sceneWidth, sceneHeight);   //  suggested code
 renderer.setClearColor(scene.fog.color)
 
 renderer.outputEncoding = THREE.sRGBEncoding
@@ -216,15 +218,14 @@ function onWindowResize() {
     if ( fullScreenMode) {
         var elem = document.getElementById("webgl-and-controls");
         var sceneWidth = window.innerWidth;
-        var sceneHeight = elem.offsetHeight;
+        var sceneHeight = window.innerHeight;
         camera.aspect = sceneWidth / sceneHeight;
         camera.updateProjectionMatrix();
         renderer.setSize( sceneWidth, sceneHeight );
     } else {
         var elem = document.getElementById("webgl-and-controls");
         var sceneWidth = window.innerWidth;
-        var sceneHeight = elem.offsetHeight;
-        // var sceneHeight = window.innerHeight;
+        var sceneHeight = window.innerHeight;
         camera.aspect = sceneWidth / sceneHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(sceneWidth, sceneHeight);
