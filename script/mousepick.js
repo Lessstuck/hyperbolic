@@ -301,7 +301,7 @@ const ballMaterial = new CANNON.Material()
 
 // Octahedron body
 const octaShape = new CANNON.Sphere(.5) // no octahedron in CANNON
-octaBody = new CANNON.Body({ mass: 5, material: ballMaterial})
+octaBody = new CANNON.Body({ mass: 5, material: ballMaterial, angularDamping: .8})
 octaBody.addShape(octaShape)
 octaBody.position.set(0, 2.5, 0)
 bodies.push(octaBody)
@@ -326,7 +326,7 @@ world.addBody(cubeBody)
 
 
 // Create contact material behaviour
-const worldBox_ball = new CANNON.ContactMaterial(worldBoxMaterial, ballMaterial, { friction: 0.0, restitution: 1 })
+const worldBox_ball = new CANNON.ContactMaterial(worldBoxMaterial, ballMaterial, { friction: 0.0, restitution: .4 })
 world.addContactMaterial(worldBox_ball)
 
 // Joint body, to later constraint the cube
