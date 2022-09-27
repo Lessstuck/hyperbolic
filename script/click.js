@@ -1,6 +1,8 @@
 import {Track} from "./noneuclidean/noneuclidean.mjs";
 import {browserFormat} from "./app.js";
-// import {ballMaterial} from "./mousepick.js";
+import * as THREE from 'https://unpkg.com/three@0.122.0/build/three.module.js'
+import {ballMaterial} from "./mousepick.js";
+// console.log("ballMaterial.color: " + ballMaterial.color);
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 var context = new AudioContext();
@@ -166,7 +168,6 @@ Instrument.prototype.playNote = function (i) {
     // ballMaterial.color = 0x999999;
     this.playSound(presets[this.trackNumber + this.morphOffset[1]].soundFilename);
   } else {
-    // ballMaterial.color = 0x222222;
   };
 };
 

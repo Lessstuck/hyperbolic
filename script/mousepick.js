@@ -19,6 +19,7 @@ let raycaster
 let cubeMesh
 let ballMesh
 let octaMesh
+var ballMaterial;
 
 // cannon.js variables
 let world
@@ -40,176 +41,181 @@ animate()
 
 
 function initThree() {
-// Camera
-camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.5, 1000)
-camera.position.set(0, 0, 10);
-camera.lookAt(0, 0, 0)
-
-$("#front").click(function (){
+    // Camera
+    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.5, 1000)
     camera.position.set(0, 0, 10);
     camera.lookAt(0, 0, 0)
-})
-$("#top").click(function (){
-    camera.position.set(0, 10, 0);
-    camera.lookAt(0, 0, 0)
-})
-$("#fullscreen").click(function (){
-    openFullscreen();
-})
 
-// Scene
-scene = new THREE.Scene()
-scene.fog = new THREE.Fog(0x000000, 500, 1000)
+    $("#front").click(function (){
+        camera.position.set(0, 0, 10);
+        camera.lookAt(0, 0, 0)
+    })
+    $("#top").click(function (){
+        camera.position.set(0, 10, 0);
+        camera.lookAt(0, 0, 0)
+    })
+    $("#fullscreen").click(function (){
+        openFullscreen();
+    })
 
-// Renderer
-renderer = new THREE.WebGLRenderer({ antialias: true })
-renderer.setSize(sceneWidth, sceneHeight);
-renderer.setClearColor(scene.fog.color)
+    // Scene
+    scene = new THREE.Scene()
+    scene.fog = new THREE.Fog(0x000000, 500, 1000)
 
-renderer.outputEncoding = THREE.sRGBEncoding
+    // Renderer
+    renderer = new THREE.WebGLRenderer({ antialias: true })
+    renderer.setSize(sceneWidth, sceneHeight);
+    renderer.setClearColor(scene.fog.color)
 
-renderer.shadowMap.enabled = true
-renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    renderer.outputEncoding = THREE.sRGBEncoding
 
-document.getElementById('webgl').appendChild(renderer.domElement);
+    renderer.shadowMap.enabled = true
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
-// Stats.js
-stats = new Stats()
-// document.body.appendChild(stats.dom)
+    document.getElementById('webgl').appendChild(renderer.domElement);
 
-// Lights
-const ambientLight = new THREE.AmbientLight(0x666666)
-scene.add(ambientLight)
+    // Stats.js
+    stats = new Stats()
+    // document.body.appendChild(stats.dom)
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2)
-const distance = 20
-directionalLight.position.set(-distance, distance, distance)
+    // Lights
+    const ambientLight = new THREE.AmbientLight(0x666666)
+    scene.add(ambientLight)
 
-directionalLight.castShadow = true
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2)
+    const distance = 20
+    directionalLight.position.set(-distance, distance, distance)
 
-directionalLight.shadow.mapSize.width = 2048
-directionalLight.shadow.mapSize.height = 2048
+    directionalLight.castShadow = true
 
-directionalLight.shadow.camera.left = -distance
-directionalLight.shadow.camera.right = distance
-directionalLight.shadow.camera.top = distance
-directionalLight.shadow.camera.bottom = -distance
+    directionalLight.shadow.mapSize.width = 2048
+    directionalLight.shadow.mapSize.height = 2048
 
-directionalLight.shadow.camera.far = 3 * distance
-directionalLight.shadow.camera.near = distance
+    directionalLight.shadow.camera.left = -distance
+    directionalLight.shadow.camera.right = distance
+    directionalLight.shadow.camera.top = distance
+    directionalLight.shadow.camera.bottom = -distance
 
-scene.add(directionalLight)
+    directionalLight.shadow.camera.far = 3 * distance
+    directionalLight.shadow.camera.near = distance
 
-// Raycaster for mouse interaction
-raycaster = new THREE.Raycaster()
+    scene.add(directionalLight)
 
-
-/////////////////////////////////////////////////////////////////////////////
-//  geometries
-/////////////////////////////////////////////////////////////////////////////
-
-// Floor
-// const floorGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1) 
-const floorGeometry = new THREE.PlaneBufferGeometry(window.innerWidth, window.innerHeight)
-floorGeometry.rotateX(-Math.PI / 2)
-const floorMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 })
-floorMaterial.side = THREE.DoubleSide
-const floor = new THREE.Mesh(floorGeometry, floorMaterial)
-floor.receiveShadow = true
-floor.position.y = -5
-scene.add(floor)
-// Ceiling
-const ceilingGeometry = new THREE.PlaneBufferGeometry(window.innerWidth, window.innerHeight)
-ceilingGeometry.rotateX(-Math.PI / 2)
-const ceilngMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 })
-ceilngMaterial.side = THREE.DoubleSide
-const ceiling = new THREE.Mesh(ceilingGeometry, ceilngMaterial)
-ceiling.receiveShadow = true
-ceiling.position.y = 5
-// scene.add(ceiling)
+    // Raycaster for mouse interaction
+    raycaster = new THREE.Raycaster()
 
 
-// Click marker to be shown on interaction
-const markerGeometry = new THREE.SphereBufferGeometry(0.2, 8, 8)
-const markerMaterial = new THREE.MeshLambertMaterial({ color: 0xff0000 })
-clickMarker = new THREE.Mesh(markerGeometry, markerMaterial)
-clickMarker.visible = false // Hide it..
-scene.add(clickMarker)
+    /////////////////////////////////////////////////////////////////////////////
+    //  geometries
+    /////////////////////////////////////////////////////////////////////////////
+
+    // Floor
+    // const floorGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1) 
+    const floorGeometry = new THREE.PlaneBufferGeometry(window.innerWidth, window.innerHeight)
+    floorGeometry.rotateX(-Math.PI / 2)
+    const floorMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 })
+    floorMaterial.side = THREE.DoubleSide
+    const floor = new THREE.Mesh(floorGeometry, floorMaterial)
+    floor.receiveShadow = true
+    floor.position.y = -5
+    scene.add(floor)
+    // Ceiling
+    const ceilingGeometry = new THREE.PlaneBufferGeometry(window.innerWidth, window.innerHeight)
+    ceilingGeometry.rotateX(-Math.PI / 2)
+    const ceilngMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 })
+    ceilngMaterial.side = THREE.DoubleSide
+    const ceiling = new THREE.Mesh(ceilingGeometry, ceilngMaterial)
+    ceiling.receiveShadow = true
+    ceiling.position.y = 5
+    // scene.add(ceiling)
 
 
-const ballMaterial = new THREE.MeshPhongMaterial({ color: 0x999999 })
+    // Click marker to be shown on interaction
+    const markerGeometry = new THREE.SphereBufferGeometry(0.2, 8, 8)
+    const markerMaterial = new THREE.MeshLambertMaterial({ color: 0xff0000 })
+    clickMarker = new THREE.Mesh(markerGeometry, markerMaterial)
+    clickMarker.visible = false // Hide it..
+    scene.add(clickMarker)
 
 
-// Octahedron
-const octaGeometry = new THREE.OctahedronBufferGeometry(.5)
-octaMesh = new THREE.Mesh(octaGeometry, ballMaterial)
-octaMesh.castShadow = true
-meshes.push(octaMesh)
-dragPositions[2] = [0,2.5,0]
-scene.add(octaMesh)
-// Ball
-const ballGeometry = new THREE.SphereBufferGeometry(.5, 30, 30)
-ballMesh = new THREE.Mesh(ballGeometry, ballMaterial)
-ballMesh.castShadow = true
-meshes.push(ballMesh)
-dragPositions[1] = [0,0,0]
-scene.add(ballMesh)
-// Cube
-const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
-cubeMesh = new THREE.Mesh(cubeGeometry, ballMaterial)
-cubeMesh.castShadow = true
-meshes.push(cubeMesh)
-dragPositions[0] = [0,-2.5,0]
-scene.add(cubeMesh)
+    // ballMaterial = new THREE.MeshPhongMaterial({ color: 0x999999 })
 
-// Movement plane when dragging
-const planeGeometry = new THREE.PlaneBufferGeometry(100, 100)
-movementPlane = new THREE.Mesh(planeGeometry, floorMaterial)
-movementPlane.visible = false // Hide it..
-scene.add(movementPlane)
+    let ballDarkMaterial = new THREE.MeshPhongMaterial({ color: 0x111111 })
+    let ballLightMaterial = new THREE.MeshPhongMaterial({ color: 0x777777 })
 
-//////////  Fullscreen or FullScreen   /////////////////////
-// from https://stackoverflow.com/questions/50568474/how-to-enter-fullscreen-in-three-js
-// reply by pera
+    // Octahedron
+    const octaGeometry = new THREE.OctahedronBufferGeometry(.5)
+    octaMesh = new THREE.Mesh(octaGeometry, ballMaterial)
+    octaMesh.material = ballDarkMaterial;
+    octaMesh.castShadow = true
+    meshes.push(octaMesh)
+    dragPositions[2] = [0,2.5,0]
+    scene.add(octaMesh)
+    // Ball
+    const ballGeometry = new THREE.SphereBufferGeometry(.5, 30, 30)
+    ballMesh = new THREE.Mesh(ballGeometry, ballMaterial)
+    ballMesh.material = ballDarkMaterial;
+    ballMesh.castShadow = true
+    meshes.push(ballMesh)
+    dragPositions[1] = [0,0,0]
+    scene.add(ballMesh)
+    // Cube
+    const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
+    cubeMesh = new THREE.Mesh(cubeGeometry, ballMaterial)
+    cubeMesh.material = ballDarkMaterial;
+    cubeMesh.castShadow = true
+    meshes.push(cubeMesh)
+    dragPositions[0] = [0,-2.5,0]
+    scene.add(cubeMesh)
+
+    // Movement plane when dragging
+    const planeGeometry = new THREE.PlaneBufferGeometry(100, 100)
+    movementPlane = new THREE.Mesh(planeGeometry, floorMaterial)
+    movementPlane.visible = false // Hide it..
+    scene.add(movementPlane)
+
+    //////////  Fullscreen or FullScreen   /////////////////////
+    // from https://stackoverflow.com/questions/50568474/how-to-enter-fullscreen-in-three-js
+    // reply by pera
 
 
-function openFullscreen() {
-    var elem = document.getElementById("webgl-and-controls");
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    } else if (elem.mozRequestFullScreen) { /* Firefox */
-      elem.mozRequestFullscreen();
-    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-      elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) { /* IE/Edge */
-      elem.msRequestFullscreen();
+    function openFullscreen() {
+        var elem = document.getElementById("webgl-and-controls");
+        if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+        } else if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+        }
+        // elem.style.width = '100%';
+        // elem.style.height = '100%';
+
     }
-    // elem.style.width = '100%';
-    // elem.style.height = '100%';
 
-  }
-
-  ////  get full screen state
-  if (document.addEventListener)
-  {
-      document.addEventListener('webkitfullscreenchange', fsChangeHandler, false);
-      document.addEventListener('mozfullscreenchange', fsChangeHandler, false);
-      document.addEventListener('fullscreenchange', fsChangeHandler, false);
-      document.addEventListener('MSFullscreenChange', fsChangeHandler, false);
-  }
-  function fsChangeHandler()
-  {
-      if (document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement !== undefined) {
-        fullScreenMode = 1;
-      } else {
-          /* Run code when going back from fs mode */
-          fullScreenMode = 0;
-      }
-  }
+    ////  get full screen state
+    if (document.addEventListener)
+    {
+        document.addEventListener('webkitfullscreenchange', fsChangeHandler, false);
+        document.addEventListener('mozfullscreenchange', fsChangeHandler, false);
+        document.addEventListener('fullscreenchange', fsChangeHandler, false);
+        document.addEventListener('MSFullscreenChange', fsChangeHandler, false);
+    }
+    function fsChangeHandler()
+    {
+        if (document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement !== undefined) {
+            fullScreenMode = 1;
+        } else {
+            /* Run code when going back from fs mode */
+            fullScreenMode = 0;
+        }
+    }
 
 
 
-window.addEventListener('resize', onWindowResize)
+    window.addEventListener('resize', onWindowResize)
 }   
 
 function onWindowResize() {
@@ -237,105 +243,105 @@ function onWindowResize() {
 
 
 function initCannon() {
-// Setup world
-world = new CANNON.World()
-world.gravity.set(0, 0, 0)
-const worldBoxMaterial = new CANNON.Material('worldBox')
+    // Setup world
+    world = new CANNON.World()
+    world.gravity.set(0, 0, 0)
+    const worldBoxMaterial = new CANNON.Material('worldBox')
 
-// Floor
-const floorShape = new CANNON.Plane()
-const floorBody = new CANNON.Body({ mass: 0 , material: worldBoxMaterial})
-floorBody.addShape(floorShape)
-// floorBody.position.set(0, -(window.innerHeight * .005), 0)
-floorBody.position.set(0, -5, 0)
-floorBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)    // rotation affects collision!!!
-world.addBody(floorBody)
+    // Floor
+    const floorShape = new CANNON.Plane()
+    const floorBody = new CANNON.Body({ mass: 0 , material: worldBoxMaterial})
+    floorBody.addShape(floorShape)
+    // floorBody.position.set(0, -(window.innerHeight * .005), 0)
+    floorBody.position.set(0, -5, 0)
+    floorBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)    // rotation affects collision!!!
+    world.addBody(floorBody)
 
-// Ceiling
-const ceilingShape = new CANNON.Plane()
-const ceilingBody = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
-ceilingBody.addShape(ceilingShape)
-ceilingBody.quaternion.setFromEuler(Math.PI / 2, 0, 0)
-// ceilingBody.position.set(0, (window.innerHeight * .005), 0)
-ceilingBody.position.set(0, 5, 0)
-world.addBody(ceilingBody)
+    // Ceiling
+    const ceilingShape = new CANNON.Plane()
+    const ceilingBody = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
+    ceilingBody.addShape(ceilingShape)
+    ceilingBody.quaternion.setFromEuler(Math.PI / 2, 0, 0)
+    // ceilingBody.position.set(0, (window.innerHeight * .005), 0)
+    ceilingBody.position.set(0, 5, 0)
+    world.addBody(ceilingBody)
 
-// Plane -x
-const planeShapeXmin = new CANNON.Plane()
-const planeXmin = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
-planeXmin.addShape(planeShapeXmin)
-planeXmin.quaternion.setFromEuler(0, Math.PI / 2, 0)
-planeXmin.position.set(-5, 0, 0)
-// planeXmin.position.set(-(window.innerWidth * .005), 0, 0)
-world.addBody(planeXmin)
+    // Plane -x
+    const planeShapeXmin = new CANNON.Plane()
+    const planeXmin = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
+    planeXmin.addShape(planeShapeXmin)
+    planeXmin.quaternion.setFromEuler(0, Math.PI / 2, 0)
+    planeXmin.position.set(-5, 0, 0)
+    // planeXmin.position.set(-(window.innerWidth * .005), 0, 0)
+    world.addBody(planeXmin)
 
-// Plane +x
-const planeShapeXmax = new CANNON.Plane()
-const planeXmax = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
-planeXmax.addShape(planeShapeXmax)
-planeXmax.quaternion.setFromEuler(0, -Math.PI / 2, 0)
-// planeXmax.position.set((window.innerWidth * .005), 0, 0)
-planeXmax.position.set(5, 0, 0)
-world.addBody(planeXmax)
+    // Plane +x
+    const planeShapeXmax = new CANNON.Plane()
+    const planeXmax = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
+    planeXmax.addShape(planeShapeXmax)
+    planeXmax.quaternion.setFromEuler(0, -Math.PI / 2, 0)
+    // planeXmax.position.set((window.innerWidth * .005), 0, 0)
+    planeXmax.position.set(5, 0, 0)
+    world.addBody(planeXmax)
 
-// Plane -z
-const planeShapeZmin = new CANNON.Plane()
-const planeZmin = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
-planeZmin.addShape(planeShapeZmin)
-planeZmin.quaternion.setFromEuler(0, 0, 0)
-// planeZmin.position.set(0, 0, -(window.innerHeight * .005))
-planeZmin.position.set(0, 0, -5)
-world.addBody(planeZmin)
+    // Plane -z
+    const planeShapeZmin = new CANNON.Plane()
+    const planeZmin = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
+    planeZmin.addShape(planeShapeZmin)
+    planeZmin.quaternion.setFromEuler(0, 0, 0)
+    // planeZmin.position.set(0, 0, -(window.innerHeight * .005))
+    planeZmin.position.set(0, 0, -5)
+    world.addBody(planeZmin)
 
-// Plane +z
-const planeShapeZmax = new CANNON.Plane()
-const planeZmax = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
-planeZmax.addShape(planeShapeZmax)
-planeZmax.quaternion.setFromEuler(0, Math.PI, 0)
-// planeZmax.position.set(0, 0, (window.innerHeight * .005))
-planeZmax.position.set(0, 0, 5)
-world.addBody(planeZmax)
+    // Plane +z
+    const planeShapeZmax = new CANNON.Plane()
+    const planeZmax = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
+    planeZmax.addShape(planeShapeZmax)
+    planeZmax.quaternion.setFromEuler(0, Math.PI, 0)
+    // planeZmax.position.set(0, 0, (window.innerHeight * .005))
+    planeZmax.position.set(0, 0, 5)
+    world.addBody(planeZmax)
 
-// Balls
-const ballMaterial = new CANNON.Material()
+    // Balls
+    const ballCannonMaterial = new CANNON.Material()
 
-// Octahedron body
-const octaShape = new CANNON.Sphere(.5) // no octahedron in CANNON
-octaBody = new CANNON.Body({ mass: 5, material: ballMaterial, angularDamping: .8})
-octaBody.addShape(octaShape)
-octaBody.position.set(0, 2.5, 0)
-bodies.push(octaBody)
-world.addBody(octaBody)
+    // Octahedron body
+    const octaShape = new CANNON.Sphere(.5) // no octahedron in CANNON
+    octaBody = new CANNON.Body({ mass: 5, material: ballCannonMaterial, angularDamping: .8})
+    octaBody.addShape(octaShape)
+    octaBody.position.set(0, 2.5, 0)
+    bodies.push(octaBody)
+    world.addBody(octaBody)
 
-// Sphere body
-const ballShape = new CANNON.Sphere(.5, 12, 12)
-ballBody = new CANNON.Body({ mass: 5, material: ballMaterial})
-ballBody.addShape(ballShape)
-ballBody.position.set(0, 0, 0)
-bodies.push(ballBody)
-world.addBody(ballBody)
+    // Sphere body
+    const ballShape = new CANNON.Sphere(.5, 12, 12)
+    ballBody = new CANNON.Body({ mass: 5, material: ballCannonMaterial})
+    ballBody.addShape(ballShape)
+    ballBody.position.set(0, 0, 0)
+    bodies.push(ballBody)
+    world.addBody(ballBody)
 
-// Cube body
-const cubeShape = new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-cubeBody = new CANNON.Body({ mass: 5, material: ballMaterial})
-cubeBody.addShape(cubeShape)
-cubeBody.position.set(0, -2.5, 0)
-cubeBody.angularDamping = .3
-bodies.push(cubeBody)
-world.addBody(cubeBody)
+    // Cube body
+    const cubeShape = new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+    cubeBody = new CANNON.Body({ mass: 5, material: ballCannonMaterial})
+    cubeBody.addShape(cubeShape)
+    cubeBody.position.set(0, -2.5, 0)
+    cubeBody.angularDamping = .3
+    bodies.push(cubeBody)
+    world.addBody(cubeBody)
 
 
-// Create contact material behaviour
-const worldBox_ball = new CANNON.ContactMaterial(worldBoxMaterial, ballMaterial, { friction: 0.0, restitution: .4 })
-world.addContactMaterial(worldBox_ball)
+    // Create contact material behaviour
+    const worldBox_ball = new CANNON.ContactMaterial(worldBoxMaterial, ballCannonMaterial, { friction: 0.0, restitution: .4 })
+    world.addContactMaterial(worldBox_ball)
 
-// Joint body, to later constraint the cube
-const jointShape = new CANNON.Sphere(0.1)
-jointBody = new CANNON.Body({ mass: 0 })
-jointBody.addShape(jointShape)
-jointBody.collisionFilterGroup = 0
-jointBody.collisionFilterMask = 0
-world.addBody(jointBody)
+    // Joint body, to later constraint the cube
+    const jointShape = new CANNON.Sphere(0.1)
+    jointBody = new CANNON.Body({ mass: 0 })
+    jointBody.addShape(jointShape)
+    jointBody.collisionFilterGroup = 0
+    jointBody.collisionFilterMask = 0
+    world.addBody(jointBody)
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -514,4 +520,7 @@ renderer.render(scene, camera)
 stats.update()
 }
 
-export {dragPositions};
+console.log("mousepick ballMaterial: " + ballMaterial);
+
+
+export {dragPositions, ballMaterial};
