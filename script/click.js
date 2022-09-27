@@ -1,5 +1,6 @@
 import {Track} from "./noneuclidean/noneuclidean.mjs";
 import {browserFormat} from "./app.js";
+// import {ballMaterial} from "./mousepick.js";
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 var context = new AudioContext();
@@ -22,12 +23,12 @@ class Preset {
 }
 
 let presets = [];
-presets[0]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C', [.67], [0, 4, 7, 9, 12]);
-presets[1]  = new Preset ([1, 1, 0, 0], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [0], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
+presets[0]  = new Preset ([1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_solobell', [.50], [12, 16]);
+presets[1]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C', [.67], [0, 4, 7, 9, 12]);
 presets[2]  = new Preset ([], 'SOPHIE_snap_01', [0], [ 12]);
 presets[3]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_gravelbell', [0], [12]);
-presets[10]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [12, 14, 16, 19, 21, 24]);
-presets[11]  = new Preset ([1, 1, 0, 0], 'low', [.0], [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]);
+presets[10]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_gravelbell', [.67], [12, 16]);
+presets[11]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [12, 14, 16, 19, 21, 24]);
 presets[12]  = new Preset ([], 'med', [0], [ 12]);
 presets[13]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'high', [0], [12]);
  
@@ -162,8 +163,10 @@ Instrument.prototype.playNote = function (i) {
     this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0);
     this.morph[this.trackNumber][1] = this.morphWrapper(this.trackNumber, 1); 
     this.morph[this.trackNumber][2] = this.morphWrapper(this.trackNumber, 2);
-
-  this.playSound(presets[this.trackNumber + this.morphOffset[1]].soundFilename);
+    // ballMaterial.color = 0x999999;
+    this.playSound(presets[this.trackNumber + this.morphOffset[1]].soundFilename);
+  } else {
+    // ballMaterial.color = 0x222222;
   };
 };
 
