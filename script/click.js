@@ -1,8 +1,7 @@
 import {Track} from "./noneuclidean/noneuclidean.mjs";
 import {browserFormat} from "./app.js";
-import * as THREE from 'https://unpkg.com/three@0.122.0/build/three.module.js'
-import {ballMaterial} from "./mousepick.js";
-// console.log("ballMaterial.color: " + ballMaterial.color);
+// import * as THREE from 'https://unpkg.com/three@0.122.0/build/three.module.js'
+import {dragPositions, octaMesh, ballMesh, cubeMesh } from "./mousepick.js";
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 var context = new AudioContext();
@@ -165,9 +164,25 @@ Instrument.prototype.playNote = function (i) {
     this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0);
     this.morph[this.trackNumber][1] = this.morphWrapper(this.trackNumber, 1); 
     this.morph[this.trackNumber][2] = this.morphWrapper(this.trackNumber, 2);
-    // ballMaterial.color = 0x999999;
+    // Make ovjects flash when they play 
+    switch (this.trackNumber)  {
+      case 0:
+        octaMesh.material.color.set(0x777777)
+      case 1:
+        ballMesh.material.color.set(0x777777)
+      case 2:
+        cubeMesh.material.color.set(0x777777)
+    }   
     this.playSound(presets[this.trackNumber + this.morphOffset[1]].soundFilename);
   } else {
+    switch (this.trackNumber)   {
+    case 0:
+      octaMesh.material.color.set(0x222222)
+    case 1:
+      ballMesh.material.color.set(0x222222)
+    case 2:
+      cubeMesh.material.color.set(0x222222)
+    }
   };
 };
 

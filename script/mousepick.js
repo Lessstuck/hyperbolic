@@ -113,7 +113,7 @@ function initThree() {
     // const floorGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1) 
     const floorGeometry = new THREE.PlaneBufferGeometry(window.innerWidth, window.innerHeight)
     floorGeometry.rotateX(-Math.PI / 2)
-    const floorMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 })
+    const floorMaterial = new THREE.MeshLambertMaterial({ color: 0x111111 })
     floorMaterial.side = THREE.DoubleSide
     const floor = new THREE.Mesh(floorGeometry, floorMaterial)
     floor.receiveShadow = true
@@ -138,31 +138,30 @@ function initThree() {
     scene.add(clickMarker)
 
 
-    // ballMaterial = new THREE.MeshPhongMaterial({ color: 0x999999 })
 
-    let ballDarkMaterial = new THREE.MeshPhongMaterial({ color: 0x111111 })
-    let ballLightMaterial = new THREE.MeshPhongMaterial({ color: 0x777777 })
+    let oktaMaterial = new THREE.MeshPhongMaterial({color: 0x222222})
+    let ballMaterial = new THREE.MeshPhongMaterial({color: 0x222222})
+    let cubeMaterial = new THREE.MeshPhongMaterial({color: 0x222222})
 
     // Octahedron
     const octaGeometry = new THREE.OctahedronBufferGeometry(.5)
-    octaMesh = new THREE.Mesh(octaGeometry, ballMaterial)
-    octaMesh.material = ballDarkMaterial;
+    octaMesh = new THREE.Mesh(octaGeometry, oktaMaterial)
     octaMesh.castShadow = true
     meshes.push(octaMesh)
     dragPositions[2] = [0,2.5,0]
     scene.add(octaMesh)
+
+
     // Ball
     const ballGeometry = new THREE.SphereBufferGeometry(.5, 30, 30)
     ballMesh = new THREE.Mesh(ballGeometry, ballMaterial)
-    ballMesh.material = ballDarkMaterial;
     ballMesh.castShadow = true
     meshes.push(ballMesh)
     dragPositions[1] = [0,0,0]
     scene.add(ballMesh)
     // Cube
     const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
-    cubeMesh = new THREE.Mesh(cubeGeometry, ballMaterial)
-    cubeMesh.material = ballDarkMaterial;
+    cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial)
     cubeMesh.castShadow = true
     meshes.push(cubeMesh)
     dragPositions[0] = [0,-2.5,0]
@@ -177,7 +176,6 @@ function initThree() {
     //////////  Fullscreen or FullScreen   /////////////////////
     // from https://stackoverflow.com/questions/50568474/how-to-enter-fullscreen-in-three-js
     // reply by pera
-
 
     function openFullscreen() {
         var elem = document.getElementById("webgl-and-controls");
@@ -203,6 +201,7 @@ function initThree() {
         document.addEventListener('fullscreenchange', fsChangeHandler, false);
         document.addEventListener('MSFullscreenChange', fsChangeHandler, false);
     }
+
     function fsChangeHandler()
     {
         if (document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement !== undefined) {
@@ -212,11 +211,10 @@ function initThree() {
             fullScreenMode = 0;
         }
     }
-
-
-
     window.addEventListener('resize', onWindowResize)
 }   
+
+
 
 function onWindowResize() {
     if ( fullScreenMode) {
@@ -347,7 +345,6 @@ function initCannon() {
 /////////////////////////////////////////////////////////////////////////////
 //  listener 
 /////////////////////////////////////////////////////////////////////////////
-
 
 
 window.addEventListener('pointerdown', (event) => {
@@ -499,11 +496,16 @@ jointConstraint = undefined
 //  step animation and render
 /////////////////////////////////////////////////////////////////////////////
 
+// export THREE objects before animation
+export {dragPositions, octaMesh, ballMesh, cubeMesh};
+
+
 function animate() {
 requestAnimationFrame(animate)
 
 // Step the physics world
 world.fixedStep()
+
 
 // Sync the three.js meshes with the bodies
 for (let i = 0; i < meshes.length; i++) {
@@ -520,7 +522,3 @@ renderer.render(scene, camera)
 stats.update()
 }
 
-console.log("mousepick ballMaterial: " + ballMaterial);
-
-
-export {dragPositions, ballMaterial};
