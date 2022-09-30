@@ -1,12 +1,24 @@
 import {Track} from "./noneuclidean/noneuclidean.mjs";
 import {browserFormat} from "./app.js";
-// import * as THREE from 'https://unpkg.com/three@0.122.0/build/three.module.js'
-import {dragPositions, octaMesh, ballMesh, cubeMesh } from "./mousepick.js";
+import {octaMesh, ballMesh, cubeMesh } from "./mousepick.js";
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 var context = new AudioContext();
 
 var iosSleepPreventInterval = null;
+
+
+/* Each ball has two states, called Presets. A preset is an array of 4 elements:
+rhythmic probabilities array, sample name, volume, and pitch set.
+Depending on ball's location, the algorithm morphs between the two versions
+of the element.
+
+For example, if a ball is to the far left, it will use the sample from
+the first preset. If it's to the far right, it will use the sample 
+from the second preset (presets index offset by 10). In the middle,
+it "flips a coin"
+
+*/
 
 class Preset {
   constructor (beatProb = [0.33, 0.33, 0.33],
@@ -147,7 +159,7 @@ Instrument.prototype = {
 // play notes
 //////////////////////////////////////////////////////////////
 
-
+// Each beat (each playNote call), flip a coin to decide which preset to use
 Instrument.prototype.playNote = function (i) {
   let coinToss = Math.floor(Math.random() * 100);
   for (let j = 0; j < this.morph.length; j++) {
@@ -159,12 +171,13 @@ Instrument.prototype.playNote = function (i) {
   }
   let chosenTrack = presets[this.trackNumber + this.morphOffset[0]].track;
   
+// If noneuclidean.js decides there's a note to play here, then get position of ball
   let playState = chosenTrack.play();       // get track playState from noneuclidean.js
   if (playState) {
     this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0);
     this.morph[this.trackNumber][1] = this.morphWrapper(this.trackNumber, 1); 
     this.morph[this.trackNumber][2] = this.morphWrapper(this.trackNumber, 2);
-    // Make ovjects flash when they play 
+    // Make objects flash when they play 
     switch (this.trackNumber)  {
       case 0:
         octaMesh.material.color.set(0x777777)
@@ -186,7 +199,7 @@ Instrument.prototype.playNote = function (i) {
   };
 };
 
-// pick notes at random from scale, then play
+// Use preset parameters and morph value (position) to chose gain, pan, and scale
 Instrument.prototype.playSound = function (buffer) {
   this.gainNode = context.createGain();
   this.panner = context.createStereoPanner();
@@ -216,6 +229,7 @@ Instrument.prototype.barInterval = function () {
 //////////////////////////////////// meter select ///// UI disabled
 
 Instrument.prototype.meter = function (option) {
+  // vestigial code if meter UI is used
   // this[option] = this[option] || parseInt(this.meterOptions.find('#note_' + option + ' option:selected').text());
   this[option] = 16;
   return this[option];
@@ -225,8 +239,6 @@ Instrument.prototype.temp = function () {
   this.tempValue = 60/this.bpm*1000*4;
   return this.tempValue;
 };
-
-
 
 Instrument.prototype.stopBar = function () {
   for (var i = 0; i < this.barNotes.length; i++) 
@@ -239,6 +251,7 @@ Instrument.prototype.listenEvents = function () {
 instrument.meterOptions.find('select').change(function () {
     var optionName = $(this).attr('id').split("note_")[1];
     var optionValue = 16;
+    // vestigial code if meter UI is used
     // var optionValue = parseInt($(this).find('option:selected').text());
     instrument[optionName] = optionValue;
   });
