@@ -62,20 +62,18 @@ $(document).ready(function () {
 
   $("#start").click(function (){
     if ($("#rate").val()) {
-      for (let instrument of instruments){
+      instruments.forEach(function(instrument)  {
         instrument.start()
-    }
+      })
+    };
     return false;
-    }
-  });
+  })
+
   $("#stop").click(function (){
-    for (let instrument of instruments){
+    instruments.forEach(function(instrument)  {
       instrument.stop()
-    }
+    })
     return false;
   });
- 
-
-})
-
+});
 export {browserFormat};
