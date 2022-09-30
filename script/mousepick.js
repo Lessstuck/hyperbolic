@@ -508,13 +508,14 @@ world.fixedStep()
 
 
 // Sync the three.js meshes with the bodies
-for (let i = 0; i < meshes.length; i++) {
+meshes.forEach( function(member, i) {
     meshes[i].position.copy(bodies[i].position);
     dragPositions[i][0] = meshes[i].position.x; 
     dragPositions[i][1] = meshes[i].position.y;
     dragPositions[i][2] = meshes[i].position.z;
     meshes[i].quaternion.copy(bodies[i].quaternion);
-}
+});
+
 
 // Render three.js
 renderer.render(scene, camera)
