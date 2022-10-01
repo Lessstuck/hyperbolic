@@ -36,14 +36,16 @@ class Preset {
 }
 
 let presets = [];
-presets[0]  = new Preset ([1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_solobell', [.50], [12, 16]);
-presets[1]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C', [.67], [0, 4, 7, 9, 12]);
-presets[2]  = new Preset ([], 'SOPHIE_snap_01', [0], [ 12]);
-presets[3]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_gravelbell', [0], [12]);
-presets[10]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'RU_SPM_perc_gravelbell', [.67], [12, 16]);
-presets[11]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.67], [12, 14, 16, 19, 21, 24]);
-presets[12]  = new Preset ([], 'med', [0], [ 12]);
-presets[13]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 'high', [0], [12]);
+presets[2]  = new Preset ([0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 'Low_Tumba_Bass', [1], [-12, 0]);
+presets[1]  = new Preset ([1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'RU_SPM_perc_solobell', [.5], [12, 16]);  // .5
+presets[0]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C', [.67], [-12, -9, -5, 0]); // .67
+
+presets[12]  = new Preset ([1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'Hi_Tumba_Tip', [.5], [ 18, 24, 30, 36]);
+
+presets[11]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'RU_SPM_perc_gravelbell', [.5], [16, 19, 24]); // .67
+presets[10]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.5], [12, 14, 16, 19, 21, 24]); //.67
+
+
  
 
 const Sequencer = {
