@@ -42,7 +42,7 @@ function browserFormat () {
   // };
 };
 
-let iPhoneDetected = /iPhone/.test(navigator.userAgent) && !window.MSStream;
+
 
 $(document).ready(function () {
   const context = new AudioContext;
@@ -78,4 +78,4 @@ $(document).ready(function () {
     return false;
   });
 });
-export {browserFormat, iPhoneDetected};
+export {browserFormat};
