@@ -110,8 +110,8 @@ function initThree() {
     /////////////////////////////////////////////////////////////////////////////
 
     // Floor
-    // const floorGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1) 
-    const floorGeometry = new THREE.PlaneBufferGeometry(window.innerWidth, window.innerHeight)
+    const floorGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1) 
+    // const floorGeometry = new THREE.PlaneBufferGeometry(window.innerWidth, window.innerHeight)
     floorGeometry.rotateX(-Math.PI / 2)
     const floorMaterial = new THREE.MeshLambertMaterial({ color: 0x111111 })
     floorMaterial.side = THREE.DoubleSide
@@ -119,16 +119,34 @@ function initThree() {
     floor.receiveShadow = true
     floor.position.y = -5
     scene.add(floor)
-    // Ceiling
-    const ceilingGeometry = new THREE.PlaneBufferGeometry(window.innerWidth, window.innerHeight)
-    ceilingGeometry.rotateX(-Math.PI / 2)
-    const ceilngMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 })
-    ceilngMaterial.side = THREE.DoubleSide
-    const ceiling = new THREE.Mesh(ceilingGeometry, ceilngMaterial)
-    ceiling.receiveShadow = true
-    ceiling.position.y = 5
-    // scene.add(ceiling)
 
+    // Walls
+    const wallMaterial = new THREE.MeshLambertMaterial({ color: 0x090909})
+    wallMaterial.side = THREE.DoubleSide
+
+    // Plane -x
+    const planeXminGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1) 
+    planeXminGeometry.rotateY(-Math.PI / 2)
+    const planeXmin = new THREE.Mesh(planeXminGeometry, wallMaterial)
+    planeXmin.receiveShadow = true
+    planeXmin.position.x = -5
+    scene.add(planeXmin)
+
+    // Plane +x
+    const planeXmaxGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1) 
+    planeXmaxGeometry.rotateY(-Math.PI / 2)
+    const planeXmax = new THREE.Mesh(planeXmaxGeometry, wallMaterial)
+    planeXmax.receiveShadow = true
+    planeXmax.position.x = 5
+    scene.add(planeXmax)
+
+    // Plane +z
+    const planeZmaxGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1) 
+    // planeZmaxGeometry.rotateY(-Math.PI / 2)
+    const planeZmax = new THREE.Mesh(planeZmaxGeometry, wallMaterial)
+    planeZmax.receiveShadow = true
+    planeZmax.position.z = -5
+    scene.add(planeZmax)
 
     // Click marker to be shown on interaction
     const markerGeometry = new THREE.SphereBufferGeometry(0.2, 8, 8)
@@ -136,8 +154,6 @@ function initThree() {
     clickMarker = new THREE.Mesh(markerGeometry, markerMaterial)
     clickMarker.visible = false // Hide it..
     scene.add(clickMarker)
-
-
 
     let oktaMaterial = new THREE.MeshPhongMaterial({color: 0x222222})
     let ballMaterial = new THREE.MeshPhongMaterial({color: 0x222222})
@@ -270,7 +286,6 @@ function initCannon() {
     planeXmin.addShape(planeShapeXmin)
     planeXmin.quaternion.setFromEuler(0, Math.PI / 2, 0)
     planeXmin.position.set(-5, 0, 0)
-    // planeXmin.position.set(-(window.innerWidth * .005), 0, 0)
     world.addBody(planeXmin)
 
     // Plane +x
@@ -278,7 +293,6 @@ function initCannon() {
     const planeXmax = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
     planeXmax.addShape(planeShapeXmax)
     planeXmax.quaternion.setFromEuler(0, -Math.PI / 2, 0)
-    // planeXmax.position.set((window.innerWidth * .005), 0, 0)
     planeXmax.position.set(5, 0, 0)
     world.addBody(planeXmax)
 
@@ -287,7 +301,6 @@ function initCannon() {
     const planeZmin = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
     planeZmin.addShape(planeShapeZmin)
     planeZmin.quaternion.setFromEuler(0, 0, 0)
-    // planeZmin.position.set(0, 0, -(window.innerHeight * .005))
     planeZmin.position.set(0, 0, -5)
     world.addBody(planeZmin)
 
@@ -296,7 +309,6 @@ function initCannon() {
     const planeZmax = new CANNON.Body({ mass: 0, material: worldBoxMaterial })
     planeZmax.addShape(planeShapeZmax)
     planeZmax.quaternion.setFromEuler(0, Math.PI, 0)
-    // planeZmax.position.set(0, 0, (window.innerHeight * .005))
     planeZmax.position.set(0, 0, 5)
     world.addBody(planeZmax)
 
