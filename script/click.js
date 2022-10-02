@@ -36,12 +36,11 @@ class Preset {
 }
 
 let presets = [];
-presets[2]  = new Preset ([0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 'Low_Tumba_Bass', [1], [-12, 0]);
+presets[2]  = new Preset ([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 'Low_Tumba_Bass', [1], [-5, -12]);
 presets[1]  = new Preset ([1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'RU_SPM_perc_solobell', [.5], [12, 16]);  // .5
 presets[0]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C', [.67], [-12, -9, -5, 0]); // .67
 
-presets[12]  = new Preset ([1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'Hi_Tumba_Tip', [.5], [ 18, 24, 30, 36]);
-
+presets[12]  = new Preset ([1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'Hi_Tumba_Tip', [.5], [ 18, 24, 30, 36]);
 presets[11]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'RU_SPM_perc_gravelbell', [.5], [16, 19, 24]); // .67
 presets[10]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.5], [12, 14, 16, 19, 21, 24]); //.67
 
@@ -182,26 +181,28 @@ Instrument.prototype.playNote = function (i) {
     // Make objects flash when they play 
     switch (this.trackNumber)  {
       case 0:
-        octaMesh.material.color.set(0x777777)
+        octaMesh.material.emissive.set(0x222222)
       case 1:
-        ballMesh.material.color.set(0x777777)
+        ballMesh.material.emissive.set(0x222222)
       case 2:
-        cubeMesh.material.color.set(0x777777)
+        cubeMesh.material.emissive.set(0x222222)
     }   
+    // Sample choice determnined by y value
     this.playSound(presets[this.trackNumber + this.morphOffset[1]].soundFilename);
   } else {
     switch (this.trackNumber)   {
     case 0:
-      octaMesh.material.color.set(0x222222)
+      octaMesh.material.emissive.set(0x000000)
     case 1:
-      ballMesh.material.color.set(0x222222)
+      ballMesh.material.emissive.set(0x000000)
     case 2:
-      cubeMesh.material.color.set(0x222222)
+      cubeMesh.material.emissive.set(0x000000)
     }
   };
 };
 
 // Use preset parameters and morph value (position) to chose gain, pan, and scale
+// Set up webaudio
 Instrument.prototype.playSound = function (buffer) {
   this.gainNode = context.createGain();
   this.panner = context.createStereoPanner();
@@ -210,10 +211,12 @@ Instrument.prototype.playSound = function (buffer) {
   this.source.connect(this.gainNode);
   this.gainNode.connect(this.panner);
   this.panner.connect(context.destination);
-  
+  // Randomize gain
   let linearGain = (Math.random() * .5 + .5) * presets[this.trackNumber + this.morphOffset[1]].level;
   this.gainNode.gain.value = linearGain * linearGain;   // easy hack to make volume a bit more logarithmic
+  // Pan determined by x value
   this.panner.pan.value = (this.morph[this.trackNumber][0] * .02) - 1; // convert 0-100 to -1 to +1 for webaudio panner
+  // Pick scale using y value, choose random note in scale
   let scale = presets[this.trackNumber + this.morphOffset[1]].scale;
   this.source.detune.value = (scale[Math.floor(Math.random() * scale.length)] - 12) * 100;
   this.source.start(0);

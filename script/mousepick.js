@@ -1,6 +1,4 @@
-/**
- * Example of a pickable object.
- */
+// geometries, bodies, and mousepicker
 
 import * as CANNON from './cannon-es.js'
 import * as THREE from 'https://unpkg.com/three@0.122.0/build/three.module.js'
@@ -121,7 +119,7 @@ function initThree() {
     scene.add(floor)
 
     // Walls
-    const wallMaterial = new THREE.MeshLambertMaterial({ color: 0x090909})
+    const wallMaterial = new THREE.MeshLambertMaterial({ color: 0x050505})
     wallMaterial.side = THREE.DoubleSide
 
     // Plane -x
@@ -142,7 +140,6 @@ function initThree() {
 
     // Plane +z
     const planeZmaxGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1) 
-    // planeZmaxGeometry.rotateY(-Math.PI / 2)
     const planeZmax = new THREE.Mesh(planeZmaxGeometry, wallMaterial)
     planeZmax.receiveShadow = true
     planeZmax.position.z = -5
