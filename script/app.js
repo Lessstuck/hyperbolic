@@ -42,6 +42,8 @@ function browserFormat () {
   // };
 };
 
+let iPhoneDetected = /iPhone/.test(navigator.userAgent) && !window.MSStream;
+
 $(document).ready(function () {
   const context = new AudioContext;
   window.addEventListener('touchstart', function() {
@@ -76,4 +78,4 @@ $(document).ready(function () {
     return false;
   });
 });
-export {browserFormat};
+export {browserFormat, iPhoneDetected};
