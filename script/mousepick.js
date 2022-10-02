@@ -187,6 +187,13 @@ function initThree() {
     scene.add(movementPlane)
 
     //////////  Fullscreen or FullScreen   /////////////////////
+  
+
+    let fullscreenButton = document.getElementById("fullscreen")
+    if (iPhoneDetected) {
+        fullscreenButton.style.display = "none";
+    }
+
     // from https://stackoverflow.com/questions/50568474/how-to-enter-fullscreen-in-three-js
     // reply by pera
 
@@ -201,9 +208,6 @@ function initThree() {
         } else if (elem.msRequestFullscreen) { /* IE/Edge */
         elem.msRequestFullscreen();
         }
-        // elem.style.width = '100%';
-        // elem.style.height = '100%';
-
     }
 
     ////  get full screen state
