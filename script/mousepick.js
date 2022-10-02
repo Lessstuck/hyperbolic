@@ -4,9 +4,6 @@ import * as CANNON from './cannon-es.js'
 import * as THREE from 'https://unpkg.com/three@0.122.0/build/three.module.js'
 import Stats from 'https://unpkg.com/three@0.122.0/examples/jsm/libs/stats.module.js'
 
-let iPhoneDetected = /iPhone/.test(navigator.userAgent) && !window.MSStream;
-
-
 var fullScreenMode = 0;
 var sceneWidth = window.innerWidth;
 var sceneHeight = window.innerHeight;
@@ -190,8 +187,9 @@ function initThree() {
     scene.add(movementPlane)
 
     //////////  Fullscreen or FullScreen   /////////////////////
-  
 
+    // Disable fullscreen button on iPhones
+    let iPhoneDetected = /iPhone/.test(navigator.userAgent) && !window.MSStream;
     let fullscreenButton = document.getElementById("fullscreen")
     if (iPhoneDetected) {
         fullscreenButton.style.display = "none";
