@@ -37,12 +37,12 @@ class Preset {
 
 let presets = [];
 presets[2]  = new Preset ([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 'Low_Tumba_Bass', [1], [-5, -12]);
-presets[1]  = new Preset ([1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'RU_SPM_perc_solobell', [.5], [12, 16]);  // .5
-presets[0]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C', [.67], [-12, -9, -5, 0]); // .67
+presets[0]  = new Preset ([0, 1, 1], 'ad4_bikebell_ding_muted_07', [1], [7, 9]);
+presets[1]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C', [.5], [-12, -9, -5, 0]); // .67
 
 presets[12]  = new Preset ([1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'Hi_Tumba_Tip', [.5], [ 18, 24, 30, 36]);
-presets[11]  = new Preset ([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'RU_SPM_perc_gravelbell', [.5], [16, 19, 24]); // .67
-presets[10]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.5], [12, 14, 16, 19, 21, 24]); //.67
+presets[10]  = new Preset ([1], 'ad4_bikebell_ding_v02_04', [.75], [16]);
+presets[11]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.25], [12, 14, 16, 19, 21, 24]); //.67
 
 
  
@@ -172,12 +172,13 @@ Instrument.prototype.playNote = function (i) {
   }
   let chosenTrack = presets[this.trackNumber + this.morphOffset[0]].track;
   
-// If noneuclidean.js decides there's a note to play here, then get position of ball
-  let playState = chosenTrack.play();       // get track playState from noneuclidean.js
+// get track playState from noneuclidean.js
+// If there's a note to play here, then get xyz position of ball
+  let playState = chosenTrack.play();       
   if (playState) {
-    this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0);
-    this.morph[this.trackNumber][1] = this.morphWrapper(this.trackNumber, 1); 
-    this.morph[this.trackNumber][2] = this.morphWrapper(this.trackNumber, 2);
+    this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0); // x
+    this.morph[this.trackNumber][1] = this.morphWrapper(this.trackNumber, 1); // y
+    this.morph[this.trackNumber][2] = this.morphWrapper(this.trackNumber, 2); // z
     // Make objects flash when they play 
     switch (this.trackNumber)  {
       case 0:
