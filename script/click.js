@@ -47,11 +47,11 @@ class Preset {
 
 let presets = [];
 presets[2]  = new Preset ([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 'Low_Tumba_Bass', [.75], [-5, -12]);
-presets[0]  = new Preset ([0, 1, 1], 'ad4_bikebell_ding_muted_07', [.5], [7, 9, 12, 14]);
+presets[0]  = new Preset ([0, 1, 1], 'ad4_bikebell_ding_muted_07', [.25], [7, 9, 12, 14]);
 presets[1]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C', [.5], [-12, -9, -5, 0]);
 
 presets[12]  = new Preset ([1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'Hi_Tumba_Tip', [.5], [ 18, 24, 30, 36]);
-presets[10]  = new Preset ([1], 'ad4_bikebell_ding_v02_04', [.5], [16]);
+presets[10]  = new Preset ([1], 'ad4_bikebell_ding_v02_04', [.25], [16]);
 presets[11]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.25], [12, 14, 16, 19, 21, 24]); //.67
 
 
