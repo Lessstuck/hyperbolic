@@ -34,16 +34,6 @@ function morphTrigger(i, j) {
 
 }
 
-function browserFormat () {
-  // if (navigator.userAgent.safari) {
-    return ".mp3";
-  // } else {
-  //   return ".ogg";
-  // };
-};
-
-
-
 $(document).ready(function () {
   const context = new AudioContext;
   window.addEventListener('touchstart', function() {
@@ -78,4 +68,3 @@ $(document).ready(function () {
     return false;
   });
 });
-export {browserFormat};

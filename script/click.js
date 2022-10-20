@@ -1,5 +1,4 @@
 import {Track} from "./noneuclidean/noneuclidean.mjs";
-import {browserFormat} from "./app.js";
 import {octaMesh, ballMesh, cubeMesh } from "./mousepick.js";
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -81,7 +80,7 @@ const Sequencer = {
 };
 
 function createNewSound(fileName, parent) {
-  var url = 'audio/' + fileName + browserFormat();
+  var url = 'audio/' + fileName + ".mp3";
   var request = new XMLHttpRequest();
   request.open('GET', url, true);
   request.responseType = 'arraybuffer';
