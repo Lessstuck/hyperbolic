@@ -47,7 +47,7 @@ class Preset {
 
 let presets = [];
 presets[2]  = new Preset ([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 'Low_Tumba_Bass', [.75], [-5, -12]);
-presets[0]  = new Preset ([0, 1, 1], 'ad4_bikebell_ding_muted_07', [.5], [7]);
+presets[0]  = new Preset ([0, 1, 1], 'ad4_bikebell_ding_muted_07', [.5], [7, 9, 12, 14]);
 presets[1]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C', [.5], [-12, -9, -5, 0]);
 
 presets[12]  = new Preset ([1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'Hi_Tumba_Tip', [.5], [ 18, 24, 30, 36]);
@@ -159,7 +159,7 @@ Instrument.prototype = {
     for (var i = 0; i < instrument.meter('beat'); i++) {
       (function (i) {
         instrument.barNotes[i] = Sequencer.timeout(function () {
-          instrument.playNote(i);    // playnote is 16th note pulse. see definition directly below
+          instrument.pulse(i);    // pulse is 16th note beats. see definition directly below
         },i*instrument.temp()/instrument.meter('value'))
       })(i);
     }
@@ -170,8 +170,8 @@ Instrument.prototype = {
 // play notes
 //////////////////////////////////////////////////////////////
 
-// Each beat (each playNote call), flip a coin to decide which preset to use
-Instrument.prototype.playNote = function (i) {
+// Each beat (each pulse call), flip a coin to decide which preset to use, by offsetting preset number  by 0 or 10
+Instrument.prototype.pulse = function (i) {
   let parameter = 0; // each chaotically chosen paramenter needs a number
   let coinToss = Math.floor(lesChaos(this.trackNumber, parameter) * 100);
   for (let j = 0; j < this.morph.length; j++) {
