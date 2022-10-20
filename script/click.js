@@ -170,21 +170,22 @@ Instrument.prototype = {
 // play notes
 //////////////////////////////////////////////////////////////
 
-// Each beat (each pulse call), flip a coin to decide which preset to use, by offsetting preset number  by 0 or 10
+// Each beat (each pulse call, and each track, flip a coin to decide morphOffset, which is added to preset number
+// to select one of the two presets per track
 Instrument.prototype.pulse = function (i) {
   let parameter = 0; // each chaotically chosen paramenter needs a number
   let coinToss = Math.floor(lesChaos(this.trackNumber, parameter) * 100);
   for (let j = 0; j < this.morph.length; j++) {
-    if (coinToss > this.morph[this.trackNumber][j]) {
+    if (coinToss > this.morph[this.trackNumber][j]) { //  {<---- choose preset for each dimension based on position --------<<<
       this.morphOffset[j] = 0;
     } else  {
       this.morphOffset[j] = 10;
     };
   }
-  let chosenTrack = presets[this.trackNumber + this.morphOffset[0]].track;
+  let chosenTrack = presets[this.trackNumber + this.morphOffset[1]].track; //  {<---- choose rhythm array (.track) --------<<<
   
 // get track playState from noneuclidean.js
-// If there's a note to play here, then get xyz position of ball
+// If there's a note to play here, then get xyz position of ball & flash it
   let playState = chosenTrack.play();       
   if (playState) {
     this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0); // x
@@ -200,7 +201,7 @@ Instrument.prototype.pulse = function (i) {
         cubeMesh.material.emissive.set(0x222222)
     }   
     // Sample choice determnined by y value
-    this.playSound(presets[this.trackNumber + this.morphOffset[1]].soundFilename);
+    this.playSound(presets[this.trackNumber + this.morphOffset[0]].soundFilename);  //  <---- choose sound from preset --------<<<
   } else {
     switch (this.trackNumber)   {
     case 0:
@@ -224,15 +225,17 @@ Instrument.prototype.playSound = function (buffer) {
   this.gainNode.connect(this.panner);
   this.panner.connect(context.destination);
   // Calculate gain using chaos function
+  // Note that the lesChaos is reading from an array of baked values, with the lookup index tracked separately for each parameter
   let parameter = 1; // each chaotically chosen paramenter needs a number
-  let linearGain = ((lesChaos(this.trackNumber, parameter) * .5 + .5) * presets[this.trackNumber + this.morphOffset[1]].level);
+  let linearGain = ((lesChaos(this.trackNumber, parameter) * .5 + .5) * presets[this.trackNumber + this.morphOffset[1]].level);  // <---- choose gain --------<<<
   this.gainNode.gain.value = linearGain * linearGain;   // easy hack to make volume a bit more logarithmic
-  // Pan determined by x value
-  this.panner.pan.value = (this.morph[this.trackNumber][0] * .02) - 1; // convert 0-100 to -1 to +1 for webaudio panner
+  // Pan determined by x value - not morphed preset
+  // convert 0-100 to -1 to +1 for webaudio panner
+  this.panner.pan.value = (this.morph[this.trackNumber][0] * .02) - 1; // <---- choose pan from x position --------<<<
   // Pick scale using y value, choose chaotically chosen note in scale
-  let scale = presets[this.trackNumber + this.morphOffset[1]].scale;
+  let scale = presets[this.trackNumber + this.morphOffset[1]].scale;  // <---- choose scale --------<<<
   parameter = 2; // each chaotically chosen paramenter needs a number
-  this.source.detune.value = (scale[Math.floor(lesChaos(this.trackNumber, parameter) * scale.length)] - 12) * 100;
+  this.source.detune.value = (scale[Math.floor(lesChaos(this.trackNumber, parameter) * scale.length)] - 12) * 100; // <---- choose pitch from preset scale --------<<<
   this.source.start(0);
 }
 
