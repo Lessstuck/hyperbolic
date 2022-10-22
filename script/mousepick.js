@@ -109,13 +109,12 @@ function initThree() {
 
     // Floor
     const floorGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1) 
-    // const floorGeometry = new THREE.PlaneBufferGeometry(window.innerWidth, window.innerHeight)
     floorGeometry.rotateX(-Math.PI / 2)
     const floorMaterial = new THREE.MeshLambertMaterial({ color: 0x111111 })
     floorMaterial.side = THREE.DoubleSide
     const floor = new THREE.Mesh(floorGeometry, floorMaterial)
     floor.receiveShadow = true
-    floor.position.y = -5
+    floor.position.y = -5.5
     scene.add(floor)
 
     // Walls
@@ -127,7 +126,7 @@ function initThree() {
     planeXminGeometry.rotateY(-Math.PI / 2)
     const planeXmin = new THREE.Mesh(planeXminGeometry, wallMaterial)
     planeXmin.receiveShadow = true
-    planeXmin.position.x = -5
+    planeXmin.position.x = -5.5
     scene.add(planeXmin)
 
     // Plane +x
@@ -135,14 +134,14 @@ function initThree() {
     planeXmaxGeometry.rotateY(-Math.PI / 2)
     const planeXmax = new THREE.Mesh(planeXmaxGeometry, wallMaterial)
     planeXmax.receiveShadow = true
-    planeXmax.position.x = 5
+    planeXmax.position.x = 5.5
     scene.add(planeXmax)
 
     // Plane +z
     const planeZmaxGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1) 
     const planeZmax = new THREE.Mesh(planeZmaxGeometry, wallMaterial)
     planeZmax.receiveShadow = true
-    planeZmax.position.z = -5
+    planeZmax.position.z = -5.5
     scene.add(planeZmax)
 
     // Click marker to be shown on interaction
