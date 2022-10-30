@@ -466,10 +466,10 @@ raycaster.setFromCamera(mouse, camera)
 const hits = raycaster.intersectObject(mesh)
 
 // Return the closest hit or undefined
-if (hits.length > 0)    {
-    console.log(`hits[0].point ${hits[0].point}`)
-    console.log(hits[0].point)
-}
+// if (hits.length > 0)    {
+//     console.log(`hits[0].point ${hits[0].point}`)
+//     console.log(hits[0].point)
+// }
 
 return hits.length > 0 ? hits[0].point : undefined          //        <---- filter .point (x, y, z) for hit outside of worldbox here!!
 }
