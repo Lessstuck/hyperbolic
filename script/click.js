@@ -53,6 +53,13 @@ presets[12]  = new Preset ([1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'Hi
 presets[10]  = new Preset ([1], 'ad4_bikebell_ding_v02_04', [.25], [16]);
 presets[11]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.25], [12, 14, 16, 19, 21, 24]); //.67
 
+presets[22]  = new Preset ([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 'Low_Tumba_Bass', [.75], [-5, -12]);
+presets[20]  = new Preset ([0, 1, 1], 'ad4_bikebell_ding_muted_07', [.25], [7, 9, 12, 14]);
+presets[21]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C', [.5], [-12, -9, -5, 0]);
+
+presets[32]  = new Preset ([1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'Hi_Tumba_Tip', [.5], [ 18, 24, 30, 36]);
+presets[30]  = new Preset ([1], 'ad4_bikebell_ding_v02_04', [.25], [16]);
+presets[31]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.25], [12, 14, 16, 19, 21, 24]); //.67
 
  
 
@@ -169,7 +176,7 @@ Instrument.prototype = {
 // play notes
 //////////////////////////////////////////////////////////////
 
-// Each beat (each pulse call, and each track, flip a coin to decide morphOffset, which is added to preset number
+// Each beat (each pulse call & track), flip a coin to decide morphOffset, which is added to preset number
 // to select one of the two presets per track
 Instrument.prototype.pulse = function (i) {
   let parameter = 0; // each chaotically chosen paramenter needs a number

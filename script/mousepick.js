@@ -115,7 +115,7 @@ function initThree() {
     const floor = new THREE.Mesh(floorGeometry, floorMaterial)
     floor.receiveShadow = true
     floor.position.y = -5.5
-    scene.add(floor)
+    // scene.add(floor)
 
     // Walls
     const wallMaterial = new THREE.MeshLambertMaterial({ color: 0x050505})
@@ -127,7 +127,7 @@ function initThree() {
     const planeXmin = new THREE.Mesh(planeXminGeometry, wallMaterial)
     planeXmin.receiveShadow = true
     planeXmin.position.x = -5.5
-    scene.add(planeXmin)
+    // scene.add(planeXmin)
 
     // Plane +x
     const planeXmaxGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1) 
@@ -135,14 +135,14 @@ function initThree() {
     const planeXmax = new THREE.Mesh(planeXmaxGeometry, wallMaterial)
     planeXmax.receiveShadow = true
     planeXmax.position.x = 5.5
-    scene.add(planeXmax)
+    // scene.add(planeXmax)
 
     // Plane +z
     const planeZmaxGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1) 
     const planeZmax = new THREE.Mesh(planeZmaxGeometry, wallMaterial)
     planeZmax.receiveShadow = true
     planeZmax.position.z = -5.5
-    scene.add(planeZmax)
+    // scene.add(planeZmax)
 
     // Click marker to be shown on interaction
     const markerGeometry = new THREE.SphereBufferGeometry(0.2, 8, 8)
@@ -333,20 +333,21 @@ function initCannon() {
     world.addBody(ballBody)
 
     // Cube body
-    const cubeShape = new CANNON.Box(new CANNON.Vec3(1, 1, 1))
-    cubeBody = new CANNON.Body({ mass: 5, material: ballCannonMaterial})
-    cubeBody.addShape(cubeShape)
-    cubeBody.position.set(0, -2.5, 0)
-    cubeBody.angularDamping = .3
-    bodies.push(cubeBody)
-    world.addBody(cubeBody)
+    const cubeHalfExtents = new CANNON.Vec3(1, 1, 1);
+    const cubeShape = new CANNON.Box(cubeHalfExtents);
+    cubeBody = new CANNON.Body({ mass: 5, material: ballCannonMaterial});
+    cubeBody.addShape(cubeShape);
+    cubeBody.position.set(0, -2.5, 0);
+    cubeBody.angularDamping = .3;
+    bodies.push(cubeBody);
+    world.addBody(cubeBody);
 
 
     // Create contact material behaviour
     const worldBox_ball = new CANNON.ContactMaterial(worldBoxMaterial, ballCannonMaterial, { friction: 0.0, restitution: .4 })
     world.addContactMaterial(worldBox_ball)
 
-    // Joint body, to later constraint the cube
+    // Joint body, to later constraint the ball
     const jointShape = new CANNON.Sphere(0.1)
     jointBody = new CANNON.Body({ mass: 0 })
     jointBody.addShape(jointShape)
@@ -450,12 +451,12 @@ movementPlane.position.copy(point)
 movementPlane.quaternion.copy(camera.quaternion)
 }
 
-// Returns an hit point if there's a hit with the mesh,
+// Returns a hit point if there's a hit with the mesh,
 // otherwise returns undefined
 function getHitPoint(clientX, clientY, mesh, camera) {
 // Get 3D point form the client x y
 const mouse = new THREE.Vector2()
-mouse.x = (clientX / window.innerWidth) * 2 - 1
+mouse.x = ((clientX / window.innerWidth) * 2 - 1)
 mouse.y = -((clientY / window.innerHeight) * 2 - 1)
 
 // Get the picking ray from the point
@@ -465,15 +466,20 @@ raycaster.setFromCamera(mouse, camera)
 const hits = raycaster.intersectObject(mesh)
 
 // Return the closest hit or undefined
-return hits.length > 0 ? hits[0].point : undefined
+if (hits.length > 0)    {
+    console.log(`hits[0].point ${hits[0].point}`)
+    console.log(hits[0].point)
 }
 
-/////////////////////////////////////////////////////////////////////////////
+return hits.length > 0 ? hits[0].point : undefined          //        <---- filter .point (x, y, z) for hit outside of worldbox here!!
+}
+
+///////////////////////////////////////////////////////////s//////////////////
 //  interaction constraint
 /////////////////////////////////////////////////////////////////////////////
 
-// Add a constraint between the cube and the jointBody
-// in the initeraction position
+// Add a constraint between the object and the jointBody
+// in the interaction position
 function addJointConstraint(position, constrainedBody) {
 // Vector that goes from the body to the clicked point
 const vector = new CANNON.Vec3().copy(position).vsub(constrainedBody.position)
