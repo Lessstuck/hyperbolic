@@ -44,6 +44,9 @@ class Preset {
   }
 }
 
+//
+// this.flatMorphOffset is a multiple of 10 added to presets index, to choose several versions of the same instrument
+// 
 let presets = [];
 presets[2]  = new Preset ([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 'Low_Tumba_Bass', [.75], [-5, -12]);
 presets[0]  = new Preset ([0, 1, 1], 'ad4_bikebell_ding_muted_07', [.25], [7, 9, 12, 14]);
@@ -207,8 +210,15 @@ Instrument.prototype.pulse = function (i) {
         cubeMesh.material.emissive.set(0x222222)
     }   
     // Sample choice determnined by x & z value  (was y)
-    console.log(`this.morphOffset[0] + this.morphOffset[2] ${this.morphOffset[0] + this.morphOffset[2]}`)
-    this.playSound(presets[this.trackNumber + this.morphOffset[0] + this.morphOffset[2]].soundFilename);  //  <---- choose sound from preset --------<<<
+    // console.log(`this.morphOffset[0] ${this.morphOffset[0]} --- this.morphOffset[2] + ${this.morphOffset[0]}`);
+    this.flatMorphOffset = (2 * this.morphOffset[2]) + this.morphOffset[0];   // 2y + x
+
+    if (this.trackNumber == 1)
+  {
+    console.log(`chosen preset ${this.trackNumber + this.flatMorphOffset}`)
+  }
+
+    this.playSound(presets[this.trackNumber + this.flatMorphOffset].soundFilename);  //  <---- choose sound from preset --------<<<
   } else {
     switch (this.trackNumber)   {
     case 0:
