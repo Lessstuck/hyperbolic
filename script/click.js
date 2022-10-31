@@ -50,21 +50,21 @@ class Preset {
 let presets = [];
 presets[2]  = new Preset ([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 'Low_Tumba_Bass', [.75], [-5, -12]);
 presets[0]  = new Preset ([0, 1, 1], 'ad4_bikebell_ding_muted_07', [.25], [7, 9, 12, 14]);
-presets[1]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C', [.5], [-12, -9, -5, 0]);
+presets[1]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C', [.5], [0])// [-12, -9, -5, 0]);
 
 presets[12]  = new Preset ([1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'Hi_Tumba_Tip', [.5], [ 18, 24, 30, 36]);
 presets[10]  = new Preset ([1], 'ad4_bikebell_ding_v02_04', [.25], [16]);
-presets[11]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_very_clean_pluck_02_C', [.25], [12, 14, 16, 19, 21, 24]); //.67
+presets[11]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_very_clean_pluck_02_C', [.025], [0])// [12, 14, 16, 19, 21, 24]);
 
 presets[22]  = new Preset ([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 'Low_Tumba_Bass', [.75], [-5, -12]);
 presets[20]  = new Preset ([0, 1, 1], 'ad4_bikebell_ding_muted_07', [.25], [7, 9, 12, 14]);
-presets[21]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_very_clean_pluck_02_C._verb', [.5], [-12, -9, -5, 0]);
+presets[21]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [1], [0])// [-12, -9, -5, 0]);
 
 presets[32]  = new Preset ([1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'Hi_Tumba_Tip', [.5], [ 18, 24, 30, 36]);
 presets[30]  = new Preset ([1], 'ad4_bikebell_ding_v02_04', [.25], [16]);
-presets[31]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [.25], [12, 14, 16, 19, 21, 24]); //.67
+presets[31]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_very_clean_pluck_02_C_verb', [.025], [0])// [12, 14, 16, 19, 21, 24]);
 
- 
+
 
 const Sequencer = {
   timeout: function(callback, length) {
@@ -125,6 +125,8 @@ function Instrument (rateWrapper, meterWrapper, morphWrapper, trackNumber) {
   // create 2 sounds per instrument for morphing between
   createNewSound(presets[trackNumber].soundFilename, this); 
   createNewSound(presets[trackNumber + 10].soundFilename, this); 
+  createNewSound(presets[trackNumber + 20].soundFilename, this); 
+  createNewSound(presets[trackNumber + 30].soundFilename, this); 
   // this.track = presets[this.trackNumber].track;
   return this; 
 };
@@ -211,7 +213,7 @@ Instrument.prototype.pulse = function (i) {
     }   
     // Sample choice determnined by x & z value  (was y)
     // console.log(`this.morphOffset[0] ${this.morphOffset[0]} --- this.morphOffset[2] + ${this.morphOffset[0]}`);
-    this.flatMorphOffset = (2 * this.morphOffset[2]) + this.morphOffset[0];   // 2y + x
+    this.flatMorphOffset = (2 * (10 - this.morphOffset[2])) + this.morphOffset[0];   // 2y + x
 
     if (this.trackNumber == 1)
   {
