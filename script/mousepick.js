@@ -28,6 +28,8 @@ let ballBody
 let octaBody
 
 let isDragging = false;
+let hitIndex = 0;
+
 
 // To be synced
 const meshes = []
@@ -114,7 +116,7 @@ function initThree() {
     floorMaterial.side = THREE.DoubleSide
     const floor = new THREE.Mesh(floorGeometry, floorMaterial)
     floor.receiveShadow = true
-    floor.position.y = -5.5
+    floor.position.y = -5
     scene.add(floor)
 
     // Walls
@@ -126,7 +128,7 @@ function initThree() {
     planeXminGeometry.rotateY(-Math.PI / 2)
     const planeXmin = new THREE.Mesh(planeXminGeometry, wallMaterial)
     planeXmin.receiveShadow = true
-    planeXmin.position.x = -5.5
+    planeXmin.position.x = -5
     scene.add(planeXmin)
 
     // Plane +x
@@ -134,14 +136,14 @@ function initThree() {
     planeXmaxGeometry.rotateY(-Math.PI / 2)
     const planeXmax = new THREE.Mesh(planeXmaxGeometry, wallMaterial)
     planeXmax.receiveShadow = true
-    planeXmax.position.x = 5.5
+    planeXmax.position.x = 5
     scene.add(planeXmax)
 
     // Plane +z
     const planeZmaxGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1) 
     const planeZmax = new THREE.Mesh(planeZmaxGeometry, wallMaterial)
     planeZmax.receiveShadow = true
-    planeZmax.position.z = -5.5
+    planeZmax.position.z = -5
     scene.add(planeZmax)
 
     // Click marker to be shown on interaction
@@ -371,15 +373,19 @@ const octaHitPoint =  getHitPoint(event.clientX, event.clientY, octaMesh, camera
 // Return if one wasn't hit
 let hitPoint
 let hitBody
+
 if (octaHitPoint) {
     hitPoint = octaHitPoint;
     hitBody = octaBody
+    hitIndex = 0;
 } else if (ballHitPoint) {
     hitPoint = ballHitPoint;
     hitBody = ballBody
+    hitIndex = 1;
 } else if (cubeHitPoint) {
     hitPoint = cubeHitPoint;
-    hitBody = cubeBody 
+    hitBody = cubeBody
+    hitIndex = 2
 } else {
     return
 }
@@ -454,7 +460,7 @@ movementPlane.quaternion.copy(camera.quaternion)
 // Returns a hit point if there's a hit with the mesh,
 // otherwise returns undefined
 function getHitPoint(clientX, clientY, mesh, camera) {
-// Get 3D point form the client x y
+// Get 3D point from the client x y
 const mouse = new THREE.Vector2()
 mouse.x = ((clientX / window.innerWidth) * 2 - 1)
 mouse.y = -((clientY / window.innerHeight) * 2 - 1)
@@ -516,7 +522,7 @@ jointConstraint = undefined
 /////////////////////////////////////////////////////////////////////////////
 
 // export THREE objects before animation
-export {dragPositions, octaMesh, ballMesh, cubeMesh};
+export {dragPositions, octaMesh, ballMesh, cubeMesh, hitIndex, isDragging};
 
 
 function animate() {

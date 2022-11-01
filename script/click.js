@@ -1,5 +1,5 @@
 import {Track} from "./noneuclidean/noneuclidean.mjs";
-import {octaMesh, ballMesh, cubeMesh } from "./mousepick.js";
+import {octaMesh, ballMesh, cubeMesh, hitIndex, isDragging } from "./mousepick.js";
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 var context = new AudioContext();
@@ -45,24 +45,34 @@ class Preset {
 }
 
 //
-// this.flatMorphOffset is a multiple of 10 added to presets index, to choose several versions of the same instrument
+// this.flatMorphOffset is a multiple of 10 added to presets index, to choose from 
+// several versions of the same instrument
 // 
 let presets = [];
-presets[2]  = new Preset ([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 'Low_Tumba_Bass', [.75], [-5, -12]);
-presets[0]  = new Preset ([0, 1, 1], 'ad4_bikebell_ding_muted_07', [.25], [7, 9, 12, 14]);
-presets[1]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C', [.5], [0])// [-12, -9, -5, 0]);
+// near 
 
-presets[12]  = new Preset ([1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'Hi_Tumba_Tip', [.5], [ 18, 24, 30, 36]);
+// okta
+presets[0]  = new Preset ([0, 1, 1], 'ad4_bikebell_ding_muted_07', [.25], [7, 9, 12, 14]);
+// sphere
+presets[1]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C', [.5], [0])// [-12, -9, -5, 0]);
+// cube
+presets[2]  = new Preset ([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 'Low_Tumba_Bass', [.75], [-5, -12]);
+
+
 presets[10]  = new Preset ([1], 'ad4_bikebell_ding_v02_04', [.25], [16]);
 presets[11]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_very_clean_pluck_02_C', [.025], [0])// [12, 14, 16, 19, 21, 24]);
+presets[12]  = new Preset ([1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'Hi_Tumba_Tip', [.5], [ 18, 24, 30, 36]);
 
-presets[22]  = new Preset ([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 'Low_Tumba_Bass', [.75], [-5, -12]);
+// far
+
 presets[20]  = new Preset ([0, 1, 1], 'ad4_bikebell_ding_muted_07', [.25], [7, 9, 12, 14]);
 presets[21]  = new Preset ([1, .25], 'REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C', [1], [0])// [-12, -9, -5, 0]);
+presets[22]  = new Preset ([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 'Low_Tumba_Bass', [.75], [-5, -12]);
 
-presets[32]  = new Preset ([1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'Hi_Tumba_Tip', [.5], [ 18, 24, 30, 36]);
+
 presets[30]  = new Preset ([1], 'ad4_bikebell_ding_v02_04', [.25], [16]);
 presets[31]  = new Preset ([0, 0, 0, 1], 'REACH_JUPE_tonal_one_shot_very_clean_pluck_02_C_verb', [.025], [0])// [12, 14, 16, 19, 21, 24]);
+presets[32]  = new Preset ([1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'Hi_Tumba_Tip', [.5], [ 18, 24, 30, 36]);
 
 
 
@@ -195,10 +205,18 @@ Instrument.prototype.pulse = function (i) {
   }
   let chosenTrack = presets[this.trackNumber + this.morphOffset[1]].track; //  {<---- choose rhythm array (.track) --------<<<
   
-// get track playState from noneuclidean.js
-// If there's a note to play here, then get xyz position of ball & flash it
-  let playState = chosenTrack.play();       
-  if (playState) {
+  // get track playState from noneuclidean.js
+  // If there's a note to play here, then get xyz position of ball & flash it
+  let playState = chosenTrack.play();
+  let soloState;
+  if (isDragging) {
+    soloState = hitIndex;
+  } else  {
+    soloState = -1;
+  };
+  console.log(`soloState  ${soloState}`)
+
+  if (playState && ((soloState == -1) || (soloState == this.trackNumber))) {                            // solo function
     this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0); // x
     this.morph[this.trackNumber][1] = this.morphWrapper(this.trackNumber, 1); // y
     this.morph[this.trackNumber][2] = this.morphWrapper(this.trackNumber, 2); // z
