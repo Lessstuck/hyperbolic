@@ -163,7 +163,7 @@ presets[0] = new Preset(
 presets[1] = new Preset(
   [1, 0.25],
   "REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C",
-  [0.5],
+  [0.25],
   [0]
 ); // [-12, -9, -5, 0]);
 // cube
@@ -178,7 +178,8 @@ presets[10] = new Preset([1], "ad4_bikebell_ding_v02_04", [0.25], [16]);
 presets[11] = new Preset(
   [0, 0, 0, 1],
   "REACH_JUPE_tonal_one_shot_very_clean_pluck_02_C",
-  [0.025],
+  [0.0125],
+  // [0],
   [0]
 ); // [12, 14, 16, 19, 21, 24]);
 presets[12] = new Preset(
@@ -199,7 +200,8 @@ presets[20] = new Preset(
 presets[21] = new Preset(
   [1, 0.25],
   "REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C",
-  [1],
+  [0.5],
+  // [0],
   [0]
 ); // [-12, -9, -5, 0]);
 presets[22] = new Preset(
@@ -279,6 +281,7 @@ function Instrument(rateWrapper, meterWrapper, morphWrapper, trackNumber) {
   this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0); ////// updated x position, mapped 0 - 100
   this.morph[this.trackNumber][1] = this.morphWrapper(this.trackNumber, 1); // y
   this.morph[this.trackNumber][2] = this.morphWrapper(this.trackNumber, 2); // z
+
   this.pan = 0;
   this.stopped = true;
   this.justStarted = true;
@@ -369,7 +372,6 @@ Instrument.prototype.pulse = function (i) {
   } else {
     soloState = -1;
   }
-  console.log(`soloState  ${soloState}`);
 
   if (playState && (soloState == -1 || soloState == this.trackNumber)) {
     // solo function
@@ -389,9 +391,9 @@ Instrument.prototype.pulse = function (i) {
     // console.log(`this.morphOffset[0] ${this.morphOffset[0]} --- this.morphOffset[2] + ${this.morphOffset[0]}`);
     this.flatMorphOffset = 2 * (10 - this.morphOffset[2]) + this.morphOffset[0]; // 2y + x
 
-    if (this.trackNumber == 1) {
-      console.log(`chosen preset ${this.trackNumber + this.flatMorphOffset}`);
-    }
+    // if (this.trackNumber == 1) {
+    //   console.log(`chosen preset ${this.trackNumber + this.flatMorphOffset}`);
+    // }
 
     this.playSound(
       presets[this.trackNumber + this.flatMorphOffset].soundFilename
@@ -425,9 +427,11 @@ Instrument.prototype.playSound = function (buffer) {
     (lesChaos(this.trackNumber, parameter) * 0.5 + 0.5) *
     presets[this.trackNumber + this.morphOffset[1]].level; // <---- choose gain --------<<<
   this.gainNode.gain.value = linearGain * linearGain; // easy hack to make volume a bit more logarithmic
+
   // Pan determined by x value - not morphed preset
   // convert 0-100 to -1 to +1 for webaudio panner
   this.panner.pan.value = this.morph[this.trackNumber][0] * 0.02 - 1; // <---- choose pan from x position --------<<<
+
   // Pick scale using y value, choose chaotically chosen note in scale
   let scale = presets[this.trackNumber + this.morphOffset[1]].scale; // <---- choose scale --------<<<
   parameter = 2; // each chaotically chosen paramenter needs a number
