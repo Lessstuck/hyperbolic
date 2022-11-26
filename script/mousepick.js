@@ -84,11 +84,11 @@ function initThree() {
   // document.body.appendChild(stats.dom)
 
   // Lights
-  const ambientLight = new THREE.AmbientLight(0x666666);
+  const ambientLight = new THREE.AmbientLight(0x888888);
   scene.add(ambientLight);
 
   const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
-  const distance = 20;
+  const distance = 5;
   directionalLight.position.set(-distance, distance, distance);
 
   directionalLight.castShadow = true;
@@ -157,9 +157,9 @@ function initThree() {
   clickMarker.visible = false; // Hide it..
   scene.add(clickMarker);
 
-  let oktaMaterial = new THREE.MeshPhongMaterial({ color: 0x222222 });
-  let ballMaterial = new THREE.MeshPhongMaterial({ color: 0x222222 });
-  let cubeMaterial = new THREE.MeshPhongMaterial({ color: 0x222222 });
+  let oktaMaterial = new THREE.MeshPhongMaterial({ color: 0x111111 });
+  let ballMaterial = new THREE.MeshPhongMaterial({ color: 0x111111 });
+  let cubeMaterial = new THREE.MeshPhongMaterial({ color: 0x111111 });
 
   // Octahedron
   const octaGeometry = new THREE.OctahedronBufferGeometry(0.5);
@@ -580,9 +580,9 @@ function animate() {
 function startImpulse() {
   impulse = new CANNON.Vec3(100, 0, 0);
   octaBody.applyImpulse(impulse);
-  impulse = new CANNON.Vec3(0, 0, -10);
+  impulse = new CANNON.Vec3(0, 0, -30);
   ballBody.applyImpulse(impulse);
-  impulse = new CANNON.Vec3(0, 10, 0);
+  impulse = new CANNON.Vec3(0, -50, 0);
   cubeBody.applyImpulse(impulse);
 }
 
