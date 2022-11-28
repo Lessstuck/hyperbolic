@@ -151,13 +151,16 @@ class Preset {
 //
 let presets = [];
 
-/////////////////////////// near
+////////////////////////////////////////////////////////////////////////// near
+
+//////////////////////  down
+
 // okta
 presets[0] = new Preset(
-  [1, 1],
+  [1, 0, 0.25],
   "ad4_bikebell_ding_muted_07",
   [0.25],
-  [7, 9, 12, 14]
+  [0, 4, 7, 12, 18]
 );
 // sphere
 presets[1] = new Preset(
@@ -165,7 +168,7 @@ presets[1] = new Preset(
   "REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C",
   [0.25],
   [0, 3, 7]
-); // [-12, -9, -5, 0]);
+);
 // cube
 presets[2] = new Preset(
   [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -174,8 +177,14 @@ presets[2] = new Preset(
   [-5, -12]
 );
 
+////////////////////// up
 // okta
-presets[10] = new Preset([1], "ad4_bikebell_ding_v02_04", [0.25], [-5, 3, 12]);
+presets[10] = new Preset(
+  [1, 0, 1],
+  "ad4_bikebell_ding_v02_04",
+  [0.45],
+  [0, 2, 4, 7, 12, 18]
+);
 // sphere
 presets[11] = new Preset(
   [0, 0, 0, 1],
@@ -192,20 +201,21 @@ presets[12] = new Preset(
   [-5, 0, 9, 18]
 );
 
-/////////////////////////// far
+////////////////////////////////////////////////////////////////////////// far
+
+//////////////////////  down
 //  okta
 presets[20] = new Preset(
   [1, 1],
   "ad4_bikebell_ding_muted_07",
   [0.3],
-  [7, 9, 12]
+  [-5, -4, 0]
 );
 // sphere
 presets[21] = new Preset(
   [1, 0.25],
   "REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C",
   [0.5],
-  // [0],
   [0]
 ); // [-12, -9, -5, 0]);
 // cube
@@ -216,13 +226,9 @@ presets[22] = new Preset(
   [-5, -12]
 );
 
+////////////////////// up
 // okta
-presets[30] = new Preset(
-  [1],
-  "ad4_bikebell_ding_v02_04",
-  [0.25],
-  [1, 3, 5, 7, 9]
-);
+presets[30] = new Preset([1], "ad4_bikebell_ding_v02_04", [0.45], [-7, 0]);
 // sphere
 presets[31] = new Preset(
   [0, 0, 0, 1],
