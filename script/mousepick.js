@@ -195,8 +195,10 @@ function initThree() {
   // Disable fullscreen button on iPhones
   let iPhoneDetected = /iPhone/.test(navigator.userAgent) && !window.MSStream;
   let fullscreenButton = document.getElementById("fullscreen");
+  let fullscreenSeperator = document.getElementById("fullscreen_seperator");
   if (iPhoneDetected) {
     fullscreenButton.style.display = "none";
+    fullscreenSeperator.style.display = "none";
   }
 
   // from https://stackoverflow.com/questions/50568474/how-to-enter-fullscreen-in-three-js
