@@ -8,7 +8,7 @@ import {
 } from "./mousepick.js";
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
-var context = new AudioContext();
+var audioCtx = new AudioContext();
 
 var iosSleepPreventInterval = null;
 
@@ -249,9 +249,9 @@ const Sequencer = {
     if (length <= 0) {
       length = 1;
     }
-    var source = context.createBufferSource();
-    source.buffer = context.createBuffer(1, 32000 * (length / 1000), 32000);
-    source.connect(context.destination);
+    var source = audioCtx.createBufferSource();
+    source.buffer = audioCtx.createBuffer(1, 32000 * (length / 1000), 32000);
+    source.connect(audioCtx.destination);
     source.onended = callback;
     if (!source.stop) {
       source.stop = source.noteOff;
@@ -276,7 +276,7 @@ function createNewSound(fileName, parent) {
     console.log(event);
   }
   request.onload = function () {
-    context.decodeAudioData(
+    audioCtx.decodeAudioData(
       request.response,
       function (buffer) {
         parent.sound[fileName] = buffer;
@@ -429,16 +429,28 @@ Instrument.prototype.pulse = function (i) {
   }
 };
 
+// Audio output goees to compressor node
+const compressor = audioCtx.createDynamicsCompressor();
+compressor.threshold.setValueAtTime(-50, audioCtx.currentTime);
+compressor.knee.setValueAtTime(10, audioCtx.currentTime);
+compressor.ratio.setValueAtTime(12, audioCtx.currentTime);
+compressor.attack.setValueAtTime(0.05, audioCtx.currentTime);
+compressor.release.setValueAtTime(0.1, audioCtx.currentTime);
+const masterGainNode = audioCtx.createGain();
+masterGainNode.gain.value = 0.5;
+compressor.connect(masterGainNode);
+masterGainNode.connect(audioCtx.destination);
+
 // Use preset parameters and morph value (position) to chose gain, pan, and scale
 // Set up webaudio
 Instrument.prototype.playSound = function (buffer) {
-  this.gainNode = context.createGain();
-  this.panner = context.createStereoPanner();
-  this.source = context.createBufferSource();
+  this.gainNode = audioCtx.createGain();
+  this.panner = audioCtx.createStereoPanner();
+  this.source = audioCtx.createBufferSource();
   this.source.buffer = this.sound[buffer];
   this.source.connect(this.gainNode);
   this.gainNode.connect(this.panner);
-  this.panner.connect(context.destination);
+  this.panner.connect(compressor); // Connect each instrument to compressor for mixing and output
   // Calculate gain using chaos function
   // Note that the lesChaos is reading from an array of baked values, with the lookup index tracked separately for each parameter
   let parameter = 1; // each chaotically chosen paramenter needs a number
