@@ -110,7 +110,9 @@ const chaosCounters = [
   [0, 0, 0],
   [0, 0, 0],
   [0, 0, 0],
-]; // one array per instrument, one array element per instrument choice
+];
+// Keep independent chaos array index for each paramenter
+// one array per instrument, one array element per instrument choice
 
 function lesChaos(i, j) {
   let chaosValue = chaosValues[chaosCounters[i][j]];
@@ -433,11 +435,11 @@ Instrument.prototype.pulse = function (i) {
 const compressor = audioCtx.createDynamicsCompressor();
 compressor.threshold.setValueAtTime(-50, audioCtx.currentTime);
 compressor.knee.setValueAtTime(10, audioCtx.currentTime);
-compressor.ratio.setValueAtTime(12, audioCtx.currentTime);
-compressor.attack.setValueAtTime(0.05, audioCtx.currentTime);
+compressor.ratio.setValueAtTime(9, audioCtx.currentTime);
+compressor.attack.setValueAtTime(0.01, audioCtx.currentTime);
 compressor.release.setValueAtTime(0.1, audioCtx.currentTime);
 const masterGainNode = audioCtx.createGain();
-masterGainNode.gain.value = 0.5;
+masterGainNode.gain.value = 2;
 compressor.connect(masterGainNode);
 masterGainNode.connect(audioCtx.destination);
 

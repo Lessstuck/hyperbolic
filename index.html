@@ -15,19 +15,29 @@
   <script type="module" src="script/click.js"></script>
   <script type="module" src="script/app.js"></script>
   <script type="module" src="script/mousepick.js"></script>
+  <style>
+    .prevent-select {
+      -webkit-user-select: none;
+      /* Safari */
+      -ms-user-select: none;
+      /* IE 10 and IE 11 */
+      user-select: none;
+      /* Standard syntax */
+    }
+  </style>
 </head>
 
 <body>
   <div id="webgl-and-controls">
     <div class="flex-container">
       <a href="#" id="fullscreen" class="overlay">fullscreen</a>
-      <p id="fullscreen_seperator">_________</p>
-      <a href="#" id="start" class="overlay">start</a>
-      <a href="#" id="stop" class="overlay">stop</a>
-      <p>_________</p>
+      <p id="fullscreen_seperator" class="overlay prevent-select">_________</p>
+      <a href="#" id="start" class="overlay prevent-select">start</a>
+      <a href="#" id="stop" class="overlay prevent-select">stop</a>
+      <p class="overlay prevent-select">_________</p>
       <input id="rate" class="overlay" type="range" value="106" min="60" max="140" style="width: 80px; display: none" />
-      <a href="#" id="front" class="overlay">front</a>
-      <a href="#" id="top" class="overlay">top</a>
+      <a href="#" id="front" class="overlay prevent-select">front</a>
+      <a href="#" id="top" class="overlay prevent-select">top</a>
       <!-- temporary buttons to facilitate setting preset values -->
       <!-- <a href="#" id="run" class="overlay">run</a>
         <a href="#" id="low" class="overlay">low</a>
