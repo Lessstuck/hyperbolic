@@ -121,7 +121,7 @@ function lesChaos(i, j) {
 }
 
 /* Each ball has two states, called Presets. A preset is an array of 4 elements:
-rhythmic probabilities array, sample name, volume, and pitch set.
+rhythmic probabilities array, sample name, gain array, and pitch array.
 Depending on ball's location, the algorithm morphs between the two versions
 of the element.
 
@@ -130,18 +130,31 @@ the first preset. If it's to the far right, it will use the sample
 from the second preset (presets index offset by 10). In the middle,
 it "flips a coin"
 
+Mappings
+X
+pan <--- x
+sample <--- this.flatMorphOffset = 2z + x
+
+Y
+rhythm array <--- preset || preset + morphOffset
+scale array <--- preset || preset + morphOffset
+gain array <--- this.flatMorphOffset  = 2z + x . // for now, only one element in array
+
+Z
+sample <--- this.flatMorphOffset = 2z + x
+
 */
 
 class Preset {
   constructor(
     beatProb = [0.33, 0.33, 0.33],
     soundFilename = "low",
-    level = [1],
+    gain = [1],
     scale = [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]
   ) {
     this.beatProb = beatProb;
     this.soundFilename = soundFilename;
-    this.level = level;
+    this.gain = gain;
     this.scale = scale;
     this.track = new Track(beatProb, 1);
   }
@@ -191,7 +204,7 @@ presets[10] = new Preset(
 presets[11] = new Preset(
   [0, 0, 0, 1],
   "REACH_JUPE_tonal_one_shot_very_clean_pluck_02_C",
-  [0.0125],
+  [0.25],
   // [0],
   [0]
 ); // [12, 14, 16, 19, 21, 24]);
@@ -235,7 +248,7 @@ presets[30] = new Preset([1], "ad4_bikebell_ding_v02_04", [0.45], [-7, 0]);
 presets[31] = new Preset(
   [0, 0, 0, 1],
   "REACH_JUPE_tonal_one_shot_very_clean_pluck_02_C_verb",
-  [0.03],
+  [0.25],
   [0]
 ); // [12, 14, 16, 19, 21, 24]);
 // cube
@@ -410,11 +423,7 @@ Instrument.prototype.pulse = function (i) {
     }
     // Sample choice determnined by x & z value  (was y)
     // console.log(`this.morphOffset[0] ${this.morphOffset[0]} --- this.morphOffset[2] + ${this.morphOffset[0]}`);
-    this.flatMorphOffset = 2 * (10 - this.morphOffset[2]) + this.morphOffset[0]; // 2y + x
-
-    // if (this.trackNumber == 1) {
-    //   console.log(`chosen preset ${this.trackNumber + this.flatMorphOffset}`);
-    // }
+    this.flatMorphOffset = 2 * (10 - this.morphOffset[2]) + this.morphOffset[0]; // 2z + x
 
     this.playSound(
       presets[this.trackNumber + this.flatMorphOffset].soundFilename
@@ -453,12 +462,13 @@ Instrument.prototype.playSound = function (buffer) {
   this.source.connect(this.gainNode);
   this.gainNode.connect(this.panner);
   this.panner.connect(compressor); // Connect each instrument to compressor for mixing and output
+
   // Calculate gain using chaos function
   // Note that the lesChaos is reading from an array of baked values, with the lookup index tracked separately for each parameter
   let parameter = 1; // each chaotically chosen paramenter needs a number
   let linearGain =
     (lesChaos(this.trackNumber, parameter) * 0.5 + 0.5) *
-    presets[this.trackNumber + this.morphOffset[1]].level; // <---- choose gain --------<<<
+    presets[this.trackNumber + this.flatMorphOffset].gain; // <---- choose gain --------<<<
   this.gainNode.gain.value = linearGain * linearGain; // easy hack to make volume a bit more logarithmic
 
   // Pan determined by x value - not morphed preset
