@@ -28,6 +28,9 @@ let jointConstraint;
 let cubeBody;
 let ballBody;
 let octaBody;
+let octaLight;
+let ballLight;
+let cubeLight;
 
 let isDragging = false;
 let hitIndex = 0;
@@ -116,7 +119,7 @@ function initThree() {
   // Floor
   const floorGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1);
   floorGeometry.rotateX(-Math.PI / 2);
-  const floorMaterial = new THREE.MeshLambertMaterial({ color: 0x111111 });
+  const floorMaterial = new THREE.MeshPhongMaterial({ color: 0x111111 });
   floorMaterial.side = THREE.DoubleSide;
   const floor = new THREE.Mesh(floorGeometry, floorMaterial);
   floor.receiveShadow = true;
@@ -124,7 +127,7 @@ function initThree() {
   scene.add(floor);
 
   // Walls
-  const wallMaterial = new THREE.MeshLambertMaterial({ color: 0x050505 });
+  const wallMaterial = new THREE.MeshPhongMaterial({ color: 0x050505 });
   wallMaterial.side = THREE.DoubleSide;
 
   // Plane -x
@@ -152,7 +155,7 @@ function initThree() {
 
   // Click marker to be shown on interaction
   const markerGeometry = new THREE.SphereBufferGeometry(0.2, 8, 8);
-  const markerMaterial = new THREE.MeshLambertMaterial({ color: 0xff0000 });
+  const markerMaterial = new THREE.MeshPhongMaterial({ color: 0x444444 });
   clickMarker = new THREE.Mesh(markerGeometry, markerMaterial);
   clickMarker.visible = false; // Hide it..
   scene.add(clickMarker);
@@ -168,6 +171,9 @@ function initThree() {
   meshes.push(octaMesh);
   dragPositions[2] = [0, 2.5, 0];
   scene.add(octaMesh);
+  octaLight = new THREE.PointLight(0xf2b705, 1, 100);
+  octaLight.position.set(0, 2.5, 0);
+  scene.add(octaLight);
 
   // Ball
   const ballGeometry = new THREE.SphereBufferGeometry(0.5, 30, 30);
@@ -176,6 +182,9 @@ function initThree() {
   meshes.push(ballMesh);
   dragPositions[1] = [0, 0, 0];
   scene.add(ballMesh);
+  ballLight = new THREE.PointLight(0xbf1304, 1, 100);
+  ballLight.position.set(0, 0, 0);
+  scene.add(ballLight);
   // Cube
   const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1);
   cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
@@ -183,6 +192,9 @@ function initThree() {
   meshes.push(cubeMesh);
   dragPositions[0] = [0, -2.5, 0];
   scene.add(cubeMesh);
+  cubeLight = new THREE.PointLight(0x048abf, 1, 100);
+  cubeLight.position.set(0, -2.5, 0);
+  scene.add(cubeLight);
 
   // Movement plane when dragging
   const planeGeometry = new THREE.PlaneBufferGeometry(100, 100);
@@ -568,8 +580,21 @@ function animate() {
     dragPositions[i][0] = meshes[i].position.x;
     dragPositions[i][1] = meshes[i].position.y;
     dragPositions[i][2] = meshes[i].position.z;
+
     meshes[i].quaternion.copy(bodies[i].quaternion);
   });
+
+  octaLight.position.x = meshes[0].position.x;
+  octaLight.position.y = meshes[0].position.y;
+  octaLight.position.z = meshes[0].position.z;
+
+  ballLight.position.x = meshes[1].position.x;
+  ballLight.position.y = meshes[1].position.y;
+  ballLight.position.z = meshes[1].position.z;
+
+  cubeLight.position.x = meshes[2].position.x;
+  cubeLight.position.y = meshes[2].position.y;
+  cubeLight.position.z = meshes[2].position.z;
 
   // Render three.js
   renderer.render(scene, camera);
@@ -598,6 +623,9 @@ function stopReset() {
   velocity = new CANNON.Vec3(0, 0, 0);
   cubeBody.velocity = velocity;
   cubeBody.position.set(0, -2.5, 0);
+  octaMesh.material.emissive.set(0x000000);
+  ballMesh.material.emissive.set(0x000000);
+  cubeMesh.material.emissive.set(0x000000);
 }
 
-export { startImpulse, stopReset };
+export { startImpulse, stopReset, octaLight, ballLight, cubeLight };

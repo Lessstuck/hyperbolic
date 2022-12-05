@@ -5,6 +5,9 @@ import {
   cubeMesh,
   hitIndex,
   isDragging,
+  octaLight,
+  ballLight,
+  cubeLight,
 } from "./mousepick.js";
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -415,11 +418,14 @@ Instrument.prototype.pulse = function (i) {
     // Make objects flash when they play
     switch (this.trackNumber) {
       case 0:
-        octaMesh.material.emissive.set(0x222222);
+        octaMesh.material.emissive.set(0xf2b705);
+        octaLight.color.setHex(0xf2b705);
       case 1:
-        ballMesh.material.emissive.set(0x222222);
+        ballMesh.material.emissive.set(0xbf1304);
+        ballLight.color.setHex(0xbf1304);
       case 2:
-        cubeMesh.material.emissive.set(0x222222);
+        cubeMesh.material.emissive.set(0x048abf);
+        cubeLight.color.setHex(0x048abf);
     }
     // Sample choice determnined by x & z value  (was y)
     // console.log(`this.morphOffset[0] ${this.morphOffset[0]} --- this.morphOffset[2] + ${this.morphOffset[0]}`);
@@ -432,10 +438,13 @@ Instrument.prototype.pulse = function (i) {
     switch (this.trackNumber) {
       case 0:
         octaMesh.material.emissive.set(0x000000);
+        octaLight.color.setHex(0x000000);
       case 1:
         ballMesh.material.emissive.set(0x000000);
+        ballLight.color.setHex(0x000000);
       case 2:
         cubeMesh.material.emissive.set(0x000000);
+        cubeLight.color.setHex(0x000000);
     }
   }
 };
