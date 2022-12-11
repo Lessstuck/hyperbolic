@@ -173,19 +173,19 @@ let presets = [];
 
 //////////////////////  left
 
-// okta
+// octa
 presets[0] = new Preset(
-  [1, 0, 0.25],
+  [0, 1, 0.25],
   "ad4_bikebell_ding_muted_11",
   [0.25],
-  [0, 4, 7, 12, 18]
+  [0, 4, 7, 9]
 );
 // sphere
 presets[1] = new Preset(
   [1, 0.25],
   "REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C",
   [0.25],
-  [0, 3, 7]
+  [0, 4, 7]
 );
 // cube
 presets[2] = new Preset(
@@ -196,21 +196,19 @@ presets[2] = new Preset(
 );
 
 ////////////////////// right
-// okta
+// octa
 presets[10] = new Preset(
-  [1, 0, 1],
-
+  [1],
   "ad4_bikebell_ding_muted_07",
-  [0.45],
-  [0, 2, 4, 7, 12, 18]
+  [0.25],
+  [12, 14, 15, 19]
 );
 // sphere
 presets[11] = new Preset(
   [0, 0, 0, 1],
   "REACH_JUPE_tonal_one_shot_very_clean_pluck_02_C",
   [0.25],
-  // [0],
-  [0]
+  [4, 7]
 ); // [12, 14, 16, 19, 21, 24]);
 //cube
 presets[12] = new Preset(
@@ -223,7 +221,7 @@ presets[12] = new Preset(
 ////////////////////////////////////////////////////////////////////////// far
 
 //////////////////////  left
-//  okta
+//  octa
 presets[20] = new Preset(
   [1, 1],
   "ad4_bikebell_ding_v02_04",
@@ -246,8 +244,8 @@ presets[22] = new Preset(
 );
 
 ////////////////////// right
-// okta
-presets[30] = new Preset([1], "ad4_bikebell_ding_v02_04", [0.45], [-7, 0]);
+// octa
+presets[30] = new Preset([1], "ad4_bikebell_ding_v02_04", [0.3], [-7, 0]);
 // sphere
 presets[31] = new Preset(
   [0, 0, 0, 1],
@@ -423,7 +421,7 @@ Instrument.prototype.pulse = function (i) {
   let playState = chosenTrack.play();
 
   if (playState && (soloState == -1 || soloState == this.trackNumber)) {
-    // if this track is being soloed
+    // if solo is off or if this track is being soloed
 
     // solo function
     this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0); // x
@@ -441,7 +439,6 @@ Instrument.prototype.pulse = function (i) {
         cubeMesh.material.emissive.set(0x048abf);
         cubeLight.color.setHex(0x048abf);
     }
-
     this.playSound(
       presets[this.trackNumber + this.flatMorphOffset].soundFilename // <---- choose sound from preset --------<<<
     );

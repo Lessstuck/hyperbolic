@@ -87,7 +87,7 @@ function initThree() {
   // document.body.appendChild(stats.dom)
 
   // Lights
-  const ambientLight = new THREE.AmbientLight(0x666666);
+  const ambientLight = new THREE.AmbientLight(0x222222);
   scene.add(ambientLight);
 
   const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
@@ -188,7 +188,7 @@ function initThree() {
   ballLight.castShadow = true;
   scene.add(ballLight);
   // Cube
-  const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1);
+  const cubeGeometry = new THREE.BoxBufferGeometry(0.8, 0.8, 0.8);
   cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
   cubeMesh.castShadow = true;
   meshes.push(cubeMesh);
