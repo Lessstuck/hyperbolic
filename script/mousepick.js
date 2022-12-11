@@ -87,7 +87,7 @@ function initThree() {
   // document.body.appendChild(stats.dom)
 
   // Lights
-  const ambientLight = new THREE.AmbientLight(0x888888);
+  const ambientLight = new THREE.AmbientLight(0x666666);
   scene.add(ambientLight);
 
   const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
@@ -107,7 +107,7 @@ function initThree() {
   directionalLight.shadow.camera.far = 3 * distance;
   directionalLight.shadow.camera.near = distance;
 
-  scene.add(directionalLight);
+  // scene.add(directionalLight);
 
   // Raycaster for mouse interaction
   raycaster = new THREE.Raycaster();
@@ -173,6 +173,7 @@ function initThree() {
   scene.add(octaMesh);
   octaLight = new THREE.PointLight(0xf2b705, 1, 100);
   octaLight.position.set(0, 2.5, 0);
+  octaLight.castShadow = true;
   scene.add(octaLight);
 
   // Ball
@@ -184,6 +185,7 @@ function initThree() {
   scene.add(ballMesh);
   ballLight = new THREE.PointLight(0xbf1304, 1, 100);
   ballLight.position.set(0, 0, 0);
+  ballLight.castShadow = true;
   scene.add(ballLight);
   // Cube
   const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1);
@@ -194,6 +196,7 @@ function initThree() {
   scene.add(cubeMesh);
   cubeLight = new THREE.PointLight(0x048abf, 1, 100);
   cubeLight.position.set(0, -2.5, 0);
+  cubeLight.castShadow = true;
   scene.add(cubeLight);
 
   // Movement plane when dragging
