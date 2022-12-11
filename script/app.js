@@ -19,9 +19,9 @@ let dragPositionClipped;
 function morphTrigger(i, j) {
   if (testMode == "run") {
     dragPositionClipped = (dragPositions[i][j] + 5) * 10;
-    if (dragPositionClipped < 30) {
+    if (dragPositionClipped < 40) {
       dragPositionClipped = 0;
-    } else if (dragPositionClipped > 70) {
+    } else if (dragPositionClipped > 60) {
       dragPositionClipped = 100;
     }
     dragPositionClipped = Math.round(dragPositionClipped);

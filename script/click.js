@@ -171,7 +171,7 @@ let presets = [];
 
 ////////////////////////////////////////////////////////////////////////// near
 
-//////////////////////  down
+//////////////////////  left
 
 // okta
 presets[0] = new Preset(
@@ -195,7 +195,7 @@ presets[2] = new Preset(
   [-5, -12]
 );
 
-////////////////////// up
+////////////////////// right
 // okta
 presets[10] = new Preset(
   [1, 0, 1],
@@ -221,7 +221,7 @@ presets[12] = new Preset(
 
 ////////////////////////////////////////////////////////////////////////// far
 
-//////////////////////  down
+//////////////////////  left
 //  okta
 presets[20] = new Preset(
   [1, 1],
@@ -244,7 +244,7 @@ presets[22] = new Preset(
   [-5, -12]
 );
 
-////////////////////// up
+////////////////////// right
 // okta
 presets[30] = new Preset([1], "ad4_bikebell_ding_v02_04", [0.45], [-7, 0]);
 // sphere
@@ -385,8 +385,15 @@ Instrument.prototype = {
 //////////////////////////////////////////////////////////////
 
 // Each beat (each pulse call & track), flip a coin to decide morphOffset, which is added to preset number
-// to select one of the two presets per track
+// to select one of the four presets per track
 Instrument.prototype.pulse = function (i) {
+  let soloState;
+  if (isDragging) {
+    soloState = hitIndex; // solo this track
+  } else {
+    soloState = -1; // no solo
+  }
+
   let parameter = 0; // each chaotically chosen paramenter needs a number   << SHOULD THIS GET RESET EVERY BEAT?
   let coinToss = Math.floor(lesChaos(this.trackNumber, parameter) * 100);
   for (let j = 0; j < this.morph.length; j++) {
@@ -398,19 +405,25 @@ Instrument.prototype.pulse = function (i) {
       this.morphOffset[j] = 10;
     }
   }
+
+  // Sample choice determnined by x & z value
+  this.flatMorphOffset = 2 * (10 - this.morphOffset[2]) + this.morphOffset[0]; // 2z + x
+
+  // if (i === 1) {
+  //   console.log(`this.morphOffset[0]: ${this.morphOffset[0]}`);
+  //   console.log(`this.morphOffset[2]: ${this.morphOffset[2]}`);
+  //   console.log(`flatMorphOffset: ${this.flatMorphOffset}`);
+  // }
+
   let chosenTrack = presets[this.trackNumber + this.morphOffset[1]].track; //  {<---- choose rhythm array (.track) --------<<<
 
   // get track playState from noneuclidean.js
   // If there's a note to play here, then get xyz position of ball & flash it
   let playState = chosenTrack.play();
-  let soloState;
-  if (isDragging) {
-    soloState = hitIndex;
-  } else {
-    soloState = -1;
-  }
 
   if (playState && (soloState == -1 || soloState == this.trackNumber)) {
+    // if this track is being soloed
+
     // solo function
     this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0); // x
     this.morph[this.trackNumber][1] = this.morphWrapper(this.trackNumber, 1); // y
@@ -427,13 +440,10 @@ Instrument.prototype.pulse = function (i) {
         cubeMesh.material.emissive.set(0x048abf);
         cubeLight.color.setHex(0x048abf);
     }
-    // Sample choice determnined by x & z value  (was y)
-    // console.log(`this.morphOffset[0] ${this.morphOffset[0]} --- this.morphOffset[2] + ${this.morphOffset[0]}`);
-    this.flatMorphOffset = 2 * (10 - this.morphOffset[2]) + this.morphOffset[0]; // 2z + x
 
     this.playSound(
-      presets[this.trackNumber + this.flatMorphOffset].soundFilename
-    ); //  <---- choose sound from preset --------<<<
+      presets[this.trackNumber + this.flatMorphOffset].soundFilename // <---- choose sound from preset --------<<<
+    );
   } else {
     switch (this.trackNumber) {
       case 0:
