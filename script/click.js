@@ -176,7 +176,7 @@ let presets = [];
 // okta
 presets[0] = new Preset(
   [1, 0, 0.25],
-  "ad4_bikebell_ding_muted_07",
+  "ad4_bikebell_ding_muted_11",
   [0.25],
   [0, 4, 7, 12, 18]
 );
@@ -199,7 +199,8 @@ presets[2] = new Preset(
 // okta
 presets[10] = new Preset(
   [1, 0, 1],
-  "ad4_bikebell_ding_v02_04",
+
+  "ad4_bikebell_ding_muted_07",
   [0.45],
   [0, 2, 4, 7, 12, 18]
 );
@@ -225,7 +226,7 @@ presets[12] = new Preset(
 //  okta
 presets[20] = new Preset(
   [1, 1],
-  "ad4_bikebell_ding_muted_07",
+  "ad4_bikebell_ding_v02_04",
   [0.3],
   [-5, -4, 0]
 );
