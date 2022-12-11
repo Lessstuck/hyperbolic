@@ -107,7 +107,7 @@ function initThree() {
   directionalLight.shadow.camera.far = 3 * distance;
   directionalLight.shadow.camera.near = distance;
 
-  // scene.add(directionalLight);
+  scene.add(directionalLight);
 
   // Raycaster for mouse interaction
   raycaster = new THREE.Raycaster();
@@ -160,13 +160,13 @@ function initThree() {
   clickMarker.visible = false; // Hide it..
   scene.add(clickMarker);
 
-  let oktaMaterial = new THREE.MeshPhongMaterial({ color: 0x111111 });
+  let octaMaterial = new THREE.MeshPhongMaterial({ color: 0x111111 });
   let ballMaterial = new THREE.MeshPhongMaterial({ color: 0x111111 });
   let cubeMaterial = new THREE.MeshPhongMaterial({ color: 0x111111 });
 
   // Octahedron
-  const octaGeometry = new THREE.OctahedronBufferGeometry(0.5);
-  octaMesh = new THREE.Mesh(octaGeometry, oktaMaterial);
+  const octaGeometry = new THREE.OctahedronBufferGeometry(0.65);
+  octaMesh = new THREE.Mesh(octaGeometry, octaMaterial);
   octaMesh.castShadow = true;
   meshes.push(octaMesh);
   dragPositions[2] = [0, 2.5, 0];
@@ -340,7 +340,7 @@ function initCannon() {
   const ballCannonMaterial = new CANNON.Material();
 
   // Octahedron body
-  const octaShape = new CANNON.Sphere(0.5); // no octahedron in CANNON
+  const octaShape = new CANNON.Sphere(0.65); // no octahedron in CANNON
   octaBody = new CANNON.Body({
     mass: 5,
     material: ballCannonMaterial,
