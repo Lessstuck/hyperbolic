@@ -401,14 +401,11 @@ Instrument.prototype.pulse = function (i) {
     }
   }
 
+  this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0); // x
+  this.morph[this.trackNumber][1] = this.morphWrapper(this.trackNumber, 1); // y
+  this.morph[this.trackNumber][2] = this.morphWrapper(this.trackNumber, 2); // z
   // Sample choice determnined by x & z value
   this.flatMorphOffset = 2 * (10 - this.morphOffset[2]) + this.morphOffset[0]; // 2z + x
-
-  // if (i === 1) {
-  //   console.log(`this.morphOffset[0]: ${this.morphOffset[0]}`);
-  //   console.log(`this.morphOffset[2]: ${this.morphOffset[2]}`);
-  //   console.log(`flatMorphOffset: ${this.flatMorphOffset}`);
-  // }
 
   let chosenTrack = presets[this.trackNumber + this.morphOffset[1]].track; //  {<---- choose rhythm array (.track) --------<<<
 
@@ -416,13 +413,8 @@ Instrument.prototype.pulse = function (i) {
   // If there's a note to play here, then get xyz position of ball & flash it
   let playState = chosenTrack.play();
 
+  // if solo is off or if this track is being soloed
   if (playState && (soloState == -1 || soloState == this.trackNumber)) {
-    //   // if solo is off or if this track is being soloed
-
-    // solo function
-    this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0); // x
-    this.morph[this.trackNumber][1] = this.morphWrapper(this.trackNumber, 1); // y
-    this.morph[this.trackNumber][2] = this.morphWrapper(this.trackNumber, 2); // z
     // Make objects flash when they play
     switch (this.trackNumber) {
       case 0:
