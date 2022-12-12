@@ -159,7 +159,7 @@ class Preset {
     this.soundFilename = soundFilename;
     this.gain = gain;
     this.scale = scale;
-    this.track = new Track(beatProb, 1);
+    this.track = new Track(beatProb, 1); // 1 as 2nd argument uses chaosValues instead of Math.random() to choose rhythmic steps
   }
 }
 
@@ -171,71 +171,66 @@ let presets = [];
 
 // octa
 presets[0] = new Preset(
-  [0, 1, 0.25],
+  [1, 0, 1],
   "ad4_bikebell_ding_muted_11",
-  [0.25],
+  [0.7],
   [0, 4, 7, 9]
 );
 // sphere
 presets[1] = new Preset(
   [1, 0.25],
   "REACH_JUPE_tonal_one_shot_reverb_pluck_dry_C",
-  [0.25],
+  [0.1],
   [0, 4, 7]
 );
 // cube
 presets[2] = new Preset(
-  [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 1],
   "Low_Tumba_Bass",
-  [0.75],
+  [0.9],
   [-5, -12]
 );
 
 ////////////////////// right
 // octa
 presets[10] = new Preset(
-  [1],
+  [1, 0, 1],
   "ad4_bikebell_ding_muted_07",
-  [0.25],
+  [0.7],
   [12, 14, 15, 19]
 );
 // sphere
 presets[11] = new Preset(
   [0, 0, 0, 1],
   "REACH_JUPE_tonal_one_shot_very_clean_pluck_02_C",
-  [0.25],
+  [0.1],
   [4, 7]
 ); // [12, 14, 16, 19, 21, 24]);
 //cube
-presets[12] = new Preset(
-  [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  "Hi_Tumba_Tip",
-  [0.5],
-  [-5, 0, 9, 18]
-);
+presets[12] = new Preset([1, 0, 1], "Hi_Tumba_Tip", [0.9], [-5, 0, 9, 18]);
 
 ////////////////////////////////////////////////////////////////////////// far
 
 //////////////////////  left
 //  octa
 presets[20] = new Preset(
-  [1, 1],
+  [0, 0.5, 1],
   "ad4_bikebell_ding_v02_04",
-  [0.3],
+  [0.7],
   [-5, -4, 0]
 );
 // sphere
 presets[21] = new Preset(
   [1, 0.25],
   "REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C",
-  [0.5],
+  [0.3],
   [0]
 ); // [-12, -9, -5, 0]);
 // cube
 presets[22] = new Preset(
-  [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 1],
   "Low_Tumba_Bass",
-  [0.75],
+  [0.9],
   [-5, -12]
 );
 
@@ -244,18 +239,13 @@ presets[22] = new Preset(
 presets[30] = new Preset([1], "ad4_bikebell_ding_v02_04", [0.3], [-7, 0]);
 // sphere
 presets[31] = new Preset(
-  [0, 0, 0, 1],
+  [0, 0.5, 1],
   "REACH_JUPE_tonal_one_shot_very_clean_pluck_02_C_verb",
-  [0.25],
+  [0.7],
   [0]
 ); // [12, 14, 16, 19, 21, 24]);
 // cube
-presets[32] = new Preset(
-  [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  "Hi_Tumba_Tip",
-  [0.5],
-  [0, 6, 18, 24]
-);
+presets[32] = new Preset([1, 0, 1], "Hi_Tumba_Tip", [0.9], [0, 6, 18, 24]);
 
 const Sequencer = {
   timeout: function (callback, length) {

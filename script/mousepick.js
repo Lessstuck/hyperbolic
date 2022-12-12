@@ -87,7 +87,7 @@ function initThree() {
   // document.body.appendChild(stats.dom)
 
   // Lights
-  const ambientLight = new THREE.AmbientLight(0x222222);
+  const ambientLight = new THREE.AmbientLight(0x111111);
   scene.add(ambientLight);
 
   const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
