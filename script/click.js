@@ -414,14 +414,16 @@ Instrument.prototype.pulse = function (i) {
   let playState = chosenTrack.play();
 
   // if solo is off or if this track is being soloed
-  if (playState && (soloState == -1 || soloState == this.trackNumber)) {
+  let playNow = playState && (soloState == -1 || soloState == this.trackNumber);
+
+  if (playNow) {
     this.playSound(
       presets[this.trackNumber + this.flatMorphOffset].soundFilename // <---- choose sound from preset --------<<<
     );
   }
 
   // Make objects flash when they play
-  if (playState && (soloState == -1 || soloState == this.trackNumber)) {
+  if (playNow) {
     switch (this.trackNumber) {
       case 0:
         octaMesh.material.emissive.set(0xf2b705);
