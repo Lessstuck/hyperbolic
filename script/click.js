@@ -163,10 +163,6 @@ class Preset {
   }
 }
 
-//
-// this.flatMorphOffset is a multiple of 10 added to presets index, to choose from
-// several versions of the same instrument
-//
 let presets = [];
 
 ////////////////////////////////////////////////////////////////////////// near
@@ -336,7 +332,7 @@ function Instrument(rateWrapper, meterWrapper, morphWrapper, trackNumber) {
 Instrument.prototype = {
   start: function () {
     iosSleepPreventInterval = setInterval(function () {
-      window.location.href = "/new/page";
+      // window.location.href = "/new/page";
       window.setTimeout(function () {
         window.stop();
       }, 0);
@@ -421,7 +417,7 @@ Instrument.prototype.pulse = function (i) {
   let playState = chosenTrack.play();
 
   if (playState && (soloState == -1 || soloState == this.trackNumber)) {
-    // if solo is off or if this track is being soloed
+    //   // if solo is off or if this track is being soloed
 
     // solo function
     this.morph[this.trackNumber][0] = this.morphWrapper(this.trackNumber, 0); // x
