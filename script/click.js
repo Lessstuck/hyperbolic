@@ -415,29 +415,36 @@ Instrument.prototype.pulse = function (i) {
 
   // if solo is off or if this track is being soloed
   if (playState && (soloState == -1 || soloState == this.trackNumber)) {
-    // Make objects flash when they play
+    this.playSound(
+      presets[this.trackNumber + this.flatMorphOffset].soundFilename // <---- choose sound from preset --------<<<
+    );
+  }
+
+  // Make objects flash when they play
+  if (playState && (soloState == -1 || soloState == this.trackNumber)) {
     switch (this.trackNumber) {
       case 0:
         octaMesh.material.emissive.set(0xf2b705);
         octaLight.color.setHex(0xf2b705);
+        break;
       case 1:
         ballMesh.material.emissive.set(0xbf1304);
         ballLight.color.setHex(0xbf1304);
+        break;
       case 2:
         cubeMesh.material.emissive.set(0x048abf);
         cubeLight.color.setHex(0x048abf);
     }
-    this.playSound(
-      presets[this.trackNumber + this.flatMorphOffset].soundFilename // <---- choose sound from preset --------<<<
-    );
   } else {
     switch (this.trackNumber) {
       case 0:
         octaMesh.material.emissive.set(0x000000);
         octaLight.color.setHex(0x000000);
+        break;
       case 1:
         ballMesh.material.emissive.set(0x000000);
         ballLight.color.setHex(0x000000);
+        break;
       case 2:
         cubeMesh.material.emissive.set(0x000000);
         cubeLight.color.setHex(0x000000);
