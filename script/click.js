@@ -173,7 +173,7 @@ let presets = [];
 presets[0] = new Preset(
   [1, 0, 1],
   "ad4_bikebell_ding_muted_11",
-  [0.7],
+  [0.55],
   [0, 4, 7, 9]
 );
 // sphere
@@ -196,7 +196,7 @@ presets[2] = new Preset(
 presets[10] = new Preset(
   [1, 0, 1],
   "ad4_bikebell_ding_muted_07",
-  [0.7],
+  [0.55],
   [12, 14, 15, 19]
 );
 // sphere
@@ -216,7 +216,7 @@ presets[12] = new Preset([1, 0, 1], "Hi_Tumba_Tip", [0.9], [-5, 0, 9, 18]);
 presets[20] = new Preset(
   [0, 0.5, 1],
   "ad4_bikebell_ding_v02_04",
-  [0.7],
+  [0.5],
   [-5, -4, 0]
 );
 // sphere
@@ -236,7 +236,7 @@ presets[22] = new Preset(
 
 ////////////////////// right
 // octa
-presets[30] = new Preset([1], "ad4_bikebell_ding_v02_04", [0.3], [-7, 0]);
+presets[30] = new Preset([1], "ad4_bikebell_ding_v02_04", [0.5], [-7, 0]);
 // sphere
 presets[31] = new Preset(
   [0, 0.5, 1],
