@@ -391,6 +391,7 @@ function initCannon() {
 /////////////////////////////////////////////////////////////////////////////
 
 window.addEventListener("pointerdown", (event) => {
+  event.preventDefault();
   // Cast a ray from where the mouse is pointing and
   // see if we hit something
 
@@ -457,6 +458,7 @@ window.addEventListener("pointerdown", (event) => {
 });
 
 window.addEventListener("pointermove", (event) => {
+  event.preventDefault();
   if (!isDragging) {
     return;
   }
@@ -479,6 +481,7 @@ window.addEventListener("pointermove", (event) => {
 });
 
 window.addEventListener("pointerup", () => {
+  event.preventDefault();
   isDragging = false;
 
   // Hide the marker mesh

@@ -30,12 +30,13 @@
 <body>
   <div id="webgl-and-controls">
     <div class="flex-container">
-      <a href="#" id="fullscreen" class="overlay">fullscreen</a>
+      <a href="#" id="fullscreen" class="overlay prevent-select">fullscreen</a>
       <p id="fullscreen_seperator" class="overlay prevent-select">_________</p>
       <a href="#" id="start" class="overlay prevent-select">start</a>
       <a href="#" id="stop" class="overlay prevent-select">stop</a>
       <p class="overlay prevent-select">_________</p>
-      <input id="rate" class="overlay" type="range" value="160" min="60" max="240" style="width: 80px; display: none" />
+      <input id="rate" class="overlay prevent-select" type="range" value="160" min="60" max="240"
+        style="width: 80px; display: none" />
       <a href="#" id="front" class="overlay prevent-select">front</a>
       <a href="#" id="top" class="overlay prevent-select">top</a>
       <!-- temporary buttons to facilitate setting preset values -->
@@ -43,7 +44,7 @@
         <a href="#" id="low" class="overlay">low</a>
         <a href="#" id="high" class="overlay">high</a> -->
     </div>
-    <div id="webgl"></div>
+    <div id="webgl" class="prevent-select"></div>
   </div>
 
 </body>
