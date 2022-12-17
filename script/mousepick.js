@@ -391,7 +391,6 @@ function initCannon() {
 /////////////////////////////////////////////////////////////////////////////
 
 window.addEventListener("pointerdown", (event) => {
-  removeJointConstraint(); // clean slate in case some pointups are not being captured
   // Cast a ray from where the mouse is pointing and
   // see if we hit something
   const cubeHitPoint = getHitPoint(
