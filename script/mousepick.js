@@ -393,6 +393,10 @@ function initCannon() {
 window.addEventListener("pointerdown", (event) => {
   // Cast a ray from where the mouse is pointing and
   // see if we hit something
+
+  let hitPoint;
+  let hitBody;
+
   const cubeHitPoint = getHitPoint(
     event.clientX,
     event.clientY,
@@ -413,8 +417,8 @@ window.addEventListener("pointerdown", (event) => {
   );
   // All 3 HitPoints are evaluated, but the if-else below will prioritize, for example, octa if both octa and ball are hit
   // Return if one wasn't hit
-  let hitPoint;
-  let hitBody;
+  // let hitPoint;
+  // let hitBody;
 
   if (octaHitPoint) {
     hitPoint = octaHitPoint;
@@ -429,6 +433,9 @@ window.addEventListener("pointerdown", (event) => {
     hitBody = cubeBody;
     hitIndex = 2;
   } else {
+    removeJointConstraint();
+    world.removeBody(jointBody);
+
     return;
   }
 
@@ -441,7 +448,6 @@ window.addEventListener("pointerdown", (event) => {
 
   // Create the constraint between the body that was hit and the joint body
   addJointConstraint(hitPoint, hitBody);
-  // addJointConstraint(hitPoint, ballBody)
 
   // Set the flag to trigger pointermove on next frame so the
   // movementPlane has had time to move
@@ -516,7 +522,6 @@ function getHitPoint(clientX, clientY, mesh, camera) {
 
   // Find out if there's a hit
   const hits = raycaster.intersectObject(mesh);
-
   return hits.length > 0 ? hits[0].point : undefined; //        <---- filter .point (x, y, z) for hit outside of worldbox here!!
 }
 
