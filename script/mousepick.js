@@ -535,6 +535,7 @@ function getHitPoint(clientX, clientY, mesh, camera) {
 // Add a constraint between the object and the jointBody
 // in the interaction position
 function addJointConstraint(position, constrainedBody) {
+  removeJointConstraint();
   // Vector that goes from the body to the clicked point
   const vector = new CANNON.Vec3()
     .copy(position)
@@ -557,7 +558,6 @@ function addJointConstraint(position, constrainedBody) {
   );
   console.log();
   console.log(`Add jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
-  console.log(`Add jointConstraint.bodyB.id: ${jointConstraint.bodyB.id}`);
   console.log();
   // Add the constraint to world
   world.addConstraint(jointConstraint);
@@ -569,7 +569,6 @@ function moveJoint(position) {
   jointBody.position.copy(position);
   console.log();
   console.log(`Move jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
-  console.log(`Move jointConstraint.bodyB.id: ${jointConstraint.bodyB.id}`);
   console.log();
   jointConstraint.update();
 }
@@ -579,7 +578,6 @@ function removeJointConstraint() {
   if (jointConstraint) {
     console.log();
     console.log(`Remove jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
-    console.log(`Remove jointConstraint.bodyB.id: ${jointConstraint.bodyB.id}`);
     console.log();
     world.removeConstraint(jointConstraint);
     jointConstraint = undefined;
