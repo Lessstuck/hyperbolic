@@ -556,9 +556,9 @@ function addJointConstraint(position, constrainedBody) {
     jointBody,
     new CANNON.Vec3(0, 0, 0)
   );
-  console.log();
-  console.log(`Add jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
-  console.log();
+  // console.log();
+  // console.log(`Add jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
+  // console.log();
   // Add the constraint to world
   world.addConstraint(jointConstraint);
 }
@@ -567,18 +567,18 @@ function addJointConstraint(position, constrainedBody) {
 // and updates the constraint
 function moveJoint(position) {
   jointBody.position.copy(position);
-  console.log();
-  console.log(`Move jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
-  console.log();
+  // console.log();
+  // console.log(`Move jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
+  // console.log();
   jointConstraint.update();
 }
 
 // Remove constraint from world
 function removeJointConstraint() {
   if (jointConstraint) {
-    console.log();
-    console.log(`Remove jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
-    console.log();
+    // console.log();
+    // console.log(`Remove jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
+    // console.log();
     world.removeConstraint(jointConstraint);
     jointConstraint = undefined;
   }
