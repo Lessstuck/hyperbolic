@@ -555,7 +555,10 @@ function addJointConstraint(position, constrainedBody) {
     jointBody,
     new CANNON.Vec3(0, 0, 0)
   );
-
+  console.log();
+  console.log(`jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
+  console.log(`jointConstraint.bodyB.id: ${jointConstraint.bodyB.id}`);
+  console.log();
   // Add the constraint to world
   world.addConstraint(jointConstraint);
 }
