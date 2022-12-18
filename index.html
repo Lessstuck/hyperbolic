@@ -15,14 +15,14 @@
   <script type="module" src="script/click.js"></script>
   <script type="module" src="script/app.js"></script>
   <script type="module" src="script/mousepick.js"></script>
-  <script>
+  <!-- <script>
     $(window).bind(
       'touchmove',
       function (e) {
         e.preventDefault();
       }
     );
-  </script>
+  </script> -->
   <style>
     .prevent-select {
       -webkit-user-select: none;
@@ -64,7 +64,7 @@
       <p class="overlay prevent-select controls">___</p>
       <a href="#" id="top" class="overlay prevent-select controls">top</a>
     </div>
-    <div id="webgl"></div>
+    <div id="webgl" class="prevent-select"></div>
   </div>
 
 </body>
