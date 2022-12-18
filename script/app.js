@@ -2,17 +2,6 @@ import { Instrument } from "./click.js";
 import { dragPositions } from "./mousepick.js";
 import { startImpulse, stopReset } from "./mousepick.js";
 
-let testMode = "run";
-$("#run").click(function () {
-  testMode = "run";
-});
-$("#low").click(function () {
-  testMode = "low";
-});
-$("#high").click(function () {
-  testMode = "high";
-});
-
 /// maps dragPositions (-5 to +5) to morph values (0 to 100)
 /// i = body index, j = axis index
 let dragPositionClipped;
