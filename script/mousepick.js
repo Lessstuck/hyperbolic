@@ -576,12 +576,14 @@ function moveJoint(position) {
 
 // Remove constraint from world
 function removeJointConstraint() {
-  console.log();
-  console.log(`Remove jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
-  console.log(`Remove jointConstraint.bodyB.id: ${jointConstraint.bodyB.id}`);
-  console.log();
-  world.removeConstraint(jointConstraint);
-  jointConstraint = undefined;
+  if (jointConstraint) {
+    console.log();
+    console.log(`Remove jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
+    console.log(`Remove jointConstraint.bodyB.id: ${jointConstraint.bodyB.id}`);
+    console.log();
+    world.removeConstraint(jointConstraint);
+    jointConstraint = undefined;
+  }
 }
 /////////////////////////////////////////////////////////////////////////////
 //  step animation and render
