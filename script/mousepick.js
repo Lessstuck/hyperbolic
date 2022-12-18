@@ -434,7 +434,7 @@ window.addEventListener("pointerdown", (event) => {
     hitBody = cubeBody;
     hitIndex = 2;
   } else {
-    removeJointConstraint();
+    // removeJointConstraint(); // causes move.joint serror on iPad
     world.removeBody(jointBody);
 
     return;
