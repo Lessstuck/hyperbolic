@@ -6,20 +6,14 @@ import { startImpulse, stopReset } from "./mousepick.js";
 /// i = body index, j = axis index
 let dragPositionClipped;
 function morphTrigger(i, j) {
-  if (testMode == "run") {
-    dragPositionClipped = (dragPositions[i][j] + 5) * 10;
-    if (dragPositionClipped < 40) {
-      dragPositionClipped = 0;
-    } else if (dragPositionClipped > 60) {
-      dragPositionClipped = 100;
-    }
-    dragPositionClipped = Math.round(dragPositionClipped);
-    return dragPositionClipped;
-  } else if (testMode == "low") {
-    return 0;
-  } else if (testMode == "high") {
-    return 100;
+  dragPositionClipped = (dragPositions[i][j] + 5) * 10;
+  if (dragPositionClipped < 40) {
+    dragPositionClipped = 0;
+  } else if (dragPositionClipped > 60) {
+    dragPositionClipped = 100;
   }
+  dragPositionClipped = Math.round(dragPositionClipped);
+  return dragPositionClipped;
 }
 
 $(document).ready(function () {
