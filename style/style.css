@@ -24,7 +24,7 @@ canvas {
   padding: 2px;
   display: inline;
   z-index: 99;
-  font-size: 1.5vw;
+  font-size: 2em;
 }
 
 /* more space for the Stats.js button name */
