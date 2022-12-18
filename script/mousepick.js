@@ -556,8 +556,8 @@ function addJointConstraint(position, constrainedBody) {
     new CANNON.Vec3(0, 0, 0)
   );
   console.log();
-  console.log(`jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
-  console.log(`jointConstraint.bodyB.id: ${jointConstraint.bodyB.id}`);
+  console.log(`Add jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
+  console.log(`Add jointConstraint.bodyB.id: ${jointConstraint.bodyB.id}`);
   console.log();
   // Add the constraint to world
   world.addConstraint(jointConstraint);
@@ -567,11 +567,19 @@ function addJointConstraint(position, constrainedBody) {
 // and updates the constraint
 function moveJoint(position) {
   jointBody.position.copy(position);
+  console.log();
+  console.log(`Move jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
+  console.log(`Move jointConstraint.bodyB.id: ${jointConstraint.bodyB.id}`);
+  console.log();
   jointConstraint.update();
 }
 
 // Remove constraint from world
 function removeJointConstraint() {
+  console.log();
+  console.log(`Remove jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
+  console.log(`Remove jointConstraint.bodyB.id: ${jointConstraint.bodyB.id}`);
+  console.log();
   world.removeConstraint(jointConstraint);
   jointConstraint = undefined;
 }
@@ -616,7 +624,7 @@ function animate() {
   stats.update();
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////IMPULZ
+////////////////////////////////////////////// Push objects to go, reset to beginning position to stop
 
 function startImpulse() {
   impulse = new CANNON.Vec3(100, 0, 0);
