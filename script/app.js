@@ -16,18 +16,18 @@ function morphTrigger(i, j) {
   return dragPositionClipped;
 }
 
-$(document).ready(function () {
-  document.getElementById("webgl").addEventListener(
-    "pointer", // was touchmove
-    function (e) {
-      e.stopPropagation();
-    },
-    { passive: false }
-  );
+// $(document).ready(function () {
+//   document.getElementById("webgl").addEventListener(
+//     "pointer",
+//     function (e) {
+//       e.stopPropagation();
+//     },
+//     { passive: false }
+//   );
 
   const context = new AudioContext();
   window.addEventListener(
-    "pointerdown", // was touchstart
+    "pointerdown",
     function () {
       var buffer = context.createBuffer(1, 1, 22050);
       var source = context.createBufferSource();
