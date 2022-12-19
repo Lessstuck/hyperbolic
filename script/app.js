@@ -18,7 +18,7 @@ function morphTrigger(i, j) {
 
 $(document).ready(function () {
   document.getElementById("webgl").addEventListener(
-    "touchmove",
+    "pointer", // was touchmove
     function (e) {
       e.stopPropagation();
     },
@@ -27,7 +27,7 @@ $(document).ready(function () {
 
   const context = new AudioContext();
   window.addEventListener(
-    "touchstart",
+    "pointerdown", // was touchstart
     function () {
       var buffer = context.createBuffer(1, 1, 22050);
       var source = context.createBufferSource();
