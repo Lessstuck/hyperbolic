@@ -458,7 +458,7 @@ window.addEventListener("pointerdown", (event) => {
 });
 
 window.addEventListener("pointermove", (event) => {
-  event.preventDefault();
+  // event.preventDefault();
   if (!isDragging) {
     return;
   }
