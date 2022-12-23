@@ -3,6 +3,7 @@
 import * as CANNON from "./cannon-es.js";
 import * as THREE from "https://unpkg.com/three@0.122.0/build/three.module.js";
 import Stats from "https://unpkg.com/three@0.122.0/examples/jsm/libs/stats.module.js";
+import gsap from "./gsap-public/esm/gsap-core.js";
 
 var fullScreenMode = 0;
 var sceneWidth = window.innerWidth;
@@ -55,12 +56,26 @@ function initThree() {
   camera.lookAt(0, 0, 0);
 
   $("#front").click(function () {
-    camera.position.set(0, 0, 10);
-    camera.lookAt(0, 0, 0);
+    gsap.to(camera.position, {
+      x: 0,
+      y: 0,
+      z: 10,
+      duration: 1,
+      onUpdate: function () {
+        camera.lookAt(0, 0, 0);
+      },
+    });
   });
   $("#top").click(function () {
-    camera.position.set(0, 10, 0);
-    camera.lookAt(0, 0, 0);
+    gsap.to(camera.position, {
+      x: 0,
+      y: 10,
+      z: 0,
+      duration: 1,
+      onUpdate: function () {
+        camera.lookAt(0, 0, 0);
+      },
+    });
   });
   $("#fullscreen").click(function () {
     openFullscreen();
