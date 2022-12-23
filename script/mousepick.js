@@ -391,14 +391,12 @@ function initCannon() {
 /////////////////////////////////////////////////////////////////////////////
 
 window.addEventListener("pointerdown", (event) => {
-  console.log(`pointer down`);
   event.preventDefault();
+
   // Cast a ray from where the mouse is pointing and
   // see if we hit something
-
   let hitPoint;
   let hitBody;
-
   const cubeHitPoint = getHitPoint(
     event.clientX,
     event.clientY,
@@ -417,10 +415,9 @@ window.addEventListener("pointerdown", (event) => {
     octaMesh,
     camera
   );
+
   // All 3 HitPoints are evaluated, but the if-else below will prioritize, for example, octa if both octa and ball are hit
   // Return if one wasn't hit
-  // let hitPoint;
-  // let hitBody;
 
   if (octaHitPoint) {
     hitPoint = octaHitPoint;
@@ -459,8 +456,6 @@ window.addEventListener("pointerdown", (event) => {
 });
 
 window.addEventListener("pointermove", (event) => {
-  // event.preventDefault();
-  console.log(`pointermove isDragging ${isDragging}`);
   if (!isDragging) {
     return;
   }
@@ -474,18 +469,14 @@ window.addEventListener("pointermove", (event) => {
   );
 
   if (hitPoint) {
-    console.log(`pointermove hitPoint: ${hitPoint.x}`);
     // Move marker mesh on the contact point
     moveClickMarker(hitPoint);
-    console.log(`marker moved`);
     // Move the cannon constraint on the contact point
     moveJoint(hitPoint);
-    console.log(`joint moved`);
   }
 });
 
 window.addEventListener("pointerup", () => {
-  console.log(`pointer up`);
   // event.preventDefault();
   isDragging = false;
 
@@ -561,9 +552,6 @@ function addJointConstraint(position, constrainedBody) {
     jointBody,
     new CANNON.Vec3(0, 0, 0)
   );
-  // console.log();
-  // console.log(`Add jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
-  // console.log();
   // Add the constraint to world
   world.addConstraint(jointConstraint);
 }
@@ -572,18 +560,12 @@ function addJointConstraint(position, constrainedBody) {
 // and updates the constraint
 function moveJoint(position) {
   jointBody.position.copy(position);
-  // console.log();
-  // console.log(`Move jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
-  // console.log();
   jointConstraint.update();
 }
 
 // Remove constraint from world
 function removeJointConstraint() {
   if (jointConstraint) {
-    // console.log();
-    // console.log(`Remove jointConstraint.bodyA.id: ${jointConstraint.bodyA.id}`);
-    // console.log();
     world.removeConstraint(jointConstraint);
     jointConstraint = undefined;
   }
