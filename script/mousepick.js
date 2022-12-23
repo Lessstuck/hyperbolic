@@ -391,6 +391,7 @@ function initCannon() {
 /////////////////////////////////////////////////////////////////////////////
 
 window.addEventListener("pointerdown", (event) => {
+  console.log(`pointer down`);
   event.preventDefault();
   // Cast a ray from where the mouse is pointing and
   // see if we hit something
@@ -459,6 +460,7 @@ window.addEventListener("pointerdown", (event) => {
 
 window.addEventListener("pointermove", (event) => {
   // event.preventDefault();
+  console.log(`pointermove isDragging ${isDragging}`);
   if (!isDragging) {
     return;
   }
@@ -472,16 +474,19 @@ window.addEventListener("pointermove", (event) => {
   );
 
   if (hitPoint) {
+    console.log(`pointermove hitPoint: ${hitPoint.x}`);
     // Move marker mesh on the contact point
     moveClickMarker(hitPoint);
-
+    console.log(`marker moved`);
     // Move the cannon constraint on the contact point
     moveJoint(hitPoint);
+    console.log(`joint moved`);
   }
 });
 
 window.addEventListener("pointerup", () => {
-  event.preventDefault();
+  console.log(`pointer up`);
+  // event.preventDefault();
   isDragging = false;
 
   // Hide the marker mesh
