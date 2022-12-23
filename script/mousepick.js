@@ -60,7 +60,8 @@ function initThree() {
       x: 0,
       y: 0,
       z: 10,
-      duration: 1,
+      duration: 2,
+      ease: "power1",
       onUpdate: function () {
         camera.lookAt(0, 0, 0);
       },
@@ -71,7 +72,8 @@ function initThree() {
       x: 0,
       y: 10,
       z: 0,
-      duration: 1,
+      duration: 2,
+      ease: "power1",
       onUpdate: function () {
         camera.lookAt(0, 0, 0);
       },
