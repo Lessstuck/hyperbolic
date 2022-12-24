@@ -3,7 +3,7 @@
 import * as CANNON from "./cannon-es.js";
 import * as THREE from "https://unpkg.com/three@0.122.0/build/three.module.js";
 import Stats from "https://unpkg.com/three@0.122.0/examples/jsm/libs/stats.module.js";
-import gsap from "./gsap-public/esm/gsap-core.js";
+import gsap from "./gsap-core.js";
 
 var fullScreenMode = 0;
 var sceneWidth = window.innerWidth;
