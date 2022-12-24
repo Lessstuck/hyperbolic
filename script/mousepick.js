@@ -134,14 +134,14 @@ function initThree() {
   /////////////////////////////////////////////////////////////////////////////
 
   // Floor
-  const floorGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1);
-  floorGeometry.rotateX(-Math.PI / 2);
+  // const floorGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1);
+  // floorGeometry.rotateX(-Math.PI / 2);
   const floorMaterial = new THREE.MeshPhongMaterial({ color: 0x111111 });
-  floorMaterial.side = THREE.DoubleSide;
-  const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-  floor.receiveShadow = true;
-  floor.position.y = -5;
-  scene.add(floor);
+  // floorMaterial.side = THREE.DoubleSide;
+  // const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+  // floor.receiveShadow = true;
+  // floor.position.y = -5;
+  // scene.add(floor);
 
   // Walls
   const wallMaterial = new THREE.MeshPhongMaterial({ color: 0x050505 });
@@ -307,7 +307,6 @@ function initCannon() {
   const floorShape = new CANNON.Plane();
   const floorBody = new CANNON.Body({ mass: 0, material: worldBoxMaterial });
   floorBody.addShape(floorShape);
-  // floorBody.position.set(0, -(window.innerHeight * .005), 0)
   floorBody.position.set(0, -5, 0);
   floorBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0); // rotation affects collision!!!
   world.addBody(floorBody);
@@ -317,7 +316,6 @@ function initCannon() {
   const ceilingBody = new CANNON.Body({ mass: 0, material: worldBoxMaterial });
   ceilingBody.addShape(ceilingShape);
   ceilingBody.quaternion.setFromEuler(Math.PI / 2, 0, 0);
-  // ceilingBody.position.set(0, (window.innerHeight * .005), 0)
   ceilingBody.position.set(0, 5, 0);
   world.addBody(ceilingBody);
 
