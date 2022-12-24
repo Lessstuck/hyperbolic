@@ -481,6 +481,25 @@ window.addEventListener("pointermove", (event) => {
     camera
   );
 
+  // constrain drag so objects stay inside wordbox
+  if (hitPoint) {
+    if (hitPoint.x > 0) {
+      hitPoint.x = Math.min(hitPoint.x, 4);
+    } else if (hitPoint.x < 0) {
+      hitPoint.x = Math.max(hitPoint.x, -4);
+    }
+    if (hitPoint.y > 0) {
+      hitPoint.y = Math.min(hitPoint.y, 4);
+    } else if (hitPoint.y < 0) {
+      hitPoint.y = Math.max(hitPoint.y, -4);
+    }
+    if (hitPoint.z > 0) {
+      hitPoint.z = Math.min(hitPoint.z, 4);
+    } else if (hitPoint.z < 0) {
+      hitPoint.z = Math.max(hitPoint.z, -4);
+    }
+  }
+
   if (hitPoint) {
     // Move marker mesh on the contact point
     moveClickMarker(hitPoint);
@@ -531,7 +550,7 @@ function getHitPoint(clientX, clientY, mesh, camera) {
 
   // Find out if there's a hit
   const hits = raycaster.intersectObject(mesh);
-  return hits.length > 0 ? hits[0].point : undefined; //        <---- filter .point (x, y, z) for hit outside of worldbox here!!
+  return hits.length > 0 ? hits[0].point : undefined;
 }
 
 ///////////////////////////////////////////////////////////s//////////////////
