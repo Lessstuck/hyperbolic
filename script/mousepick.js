@@ -134,14 +134,14 @@ function initThree() {
   /////////////////////////////////////////////////////////////////////////////
 
   // Floor
-  // const floorGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1);
-  // floorGeometry.rotateX(-Math.PI / 2);
-  const floorMaterial = new THREE.MeshPhongMaterial({ color: 0x111111 });
-  // floorMaterial.side = THREE.DoubleSide;
-  // const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-  // floor.receiveShadow = true;
-  // floor.position.y = -5;
-  // scene.add(floor);
+  const floorGeometry = new THREE.PlaneBufferGeometry(10, 10, 1, 1);
+  floorGeometry.rotateX(-Math.PI / 2);
+  const floorMaterial = new THREE.MeshPhongMaterial({ color: 0x010101 });
+  floorMaterial.side = THREE.DoubleSide;
+  const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+  floor.receiveShadow = true;
+  floor.position.y = -5;
+  scene.add(floor);
 
   // Walls
   const wallMaterial = new THREE.MeshPhongMaterial({ color: 0x050505 });
