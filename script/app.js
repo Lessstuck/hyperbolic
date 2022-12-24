@@ -17,14 +17,6 @@ function morphTrigger(i, j) {
 }
 
 $(document).ready(function () {
-  // document.getElementById("webgl").addEventListener(
-  //   "pointer",
-  //   function (e) {
-  //     e.stopPropagation();
-  //   },
-  //   { passive: false }
-  // );
-
   const context = new AudioContext();
   window.addEventListener(
     "pointerdown",

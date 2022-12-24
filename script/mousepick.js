@@ -447,9 +447,7 @@ window.addEventListener("pointerdown", (event) => {
     hitBody = cubeBody;
     hitIndex = 2;
   } else {
-    // removeJointConstraint(); // causes move.joint serror on iPad
     world.removeBody(jointBody);
-
     return;
   }
 
@@ -492,12 +490,9 @@ window.addEventListener("pointermove", (event) => {
 });
 
 window.addEventListener("pointerup", () => {
-  // event.preventDefault();
   isDragging = false;
-
   // Hide the marker mesh
   hideClickMarker();
-
   // Remove the mouse constraint from the world
   removeJointConstraint();
 });
