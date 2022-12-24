@@ -276,7 +276,7 @@ function initThree() {
 }
 
 function onWindowResize() {
-  console.log(`resize`);
+  // console.log(`resize`);
   if (fullScreenMode) {
     var elem = document.getElementById("webgl-and-controls");
     var sceneWidth = window.innerWidth;
@@ -285,11 +285,11 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
     renderer.setSize(sceneWidth, sceneHeight);
   } else {
-    console.log(`resize not in fullscreen`);
+    // console.log(`resize not in fullscreen`);
     var elem = document.getElementById("webgl-and-controls");
     var sceneWidth = window.innerWidth;
     var sceneHeight = window.innerHeight;
-    console.log(`sceneHeightWidth: ${sceneHeight}, ${sceneWidth}`);
+    // console.log(`sceneHeightWidth: ${sceneHeight}, ${sceneWidth}`);
     camera.aspect = sceneWidth / sceneHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(sceneWidth, sceneHeight);
