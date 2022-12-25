@@ -172,9 +172,11 @@ let presets = [];
 // octa
 presets[0] = new Preset(
   [1, 0, 1],
-  "ad4_bikebell_ding_muted_11",
-  [0.55],
-  [0, 4, 7, 9]
+  // "ad4_bikebell_ding_muted_11",
+  "00.c_pizz_fo_c2",
+  [0.4],
+  // [0, 4, 7, 9],
+  [12, 14, 15, 19]
 );
 // sphere
 presets[1] = new Preset(
@@ -184,20 +186,17 @@ presets[1] = new Preset(
   [0, 4, 7]
 );
 // cube
-presets[2] = new Preset(
-  [0, 0, 0, 0, 0, 0, 0, 1],
-  "Low_Tumba_Bass",
-  [0.9],
-  [-5, -12]
-);
+presets[2] = new Preset([1, 0.5, 0.5], "Low_Tumba_Bass", [1], [-5, -12]);
 
 ////////////////////// right
 // octa
 presets[10] = new Preset(
   [1, 0, 1],
-  "ad4_bikebell_ding_muted_07",
-  [0.55],
-  [12, 14, 15, 19]
+  // "ad4_bikebell_ding_muted_07",
+  "00.c_pizz_fo_c2",
+  [0.4],
+  // [12, 14, 15, 19]
+  [24, 26, 27, 31]
 );
 // sphere
 presets[11] = new Preset(
@@ -207,7 +206,7 @@ presets[11] = new Preset(
   [4, 7]
 ); // [12, 14, 16, 19, 21, 24]);
 //cube
-presets[12] = new Preset([1, 0, 1], "Hi_Tumba_Tip", [0.9], [-5, 0, 9, 18]);
+presets[12] = new Preset([1, 0, 1], "Hi_Tumba_Tip", [1], [-5, 0, 9, 18]);
 
 ////////////////////////////////////////////////////////////////////////// far
 
@@ -215,9 +214,11 @@ presets[12] = new Preset([1, 0, 1], "Hi_Tumba_Tip", [0.9], [-5, 0, 9, 18]);
 //  octa
 presets[20] = new Preset(
   [0, 0.5, 1],
-  "ad4_bikebell_ding_v02_04",
-  [0.5],
-  [-5, -4, 0]
+  // "ad4_bikebell_ding_v02_04",
+  "00.c_pizz_fo_c2",
+  [0.4],
+  // [-5, -4, 0]
+  [12, 14, 15, 19]
 );
 // sphere
 presets[21] = new Preset(
@@ -227,16 +228,18 @@ presets[21] = new Preset(
   [0]
 ); // [-12, -9, -5, 0]);
 // cube
-presets[22] = new Preset(
-  [0, 0, 0, 0, 0, 0, 0, 1],
-  "Low_Tumba_Bass",
-  [0.9],
-  [-5, -12]
-);
+presets[22] = new Preset([1, 0.5, 0.5], "Low_Tumba_Bass", [1], [-5, -12]);
 
 ////////////////////// right
 // octa
-presets[30] = new Preset([1], "ad4_bikebell_ding_v02_04", [0.5], [-7, 0]);
+presets[30] = new Preset(
+  [1],
+  //  "ad4_bikebell_ding_v02_04",
+  "00.c_pizz_fo_c2",
+  [0.4],
+  // [-7, 0]
+  [24, 26, 27, 31]
+);
 // sphere
 presets[31] = new Preset(
   [0, 0.5, 1],
@@ -245,7 +248,7 @@ presets[31] = new Preset(
   [0]
 ); // [12, 14, 16, 19, 21, 24]);
 // cube
-presets[32] = new Preset([1, 0, 1], "Hi_Tumba_Tip", [0.9], [0, 6, 18, 24]);
+presets[32] = new Preset([1, 0, 1], "Hi_Tumba_Tip", [1], [0, 6, 18, 24]);
 
 const Sequencer = {
   timeout: function (callback, length) {

@@ -481,7 +481,7 @@ window.addEventListener("pointermove", (event) => {
     camera
   );
 
-  // constrain drag so objects stay inside wordbox
+  // constrain drag so objects stay inside worldbox
   if (hitPoint) {
     if (hitPoint.x > 0) {
       hitPoint.x = Math.min(hitPoint.x, 4);
