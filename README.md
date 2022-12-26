@@ -41,4 +41,4 @@ The `Sequencer` object controls overall play function. The `Instrument` class in
 
 Like most of the world's music, so-called Euclidean rhythms repeat patterns over one or more bars. This algorithm is non-Euclidean in the sense that the overall rhythmic pattern never repeats. The title of the piece continues the wordplay, since a hyperbolic space is non-Euclidean - and it is no hyperbole to suggest this piece will never be finished; completion is asymptotic. 
 
-
+This code is open-source under the MIT license, but the resulting music is ©2022 L.Stuck
