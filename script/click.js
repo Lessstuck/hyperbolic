@@ -172,7 +172,6 @@ let presets = [];
 // octa
 presets[0] = new Preset(
   [1, 0, 1],
-  // "ad4_bikebell_ding_muted_11",
   "00.c_pizz_fo_c2",
   [0.4],
   // [0, 4, 7, 9],
@@ -192,7 +191,6 @@ presets[2] = new Preset([1, 0.5, 0.5], "Low_Tumba_Bass", [1], [-5, -12]);
 // octa
 presets[10] = new Preset(
   [1, 0, 1],
-  // "ad4_bikebell_ding_muted_07",
   "00.c_pizz_fo_c2",
   [0.4],
   // [12, 14, 15, 19]
@@ -214,9 +212,8 @@ presets[12] = new Preset([1, 0, 1], "Hi_Tumba_Tip", [1], [-5, 0, 9, 18]);
 //  octa
 presets[20] = new Preset(
   [0, 0.5, 1],
-  // "ad4_bikebell_ding_v02_04",
-  "00.c_pizz_fo_c2",
-  [0.4],
+  "00.c_pizz_fo_c2_verb",
+  [0.3],
   // [-5, -4, 0]
   [12, 14, 15, 19]
 );
@@ -224,7 +221,7 @@ presets[20] = new Preset(
 presets[21] = new Preset(
   [1, 0.25],
   "REACH_JUPE_tonal_one_shot_reverb__pluck_wet_C",
-  [0.3],
+  [0.2],
   [0]
 ); // [-12, -9, -5, 0]);
 // cube
@@ -234,9 +231,8 @@ presets[22] = new Preset([1, 0.5, 0.5], "Low_Tumba_Bass", [1], [-5, -12]);
 // octa
 presets[30] = new Preset(
   [1],
-  //  "ad4_bikebell_ding_v02_04",
-  "00.c_pizz_fo_c2",
-  [0.4],
+  "00.c_pizz_fo_c2_verb",
+  [0.3],
   // [-7, 0]
   [24, 26, 27, 31]
 );
@@ -244,7 +240,7 @@ presets[30] = new Preset(
 presets[31] = new Preset(
   [0, 0.5, 1],
   "REACH_JUPE_tonal_one_shot_very_clean_pluck_02_C_verb",
-  [0.7],
+  [0.5],
   [0]
 ); // [12, 14, 16, 19, 21, 24]);
 // cube
