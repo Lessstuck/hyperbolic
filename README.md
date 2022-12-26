@@ -12,7 +12,7 @@ For each of the 3 objects, there are 3 parameters tied to the 3 dimensions of th
 Rhythmically precise • 3D physics interface • Musically interesting • Multiplatform
 
 ##### Rhythmically precise
-I use a simple webAudio-based metronome to drive rhythmic pulses, based on the playback of a silent audio buffer, with the .onended property a callback to restart the loop.
+I found a simple but accurate [webAudio-based metronome](http://andrew-yavtushenko.github.io/metronome/) to drive rhythmic pulses, based on the playback of a silent audio buffer, with the .onended property a callback to restart the loop.
 
 ##### 3D physics interface
 [Three.js](https://threejs.org/) was the obvious choice for all 3D rendering. Pointer interaction using the [cannon-es.js physics engine](https://github.com/pmndrs/cannon-es) adapted from [this example](https://pmndrs.github.io/cannon-es/examples/threejs_mousepick).
