@@ -314,7 +314,7 @@ function Instrument(rateWrapper, meterWrapper, morphWrapper, trackNumber) {
   this.sound = {};
   this.morphOffset = [0, 0, 0];
 
-  // create 2 sounds per instrument for morphing between
+  // create 4 sounds per instrument for morphing between
   createNewSound(presets[trackNumber].soundFilename, this);
   createNewSound(presets[trackNumber + 10].soundFilename, this);
   createNewSound(presets[trackNumber + 20].soundFilename, this);
