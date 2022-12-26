@@ -185,7 +185,7 @@ presets[1] = new Preset(
   [0, 4, 7]
 );
 // cube
-presets[2] = new Preset([1, 0.5, 0.5], "Low_Tumba_Bass", [1], [-5, -12]);
+presets[2] = new Preset([0, 0, 0.5, 1], "Low_Tumba_Bass", [1], [0, 7]);
 
 ////////////////////// right
 // octa
@@ -204,7 +204,7 @@ presets[11] = new Preset(
   [4, 7]
 ); // [12, 14, 16, 19, 21, 24]);
 //cube
-presets[12] = new Preset([1, 0, 1], "Hi_Tumba_Tip", [1], [-5, 0, 9, 18]);
+presets[12] = new Preset([1, 0, 1], "Hi_Tumba_Tip", [1], [0, 7, 9]);
 
 ////////////////////////////////////////////////////////////////////////// far
 
@@ -225,7 +225,7 @@ presets[21] = new Preset(
   [0]
 ); // [-12, -9, -5, 0]);
 // cube
-presets[22] = new Preset([1, 0.5, 0.5], "Low_Tumba_Bass", [1], [-5, -12]);
+presets[22] = new Preset([0, 0, 0.5, 1], "Low_Tumba_Bass", [1], [0, 7, 12]);
 
 ////////////////////// right
 // octa
