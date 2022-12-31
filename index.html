@@ -46,6 +46,16 @@
     .separators {
       color: var(--adobe-dark-blue)
     }
+
+    .break {
+      flex-basis: 100%;
+      height: 20;
+    }
+
+    .bottom {
+      color: var(--adobe-light-blue);
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -63,6 +73,8 @@
       <a href="#" id="front" class="overlay prevent-select controls">front</a>
       <p class="overlay prevent-select separators">___</p>
       <a href="#" id="top" class="overlay prevent-select controls">top</a>
+      <div class="break">""</div>
+      <div class="break overlay prevent-select bottom">Move objects to control music.</div>
     </div>
     <div class="scene">
       <div id="webgl" class="prevent-select canvas"></div>

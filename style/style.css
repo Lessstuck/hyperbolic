@@ -25,12 +25,12 @@ scene {
 
 .flex-container {
   position: absolute;
-  top: 90%;
+  top: 85%;
   display: flex;
   justify-content: center;
   flex-direction: row;
   width: 100%;
-  /* text-align: center; */
+  flex-wrap: wrap;
 }
 
 .overlay  {
