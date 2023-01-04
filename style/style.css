@@ -81,3 +81,43 @@ scene {
   width: 1.5rem;
   opacity: 0.8;
 }
+
+
+
+.prevent-select {
+  touch-action: none;
+  -webkit-user-select: none;
+  /* Safari */
+  -ms-user-select: none;
+  /* IE 10 and IE 11 */
+  user-select: none;
+  /* Standard syntax */
+}
+
+
+
+:root {
+  --adobe-dark-blue: #033E8C;
+  --adobe-light-blue: #048ABF;
+  --adobe-yellow: #F2B705;
+  --adobe-orange: #D96704;
+  --adobe-red: #BF1304;
+}
+
+.controls {
+  color: var(--adobe-orange)
+}
+
+.separators {
+  color: var(--adobe-dark-blue)
+}
+
+.break {
+  flex-basis: 100%;
+  height: 20;
+}
+
+.bottom {
+  color: var(--adobe-light-blue);
+  text-align: center;
+}
