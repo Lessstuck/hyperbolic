@@ -1,6 +1,6 @@
 import { Instrument } from "./click.js";
 import { dragPositions } from "./mousepick.js";
-import { startImpulse, stopReset } from "./mousepick.js";
+import { startImpulse, freeze, stopReset } from "./mousepick.js";
 
 /// maps dragPositions (-5 to +5) to morph values (0 to 100)
 /// i = body index, j = axis index
@@ -44,6 +44,11 @@ $(document).ready(function () {
       });
     }
     startImpulse();
+    return false;
+  });
+
+  $("#freeze").click(function () {
+    freeze();
     return false;
   });
 

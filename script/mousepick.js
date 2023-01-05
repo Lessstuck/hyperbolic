@@ -671,19 +671,31 @@ function startImpulse() {
   cubeBody.applyImpulse(impulse);
 }
 
+function freeze() {
+  velocity = new CANNON.Vec3(0, 0, 0);
+  octaBody.velocity = velocity;
+  velocity = new CANNON.Vec3(0, 0, 0);
+  ballBody.velocity = velocity;
+  velocity = new CANNON.Vec3(0, 0, 0);
+  cubeBody.velocity = velocity;
+}
+
 function stopReset() {
   velocity = new CANNON.Vec3(0, 0, 0);
   octaBody.velocity = velocity;
   octaBody.position.set(0, 2.5, 0);
+
   velocity = new CANNON.Vec3(0, 0, 0);
   ballBody.velocity = velocity;
   ballBody.position.set(0, 0, 0);
+
   velocity = new CANNON.Vec3(0, 0, 0);
   cubeBody.velocity = velocity;
   cubeBody.position.set(0, -2.5, 0);
+
   octaMesh.material.emissive.set(0x000000);
   ballMesh.material.emissive.set(0x000000);
   cubeMesh.material.emissive.set(0x000000);
 }
 
-export { startImpulse, stopReset, octaLight, ballLight, cubeLight };
+export { startImpulse, freeze, stopReset, octaLight, ballLight, cubeLight };
