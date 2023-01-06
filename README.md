@@ -22,7 +22,11 @@ I find that the most interesting musical strucures lie somewhere between complet
 In addition, the rhythmic patterns do not follow repeating phrases. This is implemented with my ES module [noneuclidean](https://www.npmjs.com/package/noneuclidean?activeTab=readme), which exports a Track class. Each track receives global play messages on regular beats. The track decides how many beats to count before returning 1, causing the instrument to play its sound, or 0, resulting in no sound. The result is a regular/irregularity I find interesting.
 
 ##### Multiplatform
-Testing on laptop (Chrome, Safari, Firefox) tablet (Safari), phone (Apple & Android). Your bug reports are most welcome. Known issue: portrait mode is not fullscreen on iPad. :(
+Testing on laptop (Chrome, Safari, Firefox) tablet (Safari), phone (Apple & Android). Your bug reports are most welcome.
+
+##### Known issues
+Portrait mode is not fullscreen on iPad with Safari on iOS 16.1  
+No audio on iPhone SE (1st gen) with Safari and iOS 15.5
 
 ### Under the Hood
 **index.html** Sets up the interface elements
